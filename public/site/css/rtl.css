@@ -1,0 +1,10 @@
+.breadcumb-menu li:after {
+    content: "\f104";
+    margin: 15px;
+
+}
+
+.widget_nav_menu li > span, .widget_meta li > span, .widget_pages li > span, .widget_archive li > span, .wp-block-page-list li > span, .widget_categories li > span {
+    right: unset;
+    left: 0;
+}
