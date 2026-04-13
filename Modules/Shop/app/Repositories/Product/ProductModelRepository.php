@@ -141,6 +141,7 @@ class ProductModelRepository implements ProductRepository {
             $length = trim((string) ($item['length'] ?? ''));
             $height = trim((string) ($item['height'] ?? ''));
             $weight = trim((string) ($item['weight'] ?? ''));
+            $price=$item['price']??0;
             $clearSlides = (bool) ($item['clear_slides'] ?? false);
             $slidesFiles = $item['slides_files'] ?? [];
             if ($slidesFiles && !is_array($slidesFiles)) {
@@ -171,6 +172,7 @@ class ProductModelRepository implements ProductRepository {
                 'length' => $length ?: null,
                 'height' => $height ?: null,
                 'weight' => $weight ?: null,
+                'price'=>$price,
                 'clear_slides' => $clearSlides,
                 'slides_files' => $slidesFiles ?: [],
             ];
@@ -189,6 +191,7 @@ class ProductModelRepository implements ProductRepository {
                 'length' => $item['length'] ?? null,
                 'height' => $item['height'] ?? null,
                 'weight' => $item['weight'] ?? null,
+                'price'=>$item['price'],
             ];
 
             $id = $item['id'] ?? null;

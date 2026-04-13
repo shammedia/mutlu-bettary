@@ -30,6 +30,7 @@
                 const lengthVal = (data && data.length) ? data.length : '';
                 const heightVal = (data && data.height) ? data.height : '';
                 const weightVal = (data && data.weight) ? data.weight : '';
+                const priceVal = (data && data.price) ? data.price : '';
 
                 return `
                     <tr>
@@ -45,6 +46,7 @@
                         <td><input type="text" class="form-control form-control-solid" name="sub_products[${idx}][length]" value="${lengthVal}" placeholder="{{__('Length (mm)')}}"></td>
                         <td><input type="text" class="form-control form-control-solid" name="sub_products[${idx}][height]" value="${heightVal}" placeholder="{{__('Height (mm)')}}"></td>
                         <td><input type="text" class="form-control form-control-solid" name="sub_products[${idx}][weight]" value="${weightVal}" placeholder="{{__('Weight (kg)')}}"></td>
+                        <td><input type="number" class="form-control form-control-solid" name="sub_products[${idx}][price]" value="${priceVal}" placeholder="{{__('Price ($)')}}"></td>
                         <td class="text-end">
                             <button type="button" class="btn btn-sm btn-light-danger remove-sub-product-row">{{__('Remove')}}</button>
                         </td>
@@ -171,6 +173,7 @@
                         'length' => $sp->length,
                         'height' => $sp->height,
                         'weight' => $sp->weight,
+                        'price'=>$sp->price,
                     ])->toArray();
         @endphp
         <div class="row mb-8">
@@ -196,6 +199,7 @@
                             <th>{{__('Length (mm)')}}</th>
                             <th>{{__('Height (mm)')}}</th>
                             <th>{{__('Weight (kg)')}}</th>
+                            <th>{{__('Price ($)')}}</th>
                             <th class="text-end">{{__('Actions')}}</th>
                         </tr>
                         </thead>
@@ -232,6 +236,7 @@
                                         @error("sub_products.$idx.slides")
                                         <div class="text-danger mt-1">{{ $message }}</div>
                                         @enderror
+
                                     </td>
                                     <td><input type="text" class="form-control form-control-solid" name="sub_products[{{$idx}}][name]" value="{{ $sp['name'] ?? '' }}" placeholder="{{__('Name')}}"></td>
                                     <td><input type="text" class="form-control form-control-solid" name="sub_products[{{$idx}}][capacity]" value="{{ $sp['capacity'] ?? '' }}" placeholder="{{__('Capacity (Ah)')}}"></td>
@@ -240,6 +245,7 @@
                                     <td><input type="text" class="form-control form-control-solid" name="sub_products[{{$idx}}][length]" value="{{ $sp['length'] ?? '' }}" placeholder="{{__('Length (mm)')}}"></td>
                                     <td><input type="text" class="form-control form-control-solid" name="sub_products[{{$idx}}][height]" value="{{ $sp['height'] ?? '' }}" placeholder="{{__('Height (mm)')}}"></td>
                                     <td><input type="text" class="form-control form-control-solid" name="sub_products[{{$idx}}][weight]" value="{{ $sp['weight'] ?? '' }}" placeholder="{{__('Weight (kg)')}}"></td>
+                                    <td><input type="text" class="form-control form-control-solid" name="sub_products[{{$idx}}][price]" value="{{ $sp['price'] ?? '' }}" placeholder="{{__('Price ($)')}}"></td>
                                     <td class="text-end">
                                         <button type="button" class="btn btn-sm btn-light-danger remove-sub-product-row">{{__('Remove')}}</button>
                                     </td>

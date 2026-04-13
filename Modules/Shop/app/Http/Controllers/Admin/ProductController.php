@@ -70,6 +70,7 @@ class ProductController extends Controller
                     trim((string) ($row['length'] ?? '')) !== '' ||
                     trim((string) ($row['height'] ?? '')) !== '' ||
                     trim((string) ($row['weight'] ?? '')) !== '';
+                    trim((string) ($row['price'] ?? '')) !== '';
 
                 // Ignore fully empty rows
                 if (! $hasAnyText && empty($slidesFiles)) {
@@ -111,6 +112,7 @@ class ProductController extends Controller
             'featured' => $request->boolean('featured'),
             'category_id' => $request->input('category_id'),
             'sub_products' => $subProducts,
+
         ];
         $this->productRepository->store($data);
 
@@ -154,6 +156,7 @@ class ProductController extends Controller
                     trim((string) ($row['length'] ?? '')) !== '' ||
                     trim((string) ($row['height'] ?? '')) !== '' ||
                     trim((string) ($row['weight'] ?? '')) !== '';
+                     ($row['price'] ?? 0)!== 0;
 
                 if ($capacity !== '') {
                     if (isset($seenCapacities[$capacity])) {
@@ -180,6 +183,7 @@ class ProductController extends Controller
                     trim((string) ($row['length'] ?? '')) !== '' ||
                     trim((string) ($row['height'] ?? '')) !== '' ||
                     trim((string) ($row['weight'] ?? '')) !== '';
+                    ($row['price'] ?? 0) !== 0;
 
                 // Ignore fully empty rows
                 if (! $hasAnyText && empty($slidesFiles)) {

@@ -18,6 +18,7 @@ class SubProduct extends Model
         'length',
         'height',
         'weight',
+        'price',
     ];
 
     protected $casts = [
