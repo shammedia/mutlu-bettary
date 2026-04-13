@@ -11,7 +11,7 @@ const _export_sfc = (sfc, props) => {
   }
   return target;
 };
-const _sfc_main$d = {
+const _sfc_main$e = {
   __name: "App",
   __ssrInlineRender: true,
   setup(__props) {
@@ -485,19 +485,19 @@ const _sfc_main$d = {
     };
   }
 };
-const _sfc_setup$d = _sfc_main$d.setup;
-_sfc_main$d.setup = (props, ctx) => {
+const _sfc_setup$e = _sfc_main$e.setup;
+_sfc_main$e.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Layouts/App.vue");
-  return _sfc_setup$d ? _sfc_setup$d(props, ctx) : void 0;
+  return _sfc_setup$e ? _sfc_setup$e(props, ctx) : void 0;
 };
-const AppLayout = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["__scopeId", "data-v-80394fbd"]]);
+const AppLayout = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["__scopeId", "data-v-80394fbd"]]);
 const __default__$6 = {
   components: {
     AppLayout
   }
 };
-const _sfc_main$c = /* @__PURE__ */ Object.assign(__default__$6, {
+const _sfc_main$d = /* @__PURE__ */ Object.assign(__default__$6, {
   __name: "AboutUs",
   __ssrInlineRender: true,
   setup(__props) {
@@ -800,17 +800,17 @@ const _sfc_main$c = /* @__PURE__ */ Object.assign(__default__$6, {
     };
   }
 });
-const _sfc_setup$c = _sfc_main$c.setup;
-_sfc_main$c.setup = (props, ctx) => {
+const _sfc_setup$d = _sfc_main$d.setup;
+_sfc_main$d.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("Modules/Base/resources/assets/js/Pages/AboutUs.vue");
-  return _sfc_setup$c ? _sfc_setup$c(props, ctx) : void 0;
+  return _sfc_setup$d ? _sfc_setup$d(props, ctx) : void 0;
 };
 const __vite_glob_0_0 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: _sfc_main$c
+  default: _sfc_main$d
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$b = {
+const _sfc_main$c = {
   __name: "FaqSection",
   __ssrInlineRender: true,
   props: {
@@ -853,20 +853,20 @@ const _sfc_main$b = {
     };
   }
 };
-const _sfc_setup$b = _sfc_main$b.setup;
-_sfc_main$b.setup = (props, ctx) => {
+const _sfc_setup$c = _sfc_main$c.setup;
+_sfc_main$c.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Components/FaqSection.vue");
-  return _sfc_setup$b ? _sfc_setup$b(props, ctx) : void 0;
+  return _sfc_setup$c ? _sfc_setup$c(props, ctx) : void 0;
 };
-const FaqSection = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["__scopeId", "data-v-019b9652"]]);
+const FaqSection = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["__scopeId", "data-v-019b9652"]]);
 const __default__$5 = {
   components: {
     AppLayout,
     FaqSection
   }
 };
-const _sfc_main$a = /* @__PURE__ */ Object.assign(__default__$5, {
+const _sfc_main$b = /* @__PURE__ */ Object.assign(__default__$5, {
   __name: "Index",
   __ssrInlineRender: true,
   setup(__props) {
@@ -1353,13 +1353,57 @@ const _sfc_main$a = /* @__PURE__ */ Object.assign(__default__$5, {
     };
   }
 });
+const _sfc_setup$b = _sfc_main$b.setup;
+_sfc_main$b.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("Modules/Base/resources/assets/js/Pages/Index.vue");
+  return _sfc_setup$b ? _sfc_setup$b(props, ctx) : void 0;
+};
+const __vite_glob_0_1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: _sfc_main$b
+}, Symbol.toStringTag, { value: "Module" }));
+const _sfc_main$a = {
+  __name: "CartIndex",
+  __ssrInlineRender: true,
+  setup(__props) {
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(`<!--[-->`);
+      _push(ssrRenderComponent(unref(Head), null, {
+        default: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(`<title${_scopeId}>${ssrInterpolate(_ctx.trans("Our Products"))} | Mutlu</title>`);
+          } else {
+            return [
+              createVNode("title", null, toDisplayString(_ctx.trans("Our Products")) + " | Mutlu", 1)
+            ];
+          }
+        }),
+        _: 1
+      }, _parent));
+      _push(ssrRenderComponent(AppLayout, null, {
+        default: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(`<h2${_scopeId}>Adnan</h2>`);
+          } else {
+            return [
+              createVNode("h2", null, "Adnan")
+            ];
+          }
+        }),
+        _: 1
+      }, _parent));
+      _push(`<!--]-->`);
+    };
+  }
+};
 const _sfc_setup$a = _sfc_main$a.setup;
 _sfc_main$a.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("Modules/Base/resources/assets/js/Pages/Index.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("Modules/Cart/resources/assets/js/Pages/CartIndex.vue");
   return _sfc_setup$a ? _sfc_setup$a(props, ctx) : void 0;
 };
-const __vite_glob_0_1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: _sfc_main$a
 }, Symbol.toStringTag, { value: "Module" }));
@@ -1961,7 +2005,7 @@ _sfc_main$9.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("Modules/Shop/resources/assets/js/Pages/ShopIndex.vue");
   return _sfc_setup$9 ? _sfc_setup$9(props, ctx) : void 0;
 };
-const __vite_glob_0_2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: _sfc_main$9
 }, Symbol.toStringTag, { value: "Module" }));
@@ -2629,7 +2673,7 @@ _sfc_main$8.setup = (props, ctx) => {
   return _sfc_setup$8 ? _sfc_setup$8(props, ctx) : void 0;
 };
 const ShopShow = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["__scopeId", "data-v-07b75d40"]]);
-const __vite_glob_0_3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_4 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: ShopShow
 }, Symbol.toStringTag, { value: "Module" }));
@@ -3190,7 +3234,7 @@ _sfc_main$7.setup = (props, ctx) => {
   return _sfc_setup$7 ? _sfc_setup$7(props, ctx) : void 0;
 };
 const Index = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["__scopeId", "data-v-c5b1ff57"]]);
-const __vite_glob_0_4 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Index
 }, Symbol.toStringTag, { value: "Module" }));
@@ -3474,7 +3518,7 @@ _sfc_main$5.setup = (props, ctx) => {
   return _sfc_setup$5 ? _sfc_setup$5(props, ctx) : void 0;
 };
 const ForgotPassword = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["ssrRender", _sfc_ssrRender$3]]);
-const __vite_glob_0_5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_6 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: ForgotPassword
 }, Symbol.toStringTag, { value: "Module" }));
@@ -3715,7 +3759,7 @@ _sfc_main$4.setup = (props, ctx) => {
   return _sfc_setup$4 ? _sfc_setup$4(props, ctx) : void 0;
 };
 const Login = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["ssrRender", _sfc_ssrRender$2]]);
-const __vite_glob_0_6 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_7 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Login
 }, Symbol.toStringTag, { value: "Module" }));
@@ -4010,7 +4054,7 @@ _sfc_main$3.setup = (props, ctx) => {
   return _sfc_setup$3 ? _sfc_setup$3(props, ctx) : void 0;
 };
 const Register = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["ssrRender", _sfc_ssrRender$1]]);
-const __vite_glob_0_7 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_8 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Register
 }, Symbol.toStringTag, { value: "Module" }));
@@ -4249,7 +4293,7 @@ _sfc_main$2.setup = (props, ctx) => {
   return _sfc_setup$2 ? _sfc_setup$2(props, ctx) : void 0;
 };
 const ResetPassword = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["ssrRender", _sfc_ssrRender]]);
-const __vite_glob_0_8 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_9 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: ResetPassword
 }, Symbol.toStringTag, { value: "Module" }));
@@ -4707,13 +4751,14 @@ createServer(
           /* @__PURE__ */ Object.assign({
             "../../Modules/Base/resources/assets/js/Pages/AboutUs.vue": __vite_glob_0_0,
             "../../Modules/Base/resources/assets/js/Pages/Index.vue": __vite_glob_0_1,
-            "../../Modules/Shop/resources/assets/js/Pages/ShopIndex.vue": __vite_glob_0_2,
-            "../../Modules/Shop/resources/assets/js/Pages/ShopShow.vue": __vite_glob_0_3,
-            "../../Modules/Support/resources/assets/js/Pages/Index.vue": __vite_glob_0_4,
-            "../../Modules/User/resources/assets/js/Pages/Auth/ForgotPassword.vue": __vite_glob_0_5,
-            "../../Modules/User/resources/assets/js/Pages/Auth/Login.vue": __vite_glob_0_6,
-            "../../Modules/User/resources/assets/js/Pages/Auth/Register.vue": __vite_glob_0_7,
-            "../../Modules/User/resources/assets/js/Pages/Auth/ResetPassword.vue": __vite_glob_0_8
+            "../../Modules/Cart/resources/assets/js/Pages/CartIndex.vue": __vite_glob_0_2,
+            "../../Modules/Shop/resources/assets/js/Pages/ShopIndex.vue": __vite_glob_0_3,
+            "../../Modules/Shop/resources/assets/js/Pages/ShopShow.vue": __vite_glob_0_4,
+            "../../Modules/Support/resources/assets/js/Pages/Index.vue": __vite_glob_0_5,
+            "../../Modules/User/resources/assets/js/Pages/Auth/ForgotPassword.vue": __vite_glob_0_6,
+            "../../Modules/User/resources/assets/js/Pages/Auth/Login.vue": __vite_glob_0_7,
+            "../../Modules/User/resources/assets/js/Pages/Auth/Register.vue": __vite_glob_0_8,
+            "../../Modules/User/resources/assets/js/Pages/Auth/ResetPassword.vue": __vite_glob_0_9
           })
         );
       }

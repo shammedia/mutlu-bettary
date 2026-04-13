@@ -3,5 +3,6 @@
     "User": true,
     "Base": true,
     "Support": true,
-    "Shop": true
+    "Shop": true,
+    "Cart": true
 }
