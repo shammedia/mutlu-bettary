@@ -4,5 +4,6 @@
     "Base": true,
     "Support": true,
     "Shop": true,
-    "Cart": true
+    "Cart": true,
+    "Order": true
 }

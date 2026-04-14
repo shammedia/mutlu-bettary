@@ -166,6 +166,7 @@ class ShopController extends Controller {
                     'weight' => $sp->weight,
                     'slides' => $slides,
                     'primary_slide' => $slides[0] ?? null,
+                    'price'=>$sp->price
                 ];
             });
 
