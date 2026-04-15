@@ -94,6 +94,13 @@
                     <span class="menu-title"><?php echo e(__('Products')); ?></span>
                 </a>
             </div>
+            <div class="menu-item">
+                <a class="menu-link <?php echo e(isset($active['shipping']) ? 'active' : ''); ?>"
+                   href="<?php echo e(route('admin.orders.all')); ?>">
+                    <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                    <span class="menu-title"><?php echo e(__('Orders')); ?></span>
+                </a>
+            </div>
         </div>
     </div>
 <?php endif; ?>
