@@ -165,6 +165,7 @@
                                    rel="noopener">
                                     <i :class="item.icon"></i>
                                 </a>
+<cart/>
                             </div>
                         </div>
                     </div>
@@ -331,6 +332,7 @@
 <script setup>
 import {computed, onMounted, ref, nextTick} from 'vue'
 import {Link, usePage} from '@inertiajs/vue3'
+import Cart from "@/Components/Cart.vue";
 
 
 const page = usePage()
@@ -370,6 +372,7 @@ const homeUrl = computed(() => safeRoute('home', {}, '/'))
 const aboutUrl = computed(() => safeRoute('about-us', {}, '/about-us'))
 const contactUrl = computed(() => safeRoute('contact-us', {}, '/contact-us'))
 const shopIndexUrl = computed(() => safeRoute('shop.index', {}, '/shop'))
+
 
 const categoryUrl = (slug) => safeRoute('shop.index', {category: slug}, `/shop?category=${encodeURIComponent(slug || '')}`)
 

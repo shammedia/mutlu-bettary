@@ -12,6 +12,11 @@
             <div class="row g-4">
                 <!-- Product List Area -->
                 <div class="col-12 col-lg-8 d-flex flex-column gap-3">
+                    <div v-if="submitSuccess" class="col-12 mt-3">
+                        <div class="alert alert-success">
+                            {{ trans("The order has been sent for review") }}
+                        </div>
+                    </div>
                     <!-- Product Card 1 -->
                     <div class="bg-surface-container-lowest rounded-2xl p-3 p-sm-4 product-card-grid shadow-sm"
                          v-for="cart in carts">
@@ -60,7 +65,8 @@
                             </h4>
                             <div class="d-flex flex-column gap-3">
                                 <label
-                                    class="d-flex align-items-center gap-3 p-4 bg-surface-container-lowest rounded-3 border border-transparent hover-border-outline-30 transition-all"
+                                    :class="createOrder.deliveryType=='home'?'bg-danger':'bg-surface-container-lowest'"
+                                    class="d-flex align-items-center gap-3 p-4  rounded-3 border border-transparent hover-border-outline-30 transition-all"
                                     for="home-delivery">
                                     <input checked="" id="home-delivery" name="shipping-method" value="home"
                                            type="radio" v-model="createOrder.deliveryType"/>
@@ -68,13 +74,14 @@
                                         <div class="d-flex align-items-center gap-2">
                                             <span
                                                 class="material-symbols-outlined text-on-surface-variant fs-20">home</span>
-                                            <span class="fw-bold small">شحن للمنزل</span>
+                                            <span class="fw-bold small">{{ trans('Shipping to Home') }}</span>
                                         </div>
 
                                     </div>
                                 </label>
                                 <label
-                                    class="d-flex align-items-center gap-3 p-4 bg-surface-container-lowest rounded-3 border border-transparent hover-border-outline-30 transition-all"
+                                    :class="createOrder.deliveryType=='office'?'bg-danger':'bg-surface-container-lowest'"
+                                    class="d-flex align-items-center gap-3 p-4 rounded-3 border border-transparent hover-border-outline-30 transition-all"
                                     for="pickup-center">
                                     <input id="pickup-center" name="shipping-method" value="office" type="radio"
                                            v-model="createOrder.deliveryType"/>
@@ -82,14 +89,14 @@
                                         <div class="d-flex align-items-center gap-2">
                                             <span
                                                 class="material-symbols-outlined text-on-surface-variant fs-20">store</span>
-                                            <span class="fw-bold small">مركز الاستلام</span>
+                                            <span class="fw-bold small">{{ trans('Pickup Center') }}</span>
                                         </div>
                                     </div>
                                 </label>
                             </div>
                         </div>
                         <div class="line-outline-30"></div>
-                        <div class="d-flex flex-column gap-3">
+                        <div class="d-flex flex-column gap-3" v-if="createOrder.deliveryType==='home'">
                             <div class="d-flex align-items-start gap-3">
                                 <div
                                     class="rounded-circle bg-primary-10 d-flex align-items-center justify-content-center text-primary-custom flex-shrink-0 mt-1"
@@ -98,15 +105,23 @@
                                           style="font-variation-settings: 'FILL' 1;">location_on</span>
                                 </div>
                                 <div class="min-w-0">
-                                    <h4 class="fw-bold fs-6">عنوان التوصيل</h4>
-                                    <p class="text-on-surface-variant small text-truncate mb-0">لم يتم تحديد موقع
-                                        التوصيل بعد</p>
+                                    <h4 class="fw-bold fs-6">{{ trans('Address') }}</h4>
+                                    <p v-if="msgErrorLocation.length > 0">
+                                        {{ msgErrorLocation }}
+                                    </p>
+                                    <p v-if="createOrder.map==null"
+                                       class="text-on-surface-variant small text-truncate mb-0">
+                                        {{ trans("Doesn't  have a location") }}
+                                    </p>
+                                    <p v-else class="text-on-surface-variant small text-truncate mb-0">
+                                        <a :href="createOrder.map" target="_blank">{{ trans('View Location') }} </a>
+                                    </p>
                                 </div>
                             </div>
-                            <button
-                                class="btn w-100 btn-map px-4 py-3 rounded-3 fw-bold small transition-opacity active-scale d-flex align-items-center justify-content-center gap-2">
+                            <button @click="getLocation"
+                                    class="btn w-100 btn-map px-4 py-3 rounded-3 fw-bold small transition-opacity active-scale d-flex align-items-center justify-content-center gap-2">
                                 <span class="material-symbols-outlined fs-18">map</span>
-                                تحديد موقعي
+                                {{ trans('Get Location') }}
                             </button>
                         </div>
                     </div>
@@ -131,15 +146,17 @@
                                 class="pt-3 mt-3 border-top border-outline-30 d-flex justify-content-between align-items-baseline">
                                 <span class="h5 fw-bold text-on-surface mb-0">{{ trans('Total') }}</span>
                                 <span
-                                    class="display-6 fw-bolder text-primary-custom">{{ shippingCost + subPrice }} $</span>
+                                    class="display-6 fw-bolder text-primary-custom">{{
+                                        shippingCost + subPrice
+                                    }} $</span>
                             </div>
                         </div>
                         <div class="d-flex flex-column gap-3">
-                            <form @submit.prevent="submitOrder">
-                            <button
-                                class="btn w-100 py-3 rounded-3 btn-gradient fw-bold fs-5 shadow active-scale transition-all">
-                                إتمام عملية الشراء
-                            </button>
+                            <form @submit.prevent="submitOrder" v-if="carts.length>0">
+                                <button
+                                    class="btn w-100 py-3 rounded-3 btn-gradient fw-bold fs-5 shadow active-scale transition-all">
+                                    {{ trans('Create Order') }}
+                                </button>
                             </form>
                             <div
                                 class="d-flex align-items-center justify-content-center gap-2 text-on-surface-variant-60 small py-2">
@@ -162,19 +179,51 @@ const page = usePage()
 const carts = ref([]);
 carts.value = JSON.parse(localStorage.getItem('carts') || '[]');
 
+const msgErrorLocation = ref('')
+
 const createOrder = useForm({
     items: [],
     deliveryType: 'office',
     shippingCost: 0,
     address: '',
-    subPrice:0
+    subPrice: 0,
+    map: null,
 })
 const submitSuccess = ref(false)
 
+const getLocation = () => {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            function (position) {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
 
-const submitOrder=()=>{
+                console.log("Latitude:", lat);
+                console.log("Longitude:", lng);
+
+                // مثال: إنشاء رابط Google Maps
+                const mapUrl = `https://www.google.com/maps?q=${lat},${lng}`;
+                createOrder.map = mapUrl
+                console.log("Map URL:", mapUrl);
+            },
+            function (error) {
+                console.error("Error getting location:", error.message);
+            }
+        );
+    } else {
+        console.log("Geolocation is not supported by this browser.");
+    }
+}
+const submitOrder = () => {
+    if (createOrder.deliveryType === 'home' && createOrder.map === null) {
+        msgErrorLocation.value = 'Please select your location';
+        return;
+    }
+    if (createOrder.deliveryType === 'office') {
+        createOrder.map = '';
+    }
     createOrder.items = carts.value;
-createOrder.subPrice = subPrice.value;
+    createOrder.subPrice = subPrice.value;
     createOrder.shippingCost = shippingCost.value;
 
     let cartUrl = '/cart';
@@ -200,6 +249,8 @@ createOrder.subPrice = subPrice.value;
             submitSuccess.value = true;
             createOrder.reset();
             createOrder.clearErrors();
+            localStorage.removeItem('carts');
+            carts.value = [];
             setTimeout(() => {
                 submitSuccess.value = false;
             }, 5000);

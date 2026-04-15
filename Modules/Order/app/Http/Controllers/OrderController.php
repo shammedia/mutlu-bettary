@@ -3,7 +3,10 @@
 namespace Modules\Order\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Config;
 use Illuminate\Http\Request;
+use Modules\Base\Models\Settings;
+use Modules\Order\app\Enums\OrderEnum;
 use Modules\Order\Models\Item;
 use Modules\Order\Models\Order;
 
@@ -30,12 +33,14 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+
       $order=  Order::create([
             'delivery_type'=>$request->deliveryType,
             'shipping'=>$request->shippingCost,
             'address'=>$request->address,
-            'subtotal' => $request->subtotal,
+            'subtotal' => $request->subPrice,
             'status' => 'pending',
+          'map' => $request->map,
         ]);
         foreach ($request->items as $item) {
 
@@ -53,7 +58,8 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        return view('order::show');
+        $order=Order::with(['items'=>fn($query)=>$query->with('product')])->findOrFail($id);
+        return view('order::admin.show',compact('order'));
     }
 
     /**
@@ -69,7 +75,40 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $status=$request->status;
+        $order=Order::findOrFail($id);
+        $order->update([
+            'status'=>OrderEnum::DONE->value,
+        ]);
+        $message="";
+        $message.="رقم الطلب : {$order->id}\n";
+        $message.="السعر  : {$order->subtotal}\n";
+        $message.="الشحن  : {$order->shipping}\n";
+        $message.="الاجمالي  : {$order->total}\n";
+        $message .= "-----------------------------\n";
+        $message .= "الإجمالي      السعر   العدد   المنتج\n";
+        $message .= "-----------------------------\n";
+
+
+
+        foreach ($order->items as $item) {
+            $name  = str_pad($item->product->name, 12);
+            $qty   = str_pad($item->quantity, 6);
+            $price = str_pad($item->price, 8);
+            $total = str_pad($item->total, 8);
+
+            $message .= "{$name}{$qty}{$price}{$total}\n";
+        }
+
+        $message .= "-----------------------------\n";
+        if($order->map!=''){
+
+            $message .= "الموقع\n";
+            $message .= $order->map;
+        }
+        $msg=urlencode($message);
+        $shippingPhone=Settings::get('shipping_phone');
+        return redirect()->to("https://wa.me/{$shippingPhone}?text={$msg}");
     }
 
     /**
@@ -77,10 +116,15 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Order::findOrFail($id)->update(['status' => OrderEnum::CANCELED->value]);
+        return redirect()->back();
     }
 
     public function all(){
-        return view('order::admin.index');
+        $model= Order::
+            withCount('items')
+            ->latest()
+            ->paginate(Config::get('core.page_size', 10));
+        return view('order::admin.index',compact('model'));
     }
 }

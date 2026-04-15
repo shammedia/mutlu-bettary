@@ -3,5 +3,13 @@
     "Subtotal": "المجموع الفرعي",
     "Shipping": "أجور الشحن",
     "Total": "الإجمالي",
-    "Checkout": "إتمام عملية الشراء"
+    "Checkout": "إتمام عملية الشراء",
+    "The order has been sent for review": "تم إرسال الطلب للمراجعة",
+    "Get Location": "تحديد موقعي الحالي",
+    "Create Order": "إرسال الطلب",
+    "View Location": "عرض الموقع",
+    "Doesn't  have a location": "لم يتم تحديد الموقع",
+    "Pickup Center": "مركز الإستلام",
+    "Shipping to Home": "شحن للمنزل",
+    "Please select your location": "يرجى تحديد الموقع"
 }

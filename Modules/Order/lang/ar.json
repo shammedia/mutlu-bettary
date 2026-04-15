@@ -1,0 +1,13 @@
+{
+    "Pending": "بالإنتظار",
+    "Done": "تم الشحن",
+    "Canceled": "ملغي",
+    "Delivery Type": "نوع الشحن",
+    "home": "المنزل",
+    "office": "مركز الإستلام",
+    "Order Items": "عناصر الطلب",
+    "Product": "المنتج",
+    "Order ID": "رقم الطلب",
+    "Order Details": "تفاصيل الطلب",
+    "Orders": "الطلبات"
+}

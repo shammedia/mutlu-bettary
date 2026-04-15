@@ -1,9 +1,78 @@
-import { useSSRContext, computed, unref, withCtx, createVNode, createTextVNode, toDisplayString, openBlock, createBlock, ref, mergeProps, Fragment, renderList, withModifiers, withDirectives, vModelText, createCommentVNode, vModelRadio, watch, onMounted, nextTick, vModelSelect, reactive, renderSlot, resolveComponent, vModelCheckbox, createSSRApp, h } from "vue";
-import { ssrRenderComponent, ssrRenderAttr, ssrInterpolate, ssrRenderClass, ssrRenderList, ssrRenderSlot, ssrRenderStyle, ssrRenderAttrs, ssrIncludeBooleanAttr, ssrLooseEqual, ssrLooseContain } from "vue/server-renderer";
-import { usePage, Link, Head, useForm, router, createInertiaApp } from "@inertiajs/vue3";
+import { computed, ref, unref, mergeProps, withCtx, openBlock, createBlock, toDisplayString, createCommentVNode, createVNode, useSSRContext, createTextVNode, Fragment, renderList, withModifiers, withDirectives, vModelText, vModelRadio, watch, onMounted, nextTick, vModelSelect, reactive, renderSlot, resolveComponent, vModelCheckbox, createSSRApp, h } from "vue";
+import { ssrRenderComponent, ssrInterpolate, ssrRenderAttr, ssrRenderClass, ssrRenderList, ssrRenderSlot, ssrRenderStyle, ssrRenderAttrs, ssrIncludeBooleanAttr, ssrLooseEqual, ssrLooseContain } from "vue/server-renderer";
+import { Link, usePage, Head, useForm, router, createInertiaApp } from "@inertiajs/vue3";
 import L from "leaflet";
 import createServer from "@inertiajs/vue3/server";
 import { renderToString } from "@vue/server-renderer";
+const _sfc_main$f = {
+  __name: "Cart",
+  __ssrInlineRender: true,
+  setup(__props) {
+    const withLocalePath = (path) => {
+      const loc = page.props.locale || "";
+      if (!path || typeof path !== "string") return path;
+      if (!path.startsWith("/")) return path;
+      return loc ? `/${loc}${path}` : path;
+    };
+    const safeRoute = (name, params = {}, fallbackPath = "/") => {
+      try {
+        if (typeof route !== "undefined" && route) {
+          if (typeof route === "function" && route().has && route().has(name)) {
+            return route(name, params);
+          }
+          return route(name, params);
+        }
+      } catch (e) {
+      }
+      return withLocalePath(fallbackPath);
+    };
+    const cartIndexUrl = computed(() => safeRoute("cart.index", {}, "/cart"));
+    const carts = ref([]);
+    carts.value = JSON.parse(localStorage.getItem("carts") || "[]");
+    const cartCount = carts.value.length;
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(ssrRenderComponent(unref(Link), mergeProps({
+        href: cartIndexUrl.value,
+        class: "position-relative"
+      }, _attrs), {
+        default: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            if (unref(cartCount)) {
+              _push2(`<span class="position-absolute text-danger top-0 start-0 translate-middle badge rounded-pill bg-white"${_scopeId}>${ssrInterpolate(unref(cartCount))}</span>`);
+            } else {
+              _push2(`<!---->`);
+            }
+            _push2(`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cart4" viewBox="0 0 16 16"${_scopeId}><path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"${_scopeId}></path></svg>`);
+          } else {
+            return [
+              unref(cartCount) ? (openBlock(), createBlock("span", {
+                key: 0,
+                class: "position-absolute text-danger top-0 start-0 translate-middle badge rounded-pill bg-white"
+              }, toDisplayString(unref(cartCount)), 1)) : createCommentVNode("", true),
+              (openBlock(), createBlock("svg", {
+                xmlns: "http://www.w3.org/2000/svg",
+                width: "24",
+                height: "24",
+                fill: "currentColor",
+                class: "bi bi-cart4",
+                viewBox: "0 0 16 16"
+              }, [
+                createVNode("path", { d: "M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0" })
+              ]))
+            ];
+          }
+        }),
+        _: 1
+      }, _parent));
+    };
+  }
+};
+const _sfc_setup$f = _sfc_main$f.setup;
+_sfc_main$f.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Components/Cart.vue");
+  return _sfc_setup$f ? _sfc_setup$f(props, ctx) : void 0;
+};
 const _export_sfc = (sfc, props) => {
   const target = sfc.__vccOpts || sfc;
   for (const [key, val] of props) {
@@ -15,16 +84,16 @@ const _sfc_main$e = {
   __name: "App",
   __ssrInlineRender: true,
   setup(__props) {
-    const page = usePage();
-    const trans = (key) => page.props.translations[key] || key;
-    const settings = computed(() => page.props.settings);
-    const storage_path = computed(() => page.props.storage_path);
-    const asset_path = computed(() => page.props.asset_path || "");
-    const locale = computed(() => page.props.locale);
-    const seo = computed(() => page.props.seo);
-    const auth = computed(() => page.props.auth);
+    const page2 = usePage();
+    const trans = (key) => page2.props.translations[key] || key;
+    const settings = computed(() => page2.props.settings);
+    const storage_path = computed(() => page2.props.storage_path);
+    const asset_path = computed(() => page2.props.asset_path || "");
+    const locale = computed(() => page2.props.locale);
+    const seo = computed(() => page2.props.seo);
+    const auth = computed(() => page2.props.auth);
     const withLocalePath = (path) => {
-      const loc = page.props.locale || "";
+      const loc = page2.props.locale || "";
       if (!path || typeof path !== "string") return path;
       if (!path.startsWith("/")) return path;
       return loc ? `/${loc}${path}` : path;
@@ -46,7 +115,7 @@ const _sfc_main$e = {
     const contactUrl = computed(() => safeRoute("contact-us", {}, "/contact-us"));
     const shopIndexUrl = computed(() => safeRoute("shop.index", {}, "/shop"));
     const categoryUrl = (slug) => safeRoute("shop.index", { category: slug }, `/shop?category=${encodeURIComponent(slug || "")}`);
-    const shopCategories = computed(() => page.props.shopCategories || page.props.categories || []);
+    const shopCategories = computed(() => page2.props.shopCategories || page2.props.categories || []);
     const translateField = (value) => {
       if (!value) return "";
       if (typeof value === "string") return value;
@@ -101,11 +170,11 @@ const _sfc_main$e = {
     };
     return (_ctx, _push, _parent, _attrs) => {
       var _a, _b;
-      _push(`<!--[--><div class="mobile-menu-wrapper" data-v-80394fbd><div class="mobile-menu-area" data-v-80394fbd><div class="mobile-logo" data-v-80394fbd>`);
+      _push(`<!--[--><div class="mobile-menu-wrapper" data-v-23733349><div class="mobile-menu-area" data-v-23733349><div class="mobile-logo" data-v-23733349>`);
       _push(ssrRenderComponent(unref(Link), { href: homeUrl.value }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<img${ssrRenderAttr("src", asset_path.value + "images/red_logo.png")} alt="logo" data-v-80394fbd${_scopeId}>`);
+            _push2(`<img${ssrRenderAttr("src", asset_path.value + "images/red_logo.png")} alt="logo" data-v-23733349${_scopeId}>`);
           } else {
             return [
               createVNode("img", {
@@ -117,7 +186,7 @@ const _sfc_main$e = {
         }),
         _: 1
       }, _parent));
-      _push(`<button class="menu-toggle" data-v-80394fbd><i class="fa fa-times" data-v-80394fbd></i></button></div><div class="mobile-menu" data-v-80394fbd><ul data-v-80394fbd><li data-v-80394fbd>`);
+      _push(`<button class="menu-toggle" data-v-23733349><i class="fa fa-times" data-v-23733349></i></button></div><div class="mobile-menu" data-v-23733349><ul data-v-23733349><li data-v-23733349>`);
       _push(ssrRenderComponent(unref(Link), {
         href: homeUrl.value,
         class: { "nav-route-active": isActive("home") }
@@ -133,7 +202,7 @@ const _sfc_main$e = {
         }),
         _: 1
       }, _parent));
-      _push(`</li><li data-v-80394fbd>`);
+      _push(`</li><li data-v-23733349>`);
       _push(ssrRenderComponent(unref(Link), {
         href: aboutUrl.value,
         class: { "nav-route-active": isActive("about-us") }
@@ -151,7 +220,7 @@ const _sfc_main$e = {
       }, _parent));
       _push(`</li>`);
       if (shopCategories.value.length) {
-        _push(`<li class="menu-item-has-children" data-v-80394fbd><a href="#" class="${ssrRenderClass({ "nav-route-active": isActive("shop.*") })}" data-v-80394fbd>${ssrInterpolate(trans("Categories"))}</a><ul class="sub-menu" data-v-80394fbd><li data-v-80394fbd>`);
+        _push(`<li class="menu-item-has-children" data-v-23733349><a href="#" class="${ssrRenderClass({ "nav-route-active": isActive("shop.*") })}" data-v-23733349>${ssrInterpolate(trans("Categories"))}</a><ul class="sub-menu" data-v-23733349><li data-v-23733349>`);
         _push(ssrRenderComponent(unref(Link), {
           href: shopIndexUrl.value,
           class: { "nav-route-active": isActive("shop.index") }
@@ -169,7 +238,7 @@ const _sfc_main$e = {
         }, _parent));
         _push(`</li><!--[-->`);
         ssrRenderList(shopCategories.value, (category) => {
-          _push(`<li data-v-80394fbd>`);
+          _push(`<li data-v-23733349>`);
           _push(ssrRenderComponent(unref(Link), {
             href: categoryUrl(category.slug)
           }, {
@@ -190,7 +259,7 @@ const _sfc_main$e = {
       } else {
         _push(`<!---->`);
       }
-      _push(`<li data-v-80394fbd>`);
+      _push(`<li data-v-23733349>`);
       _push(ssrRenderComponent(unref(Link), {
         href: contactUrl.value,
         class: { "nav-route-active": isActive("contact-us") }
@@ -208,15 +277,15 @@ const _sfc_main$e = {
       }, _parent));
       _push(`</li>`);
       if (((_a = auth.value) == null ? void 0 : _a.type) === "admin") {
-        _push(`<li class="${ssrRenderClass({ active: isActive("admin.dashboard.index") })}" data-v-80394fbd><a${ssrRenderAttr("href", _ctx.route("admin.dashboard.index"))} class="nav-link main-nav-link" data-v-80394fbd>${ssrInterpolate(trans("Dashboard"))}</a></li>`);
+        _push(`<li class="${ssrRenderClass({ active: isActive("admin.dashboard.index") })}" data-v-23733349><a${ssrRenderAttr("href", _ctx.route("admin.dashboard.index"))} class="nav-link main-nav-link" data-v-23733349>${ssrInterpolate(trans("Dashboard"))}</a></li>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`<li class="menu-item-has-children" data-v-80394fbd><a href="#" data-v-80394fbd>${ssrInterpolate(trans("Language"))}</a><ul class="sub-menu" data-v-80394fbd><li data-v-80394fbd><a href="#" class="${ssrRenderClass({ "active": locale.value === "ar" })}" data-v-80394fbd>AR</a></li><li data-v-80394fbd><a href="#" class="${ssrRenderClass({ "active": locale.value === "en" })}" data-v-80394fbd>EN</a></li><li data-v-80394fbd><a href="#" class="${ssrRenderClass({ "active": locale.value === "tr" })}" data-v-80394fbd>TR</a></li></ul></li></ul></div></div></div><header class="nav-header header-layout2" data-v-80394fbd><div class="sticky-wrapper" data-v-80394fbd><div class="menu-area" data-v-80394fbd><div class="container" data-v-80394fbd><div class="row align-items-center justify-content-between" data-v-80394fbd><div class="col-auto header-navbar-logo" data-v-80394fbd><div class="header-logo" data-v-80394fbd>`);
+      _push(`<li class="menu-item-has-children" data-v-23733349><a href="#" data-v-23733349>${ssrInterpolate(trans("Language"))}</a><ul class="sub-menu" data-v-23733349><li data-v-23733349><a href="#" class="${ssrRenderClass({ "active": locale.value === "ar" })}" data-v-23733349>AR</a></li><li data-v-23733349><a href="#" class="${ssrRenderClass({ "active": locale.value === "en" })}" data-v-23733349>EN</a></li><li data-v-23733349><a href="#" class="${ssrRenderClass({ "active": locale.value === "tr" })}" data-v-23733349>TR</a></li></ul></li></ul></div></div></div><header class="nav-header header-layout2" data-v-23733349><div class="sticky-wrapper" data-v-23733349><div class="menu-area" data-v-23733349><div class="container" data-v-23733349><div class="row align-items-center justify-content-between" data-v-23733349><div class="col-auto header-navbar-logo" data-v-23733349><div class="header-logo" data-v-23733349>`);
       _push(ssrRenderComponent(unref(Link), { href: homeUrl.value }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<img${ssrRenderAttr("src", logoSrc.value)} alt="logo" data-v-80394fbd${_scopeId}>`);
+            _push2(`<img${ssrRenderAttr("src", logoSrc.value)} alt="logo" data-v-23733349${_scopeId}>`);
           } else {
             return [
               createVNode("img", {
@@ -228,7 +297,7 @@ const _sfc_main$e = {
         }),
         _: 1
       }, _parent));
-      _push(`</div></div><div class="col-auto" data-v-80394fbd><nav class="main-menu d-none d-lg-inline-block" data-v-80394fbd><ul data-v-80394fbd><li data-v-80394fbd>`);
+      _push(`</div></div><div class="col-auto" data-v-23733349><nav class="main-menu d-none d-lg-inline-block" data-v-23733349><ul data-v-23733349><li data-v-23733349>`);
       _push(ssrRenderComponent(unref(Link), {
         href: homeUrl.value,
         class: { "nav-route-active": isActive("home") }
@@ -244,7 +313,7 @@ const _sfc_main$e = {
         }),
         _: 1
       }, _parent));
-      _push(`</li><li data-v-80394fbd>`);
+      _push(`</li><li data-v-23733349>`);
       _push(ssrRenderComponent(unref(Link), {
         href: aboutUrl.value,
         class: { "nav-route-active": isActive("about-us") }
@@ -262,9 +331,9 @@ const _sfc_main$e = {
       }, _parent));
       _push(`</li>`);
       if (shopCategories.value.length) {
-        _push(`<li class="menu-item-has-children" data-v-80394fbd><a href="#" class="${ssrRenderClass({ "nav-route-active": isActive("shop.*") })}" data-v-80394fbd>${ssrInterpolate(trans("Our Products"))}</a><ul class="sub-menu" data-v-80394fbd><!--[-->`);
+        _push(`<li class="menu-item-has-children" data-v-23733349><a href="#" class="${ssrRenderClass({ "nav-route-active": isActive("shop.*") })}" data-v-23733349>${ssrInterpolate(trans("Our Products"))}</a><ul class="sub-menu" data-v-23733349><!--[-->`);
         ssrRenderList(shopCategories.value, (category) => {
-          _push(`<li data-v-80394fbd>`);
+          _push(`<li data-v-23733349>`);
           _push(ssrRenderComponent(unref(Link), {
             href: categoryUrl(category.slug)
           }, {
@@ -281,14 +350,14 @@ const _sfc_main$e = {
           }, _parent));
           _push(`</li>`);
         });
-        _push(`<!--]--><li data-v-80394fbd>`);
+        _push(`<!--]--><li data-v-23733349>`);
         _push(ssrRenderComponent(unref(Link), {
           href: shopIndexUrl.value,
           class: { "nav-route-active": isActive("shop.index") }
         }, {
           default: withCtx((_, _push2, _parent2, _scopeId) => {
             if (_push2) {
-              _push2(`<strong data-v-80394fbd${_scopeId}>${ssrInterpolate(trans("All Products"))}</strong>`);
+              _push2(`<strong data-v-23733349${_scopeId}>${ssrInterpolate(trans("All Products"))}</strong>`);
             } else {
               return [
                 createVNode("strong", null, toDisplayString(trans("All Products")), 1)
@@ -301,7 +370,7 @@ const _sfc_main$e = {
       } else {
         _push(`<!---->`);
       }
-      _push(`<li data-v-80394fbd>`);
+      _push(`<li data-v-23733349>`);
       _push(ssrRenderComponent(unref(Link), {
         href: contactUrl.value,
         class: { "nav-route-active": isActive("contact-us") }
@@ -319,27 +388,29 @@ const _sfc_main$e = {
       }, _parent));
       _push(`</li>`);
       if (((_b = auth.value) == null ? void 0 : _b.type) === "admin") {
-        _push(`<li class="${ssrRenderClass({ active: isActive("admin.dashboard.index") })}" data-v-80394fbd><a${ssrRenderAttr("href", _ctx.route("admin.dashboard.index"))} class="nav-link main-nav-link" data-v-80394fbd>${ssrInterpolate(trans("Dashboard"))}</a></li>`);
+        _push(`<li class="${ssrRenderClass({ active: isActive("admin.dashboard.index") })}" data-v-23733349><a${ssrRenderAttr("href", _ctx.route("admin.dashboard.index"))} class="nav-link main-nav-link" data-v-23733349>${ssrInterpolate(trans("Dashboard"))}</a></li>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`<li class="menu-item-has-children" data-v-80394fbd><a class="text-uppercase" href="#" data-v-80394fbd>${ssrInterpolate(locale.value)}</a><ul class="sub-menu" data-v-80394fbd><li data-v-80394fbd><a href="#" class="${ssrRenderClass({ "active": locale.value === "ar" })}" data-v-80394fbd>AR</a></li><li data-v-80394fbd><a href="#" class="${ssrRenderClass({ "active": locale.value === "en" })}" data-v-80394fbd>EN</a></li><li data-v-80394fbd><a href="#" class="${ssrRenderClass({ "active": locale.value === "tr" })}" data-v-80394fbd>TR</a></li></ul></li></ul></nav><div class="navbar-right d-inline-flex d-lg-none" data-v-80394fbd><button type="button" class="menu-toggle icon-btn" data-v-80394fbd><i class="fas fa-bars" data-v-80394fbd></i></button></div></div><div class="col-auto d-xl-block d-none" data-v-80394fbd>`);
+      _push(`<li class="menu-item-has-children" data-v-23733349><a class="text-uppercase" href="#" data-v-23733349>${ssrInterpolate(locale.value)}</a><ul class="sub-menu" data-v-23733349><li data-v-23733349><a href="#" class="${ssrRenderClass({ "active": locale.value === "ar" })}" data-v-23733349>AR</a></li><li data-v-23733349><a href="#" class="${ssrRenderClass({ "active": locale.value === "en" })}" data-v-23733349>EN</a></li><li data-v-23733349><a href="#" class="${ssrRenderClass({ "active": locale.value === "tr" })}" data-v-23733349>TR</a></li></ul></li></ul></nav><div class="navbar-right d-inline-flex d-lg-none" data-v-23733349><button type="button" class="menu-toggle icon-btn" data-v-23733349><i class="fas fa-bars" data-v-23733349></i></button></div></div><div class="col-auto d-xl-block d-none" data-v-23733349>`);
       if (socialLinks.value.length) {
-        _push(`<div class="social-links" data-v-80394fbd><!--[-->`);
+        _push(`<div class="social-links" data-v-23733349><!--[-->`);
         ssrRenderList(socialLinks.value, (item) => {
-          _push(`<a${ssrRenderAttr("href", item.url)} target="_blank" rel="noopener" data-v-80394fbd><i class="${ssrRenderClass(item.icon)}" data-v-80394fbd></i></a>`);
+          _push(`<a${ssrRenderAttr("href", item.url)} target="_blank" rel="noopener" data-v-23733349><i class="${ssrRenderClass(item.icon)}" data-v-23733349></i></a>`);
         });
-        _push(`<!--]--></div>`);
+        _push(`<!--]-->`);
+        _push(ssrRenderComponent(_sfc_main$f, null, null, _parent));
+        _push(`</div>`);
       } else {
         _push(`<!---->`);
       }
       _push(`</div></div></div></div></div></header>`);
       ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
-      _push(`<footer class="footer-wrapper footer-layout2" style="${ssrRenderStyle({ backgroundImage: `url(${asset_path.value}site/img/bg/footer-bg2-1.png)` })}" data-v-80394fbd><div class="container" data-v-80394fbd><div class="widget-area" data-v-80394fbd><div class="row justify-content-between" data-v-80394fbd><div class="col-md-6 col-xl-3" data-v-80394fbd><div class="footer-logo mb-3" data-v-80394fbd>`);
+      _push(`<footer class="footer-wrapper footer-layout2" style="${ssrRenderStyle({ backgroundImage: `url(${asset_path.value}site/img/bg/footer-bg2-1.png)` })}" data-v-23733349><div class="container" data-v-23733349><div class="widget-area" data-v-23733349><div class="row justify-content-between" data-v-23733349><div class="col-md-6 col-xl-3" data-v-23733349><div class="footer-logo mb-3" data-v-23733349>`);
       _push(ssrRenderComponent(unref(Link), { href: homeUrl.value }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<img${ssrRenderAttr("src", logoSrc.value)} alt="logo" data-v-80394fbd${_scopeId}>`);
+            _push2(`<img${ssrRenderAttr("src", logoSrc.value)} alt="logo" data-v-23733349${_scopeId}>`);
           } else {
             return [
               createVNode("img", {
@@ -351,17 +422,17 @@ const _sfc_main$e = {
         }),
         _: 1
       }, _parent));
-      _push(`</div><div class="widget footer-widget widget-about" data-v-80394fbd><p class="footer-text mb-30" data-v-80394fbd>${ssrInterpolate(seo.value && seo.value.website_desc ? seo.value.website_desc : "")}</p>`);
+      _push(`</div><div class="widget footer-widget widget-about" data-v-23733349><p class="footer-text mb-30" data-v-23733349>${ssrInterpolate(seo.value && seo.value.website_desc ? seo.value.website_desc : "")}</p>`);
       if (socialLinks.value.length) {
-        _push(`<div class="social-btn style3" data-v-80394fbd><!--[-->`);
+        _push(`<div class="social-btn style3" data-v-23733349><!--[-->`);
         ssrRenderList(socialLinks.value, (item) => {
-          _push(`<a${ssrRenderAttr("href", item.url)} target="_blank" rel="noopener" tabindex="-1" data-v-80394fbd><i class="${ssrRenderClass(item.icon)}" data-v-80394fbd></i></a>`);
+          _push(`<a${ssrRenderAttr("href", item.url)} target="_blank" rel="noopener" tabindex="-1" data-v-23733349><i class="${ssrRenderClass(item.icon)}" data-v-23733349></i></a>`);
         });
         _push(`<!--]--></div>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`</div></div><div class="col-md-6 col-xl-auto" data-v-80394fbd><div class="widget widget_nav_menu footer-widget" data-v-80394fbd><h3 class="widget_title" data-v-80394fbd>${ssrInterpolate(trans("Company"))}</h3><div class="menu-all-pages-container" data-v-80394fbd><ul class="menu" data-v-80394fbd><li data-v-80394fbd>`);
+      _push(`</div></div><div class="col-md-6 col-xl-auto" data-v-23733349><div class="widget widget_nav_menu footer-widget" data-v-23733349><h3 class="widget_title" data-v-23733349>${ssrInterpolate(trans("Company"))}</h3><div class="menu-all-pages-container" data-v-23733349><ul class="menu" data-v-23733349><li data-v-23733349>`);
       _push(ssrRenderComponent(unref(Link), { href: homeUrl.value }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
@@ -374,7 +445,7 @@ const _sfc_main$e = {
         }),
         _: 1
       }, _parent));
-      _push(`</li><li data-v-80394fbd>`);
+      _push(`</li><li data-v-23733349>`);
       _push(ssrRenderComponent(unref(Link), { href: aboutUrl.value }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
@@ -387,7 +458,7 @@ const _sfc_main$e = {
         }),
         _: 1
       }, _parent));
-      _push(`</li><li data-v-80394fbd>`);
+      _push(`</li><li data-v-23733349>`);
       _push(ssrRenderComponent(unref(Link), { href: contactUrl.value }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
@@ -402,7 +473,7 @@ const _sfc_main$e = {
       }, _parent));
       _push(`</li>`);
       if (shopCategories.value.length) {
-        _push(`<li data-v-80394fbd>`);
+        _push(`<li data-v-23733349>`);
         _push(ssrRenderComponent(unref(Link), { href: shopIndexUrl.value }, {
           default: withCtx((_, _push2, _parent2, _scopeId) => {
             if (_push2) {
@@ -419,9 +490,9 @@ const _sfc_main$e = {
       } else {
         _push(`<!---->`);
       }
-      _push(`</ul></div></div></div><div class="col-md-6 col-xl-auto" data-v-80394fbd><div class="widget widget_nav_menu footer-widget" data-v-80394fbd><h3 class="widget_title" data-v-80394fbd>${ssrInterpolate(trans("Our Products"))}</h3><div class="menu-all-pages-container" data-v-80394fbd><ul class="menu" data-v-80394fbd><!--[-->`);
+      _push(`</ul></div></div></div><div class="col-md-6 col-xl-auto" data-v-23733349><div class="widget widget_nav_menu footer-widget" data-v-23733349><h3 class="widget_title" data-v-23733349>${ssrInterpolate(trans("Our Products"))}</h3><div class="menu-all-pages-container" data-v-23733349><ul class="menu" data-v-23733349><!--[-->`);
       ssrRenderList(shopCategories.value.slice(0, 8), (category) => {
-        _push(`<li data-v-80394fbd>`);
+        _push(`<li data-v-23733349>`);
         _push(ssrRenderComponent(unref(Link), {
           href: categoryUrl(category.slug)
         }, {
@@ -438,19 +509,19 @@ const _sfc_main$e = {
         }, _parent));
         _push(`</li>`);
       });
-      _push(`<!--]--></ul></div></div></div><div class="col-md-6 col-xl-auto" data-v-80394fbd><div class="widget footer-widget" data-v-80394fbd><h3 class="widget_title" data-v-80394fbd>${ssrInterpolate(trans("Contact"))}</h3><div class="widget-contact2" data-v-80394fbd><div class="widget-contact-grid" data-v-80394fbd><div class="icon" data-v-80394fbd><i class="fas fa-map-marker-alt" data-v-80394fbd></i></div><div class="contact-grid-details" data-v-80394fbd><p data-v-80394fbd>${ssrInterpolate(trans("Address"))}</p><h6 data-v-80394fbd>${ssrInterpolate(settings.value && settings.value.address ? settings.value.address : "")}</h6></div></div><div class="widget-contact-grid" data-v-80394fbd><div class="icon" data-v-80394fbd><i class="fas fa-phone-alt" data-v-80394fbd></i></div><div class="contact-grid-details" data-v-80394fbd><p data-v-80394fbd>${ssrInterpolate(trans("Phone Number"))}</p><h6 data-v-80394fbd>`);
+      _push(`<!--]--></ul></div></div></div><div class="col-md-6 col-xl-auto" data-v-23733349><div class="widget footer-widget" data-v-23733349><h3 class="widget_title" data-v-23733349>${ssrInterpolate(trans("Contact"))}</h3><div class="widget-contact2" data-v-23733349><div class="widget-contact-grid" data-v-23733349><div class="icon" data-v-23733349><i class="fas fa-map-marker-alt" data-v-23733349></i></div><div class="contact-grid-details" data-v-23733349><p data-v-23733349>${ssrInterpolate(trans("Address"))}</p><h6 data-v-23733349>${ssrInterpolate(settings.value && settings.value.address ? settings.value.address : "")}</h6></div></div><div class="widget-contact-grid" data-v-23733349><div class="icon" data-v-23733349><i class="fas fa-phone-alt" data-v-23733349></i></div><div class="contact-grid-details" data-v-23733349><p data-v-23733349>${ssrInterpolate(trans("Phone Number"))}</p><h6 data-v-23733349>`);
       if (settings.value && settings.value.phone) {
-        _push(`<a dir="ltr"${ssrRenderAttr("href", `tel:${settings.value.phone}`)} data-v-80394fbd>${ssrInterpolate(settings.value.phone)}</a>`);
+        _push(`<a dir="ltr"${ssrRenderAttr("href", `tel:${settings.value.phone}`)} data-v-23733349>${ssrInterpolate(settings.value.phone)}</a>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`</h6></div></div><div class="widget-contact-grid" data-v-80394fbd><div class="icon" data-v-80394fbd><i class="fas fa-envelope" data-v-80394fbd></i></div><div class="contact-grid-details" data-v-80394fbd><p data-v-80394fbd>${ssrInterpolate(trans("Email Address"))}</p><h6 data-v-80394fbd>`);
+      _push(`</h6></div></div><div class="widget-contact-grid" data-v-23733349><div class="icon" data-v-23733349><i class="fas fa-envelope" data-v-23733349></i></div><div class="contact-grid-details" data-v-23733349><p data-v-23733349>${ssrInterpolate(trans("Email Address"))}</p><h6 data-v-23733349>`);
       if (settings.value && settings.value.email) {
-        _push(`<a dir="ltr"${ssrRenderAttr("href", `mailto:${settings.value.email}`)} data-v-80394fbd>${ssrInterpolate(settings.value.email)}</a>`);
+        _push(`<a dir="ltr"${ssrRenderAttr("href", `mailto:${settings.value.email}`)} data-v-23733349>${ssrInterpolate(settings.value.email)}</a>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`</h6></div></div></div></div></div></div></div></div><div class="copyright-wrap" data-v-80394fbd><div class="container" data-v-80394fbd><div class="row gy-3 justify-content-md-between justify-content-center" data-v-80394fbd><div class="col-auto align-self-center" data-v-80394fbd><p class="copyright-text text-center" data-v-80394fbd> © <a href="#" data-v-80394fbd>${ssrInterpolate(seo.value && seo.value.website_name ? seo.value.website_name : "")}</a> ${ssrInterpolate(currentYear.value)} | ${ssrInterpolate(trans("All Rights Reserved"))}</p></div><div class="col-auto" data-v-80394fbd><div class="footer-links" data-v-80394fbd>`);
+      _push(`</h6></div></div></div></div></div></div></div></div><div class="copyright-wrap" data-v-23733349><div class="container" data-v-23733349><div class="row gy-3 justify-content-md-between justify-content-center" data-v-23733349><div class="col-auto align-self-center" data-v-23733349><p class="copyright-text text-center" data-v-23733349> © <a href="#" data-v-23733349>${ssrInterpolate(seo.value && seo.value.website_name ? seo.value.website_name : "")}</a> ${ssrInterpolate(currentYear.value)} | ${ssrInterpolate(trans("All Rights Reserved"))}</p></div><div class="col-auto" data-v-23733349><div class="footer-links" data-v-23733349>`);
       _push(ssrRenderComponent(unref(Link), { href: aboutUrl.value }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
@@ -477,11 +548,11 @@ const _sfc_main$e = {
       }, _parent));
       _push(`</div></div></div></div></div></footer>`);
       if (whatsappFabUrl.value) {
-        _push(`<a class="wa-fab"${ssrRenderAttr("href", whatsappFabUrl.value)} target="_blank" rel="noopener" aria-label="WhatsApp"${ssrRenderAttr("title", trans("WhatsApp"))} data-v-80394fbd><i class="fab fa-whatsapp" aria-hidden="true" data-v-80394fbd></i></a>`);
+        _push(`<a class="wa-fab"${ssrRenderAttr("href", whatsappFabUrl.value)} target="_blank" rel="noopener" aria-label="WhatsApp"${ssrRenderAttr("title", trans("WhatsApp"))} data-v-23733349><i class="fab fa-whatsapp" aria-hidden="true" data-v-23733349></i></a>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`<div class="scroll-top" data-v-80394fbd><svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102" data-v-80394fbd><path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" style="${ssrRenderStyle({ "transition": "stroke-dashoffset 10ms linear 0s", "stroke-dasharray": "307.919, 307.919", "stroke-dashoffset": "307.919" })}" data-v-80394fbd></path></svg></div><!--]-->`);
+      _push(`<div class="scroll-top" data-v-23733349><svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102" data-v-23733349><path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" style="${ssrRenderStyle({ "transition": "stroke-dashoffset 10ms linear 0s", "stroke-dasharray": "307.919, 307.919", "stroke-dashoffset": "307.919" })}" data-v-23733349></path></svg></div><!--]-->`);
     };
   }
 };
@@ -491,7 +562,7 @@ _sfc_main$e.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Layouts/App.vue");
   return _sfc_setup$e ? _sfc_setup$e(props, ctx) : void 0;
 };
-const AppLayout = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["__scopeId", "data-v-80394fbd"]]);
+const AppLayout = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["__scopeId", "data-v-23733349"]]);
 const __default__$6 = {
   components: {
     AppLayout
@@ -501,11 +572,11 @@ const _sfc_main$d = /* @__PURE__ */ Object.assign(__default__$6, {
   __name: "AboutUs",
   __ssrInlineRender: true,
   setup(__props) {
-    const page = usePage();
-    const trans = (key) => page.props.translations[key] || key;
-    computed(() => page.props.seo || {});
-    const asset_path = computed(() => page.props.asset_path || "");
-    const settings = computed(() => page.props.settings || {});
+    const page2 = usePage();
+    const trans = (key) => page2.props.translations[key] || key;
+    computed(() => page2.props.seo || {});
+    const asset_path = computed(() => page2.props.asset_path || "");
+    const settings = computed(() => page2.props.settings || {});
     const whatsappHref = computed(() => {
       const s = settings.value || {};
       const raw = s.whatsapp || s.sales_whatsapp;
@@ -821,10 +892,10 @@ const _sfc_main$c = {
   },
   setup(__props) {
     const props = __props;
-    const page = usePage();
-    const trans = (key) => page.props.translations[key] || key;
-    const locale = computed(() => page.props.locale || "en");
-    const asset_path = computed(() => page.props.asset_path || "");
+    const page2 = usePage();
+    const trans = (key) => page2.props.translations[key] || key;
+    const locale = computed(() => page2.props.locale || "en");
+    const asset_path = computed(() => page2.props.asset_path || "");
     const faqsToShow = computed(() => props.faqs || []);
     const openFaqId = ref(null);
     const isFaqOpen = (id) => openFaqId.value === id;
@@ -870,16 +941,16 @@ const _sfc_main$b = /* @__PURE__ */ Object.assign(__default__$5, {
   __name: "Index",
   __ssrInlineRender: true,
   setup(__props) {
-    const page = usePage();
-    const trans = (key) => page.props.translations[key] || key;
-    const seo = computed(() => page.props.seo);
-    const settings = computed(() => page.props.settings);
-    const asset_path = computed(() => page.props.asset_path || "");
-    const storage_path = computed(() => page.props.storage_path || "");
-    const locale = computed(() => page.props.locale);
-    computed(() => page.props.clients || []);
-    const faqs = computed(() => page.props.faqs || []);
-    const featuredProducts = computed(() => page.props.featuredProducts || []);
+    const page2 = usePage();
+    const trans = (key) => page2.props.translations[key] || key;
+    const seo = computed(() => page2.props.seo);
+    const settings = computed(() => page2.props.settings);
+    const asset_path = computed(() => page2.props.asset_path || "");
+    const storage_path = computed(() => page2.props.storage_path || "");
+    const locale = computed(() => page2.props.locale);
+    computed(() => page2.props.clients || []);
+    const faqs = computed(() => page2.props.faqs || []);
+    const featuredProducts = computed(() => page2.props.featuredProducts || []);
     const translateField = (value) => {
       if (!value) return "";
       if (typeof value === "string") return value;
@@ -904,11 +975,11 @@ const _sfc_main$b = /* @__PURE__ */ Object.assign(__default__$5, {
         if (typeof route !== "undefined" && route) {
           contactUrl = route("contact-us.store");
         } else {
-          const currentLocale = page.props.locale || "";
+          const currentLocale = page2.props.locale || "";
           contactUrl = currentLocale ? `/${currentLocale}/contact-us` : "/contact-us";
         }
       } catch (e) {
-        const currentLocale = page.props.locale || "";
+        const currentLocale = page2.props.locale || "";
         contactUrl = currentLocale ? `/${currentLocale}/contact-us` : "/contact-us";
       }
       contactForm.post(contactUrl, {
@@ -1367,18 +1438,47 @@ const _sfc_main$a = {
   __name: "CartIndex",
   __ssrInlineRender: true,
   setup(__props) {
-    const page = usePage();
+    const page2 = usePage();
     const carts = ref([]);
     carts.value = JSON.parse(localStorage.getItem("carts") || "[]");
+    const msgErrorLocation = ref("");
     const createOrder = useForm({
       items: [],
       deliveryType: "office",
       shippingCost: 0,
       address: "",
-      subPrice: 0
+      subPrice: 0,
+      map: null
     });
     const submitSuccess = ref(false);
+    const getLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function(position) {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            console.log("Latitude:", lat);
+            console.log("Longitude:", lng);
+            const mapUrl = `https://www.google.com/maps?q=${lat},${lng}`;
+            createOrder.map = mapUrl;
+            console.log("Map URL:", mapUrl);
+          },
+          function(error) {
+            console.error("Error getting location:", error.message);
+          }
+        );
+      } else {
+        console.log("Geolocation is not supported by this browser.");
+      }
+    };
     const submitOrder = () => {
+      if (createOrder.deliveryType === "home" && createOrder.map === null) {
+        msgErrorLocation.value = "Please select your location";
+        return;
+      }
+      if (createOrder.deliveryType === "office") {
+        createOrder.map = "";
+      }
       createOrder.items = carts.value;
       createOrder.subPrice = subPrice.value;
       createOrder.shippingCost = shippingCost.value;
@@ -1387,11 +1487,11 @@ const _sfc_main$a = {
         if (typeof route !== "undefined" && route) {
           cartUrl = route("orders.store");
         } else {
-          const currentLocale = page.props.locale || "";
+          const currentLocale = page2.props.locale || "";
           cartUrl = currentLocale ? `/${currentLocale}/orders` : "/orders";
         }
       } catch (e) {
-        const currentLocale = page.props.locale || "";
+        const currentLocale = page2.props.locale || "";
         cartUrl = currentLocale ? `/${currentLocale}/orders` : "/orders";
       }
       createOrder.post(cartUrl, {
@@ -1404,6 +1504,8 @@ const _sfc_main$a = {
           submitSuccess.value = true;
           createOrder.reset();
           createOrder.clearErrors();
+          localStorage.removeItem("carts");
+          carts.value = [];
           setTimeout(() => {
             submitSuccess.value = false;
           }, 5e3);
@@ -1413,7 +1515,7 @@ const _sfc_main$a = {
         }
       });
     };
-    const trans = (key) => page.props.translations[key] || key;
+    const trans = (key) => page2.props.translations[key] || key;
     const normalizeCapacity = (val) => {
       if (val === null || val === void 0) return "";
       return String(val).trim();
@@ -1491,7 +1593,7 @@ const _sfc_main$a = {
       _push(ssrRenderComponent(unref(Head), null, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<title data-v-b0801fb5${_scopeId}>${ssrInterpolate(trans("Our Products"))} | Mutlu</title>`);
+            _push2(`<title data-v-7282490f${_scopeId}>${ssrInterpolate(trans("Our Products"))} | Mutlu</title>`);
           } else {
             return [
               createVNode("title", null, toDisplayString(trans("Our Products")) + " | Mutlu", 1)
@@ -1503,11 +1605,40 @@ const _sfc_main$a = {
       _push(ssrRenderComponent(AppLayout, null, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<main class="py-5 px-3 max-w-5xl mx-auto overflow-hidden" data-v-b0801fb5${_scopeId}><section class="mb-4 text-center" data-v-b0801fb5${_scopeId}><h2 class="display-6 fw-bold text-on-surface mb-1" data-v-b0801fb5${_scopeId}>سلة المقتنيات</h2><p class="text-on-surface-variant-80 small" data-v-b0801fb5${_scopeId}>يتوفر شحن حتى باب المنزل.</p></section><div class="row g-4" data-v-b0801fb5${_scopeId}><div class="col-12 col-lg-8 d-flex flex-column gap-3" data-v-b0801fb5${_scopeId}><!--[-->`);
+            _push2(`<main class="py-5 px-3 max-w-5xl mx-auto overflow-hidden" data-v-7282490f${_scopeId}><section class="mb-4 text-center" data-v-7282490f${_scopeId}><h2 class="display-6 fw-bold text-on-surface mb-1" data-v-7282490f${_scopeId}>سلة المقتنيات</h2><p class="text-on-surface-variant-80 small" data-v-7282490f${_scopeId}>يتوفر شحن حتى باب المنزل.</p></section><div class="row g-4" data-v-7282490f${_scopeId}><div class="col-12 col-lg-8 d-flex flex-column gap-3" data-v-7282490f${_scopeId}>`);
+            if (submitSuccess.value) {
+              _push2(`<div class="col-12 mt-3" data-v-7282490f${_scopeId}><div class="alert alert-success" data-v-7282490f${_scopeId}>${ssrInterpolate(trans("The order has been sent for review"))}</div></div>`);
+            } else {
+              _push2(`<!---->`);
+            }
+            _push2(`<!--[-->`);
             ssrRenderList(carts.value, (cart) => {
-              _push2(`<div class="bg-surface-container-lowest rounded-2xl p-3 p-sm-4 product-card-grid shadow-sm" data-v-b0801fb5${_scopeId}><div class="product-image-wrap rounded-3 overflow-hidden flex-shrink-0" data-v-b0801fb5${_scopeId}><img alt="بطارية" class="w-100 h-100 object-fit-cover"${ssrRenderAttr("src", cart.primary_slide)} data-v-b0801fb5${_scopeId}></div><div class="d-flex flex-column justify-content-between min-w-0" data-v-b0801fb5${_scopeId}><div data-v-b0801fb5${_scopeId}><div class="d-flex justify-content-between align-items-start gap-2" data-v-b0801fb5${_scopeId}><h3 class="fs-6 fs-sm-5 fw-bold text-on-surface lh-sm text-truncate" data-v-b0801fb5${_scopeId}>بطارية 35Ah B20 (NS40)</h3><button class="btn p-0 text-primary-60 flex-shrink-0" data-v-b0801fb5${_scopeId}><span class="material-symbols-outlined fs-20" data-v-b0801fb5${_scopeId}>delete</span></button></div><div class="fs-11 small text-on-surface-variant-80 mt-1" data-v-b0801fb5${_scopeId}><p class="mb-1" data-v-b0801fb5${_scopeId}>${ssrInterpolate(trans("Capacity (Ah)"))}${ssrInterpolate(formatCapacityLabel(cart.capacity))}</p><p class="mb-0" data-v-b0801fb5${_scopeId}>${ssrInterpolate(trans("Voltage (V)"))} ${ssrInterpolate(cart.voltage)}</p></div></div><div class="d-flex justify-content-between align-items-center mt-3" data-v-b0801fb5${_scopeId}><div class="d-flex align-items-center bg-surface-container rounded-3 p-1" data-v-b0801fb5${_scopeId}><button class="btn p-0 qty-btn d-flex align-items-center justify-content-center text-primary-custom active-scale-sm" data-v-b0801fb5${_scopeId}><span class="material-symbols-outlined fs-18" data-v-b0801fb5${_scopeId}>remove</span></button><span class="px-2 px-sm-4 fw-bold small fs-sm-6" data-v-b0801fb5${_scopeId}>${ssrInterpolate(cart.quantity)}</span><button class="btn p-0 qty-btn d-flex align-items-center justify-content-center text-primary-custom active-scale-sm" data-v-b0801fb5${_scopeId}><span class="material-symbols-outlined fs-18" data-v-b0801fb5${_scopeId}>add</span></button></div><span class="h5 mb-0 fw-bolder text-on-surface" data-v-b0801fb5${_scopeId}>${ssrInterpolate(cart.price)} $</span></div></div></div>`);
+              _push2(`<div class="bg-surface-container-lowest rounded-2xl p-3 p-sm-4 product-card-grid shadow-sm" data-v-7282490f${_scopeId}><div class="product-image-wrap rounded-3 overflow-hidden flex-shrink-0" data-v-7282490f${_scopeId}><img alt="بطارية" class="w-100 h-100 object-fit-cover"${ssrRenderAttr("src", cart.primary_slide)} data-v-7282490f${_scopeId}></div><div class="d-flex flex-column justify-content-between min-w-0" data-v-7282490f${_scopeId}><div data-v-7282490f${_scopeId}><div class="d-flex justify-content-between align-items-start gap-2" data-v-7282490f${_scopeId}><h3 class="fs-6 fs-sm-5 fw-bold text-on-surface lh-sm text-truncate" data-v-7282490f${_scopeId}>بطارية 35Ah B20 (NS40)</h3><button class="btn p-0 text-primary-60 flex-shrink-0" data-v-7282490f${_scopeId}><span class="material-symbols-outlined fs-20" data-v-7282490f${_scopeId}>delete</span></button></div><div class="fs-11 small text-on-surface-variant-80 mt-1" data-v-7282490f${_scopeId}><p class="mb-1" data-v-7282490f${_scopeId}>${ssrInterpolate(trans("Capacity (Ah)"))}${ssrInterpolate(formatCapacityLabel(cart.capacity))}</p><p class="mb-0" data-v-7282490f${_scopeId}>${ssrInterpolate(trans("Voltage (V)"))} ${ssrInterpolate(cart.voltage)}</p></div></div><div class="d-flex justify-content-between align-items-center mt-3" data-v-7282490f${_scopeId}><div class="d-flex align-items-center bg-surface-container rounded-3 p-1" data-v-7282490f${_scopeId}><button class="btn p-0 qty-btn d-flex align-items-center justify-content-center text-primary-custom active-scale-sm" data-v-7282490f${_scopeId}><span class="material-symbols-outlined fs-18" data-v-7282490f${_scopeId}>remove</span></button><span class="px-2 px-sm-4 fw-bold small fs-sm-6" data-v-7282490f${_scopeId}>${ssrInterpolate(cart.quantity)}</span><button class="btn p-0 qty-btn d-flex align-items-center justify-content-center text-primary-custom active-scale-sm" data-v-7282490f${_scopeId}><span class="material-symbols-outlined fs-18" data-v-7282490f${_scopeId}>add</span></button></div><span class="h5 mb-0 fw-bolder text-on-surface" data-v-7282490f${_scopeId}>${ssrInterpolate(cart.price)} $</span></div></div></div>`);
             });
-            _push2(`<!--]--><div class="bg-surface-container-high rounded-2xl p-4 p-sm-5 d-flex flex-column gap-4" data-v-b0801fb5${_scopeId}><div data-v-b0801fb5${_scopeId}><h4 class="fw-bold h5 mb-4 d-flex align-items-center gap-2" data-v-b0801fb5${_scopeId}><span class="material-symbols-outlined text-primary-custom" data-v-b0801fb5${_scopeId}>local_shipping</span> طريقة الشحن </h4><div class="d-flex flex-column gap-3" data-v-b0801fb5${_scopeId}><label class="d-flex align-items-center gap-3 p-4 bg-surface-container-lowest rounded-3 border border-transparent hover-border-outline-30 transition-all" for="home-delivery" data-v-b0801fb5${_scopeId}><input checked="" id="home-delivery" name="shipping-method" value="home" type="radio"${ssrIncludeBooleanAttr(ssrLooseEqual(unref(createOrder).deliveryType, "home")) ? " checked" : ""} data-v-b0801fb5${_scopeId}><div class="flex-grow-1 d-flex justify-content-between align-items-center" data-v-b0801fb5${_scopeId}><div class="d-flex align-items-center gap-2" data-v-b0801fb5${_scopeId}><span class="material-symbols-outlined text-on-surface-variant fs-20" data-v-b0801fb5${_scopeId}>home</span><span class="fw-bold small" data-v-b0801fb5${_scopeId}>شحن للمنزل</span></div></div></label><label class="d-flex align-items-center gap-3 p-4 bg-surface-container-lowest rounded-3 border border-transparent hover-border-outline-30 transition-all" for="pickup-center" data-v-b0801fb5${_scopeId}><input id="pickup-center" name="shipping-method" value="office" type="radio"${ssrIncludeBooleanAttr(ssrLooseEqual(unref(createOrder).deliveryType, "office")) ? " checked" : ""} data-v-b0801fb5${_scopeId}><div class="flex-grow-1 d-flex justify-content-between align-items-center" data-v-b0801fb5${_scopeId}><div class="d-flex align-items-center gap-2" data-v-b0801fb5${_scopeId}><span class="material-symbols-outlined text-on-surface-variant fs-20" data-v-b0801fb5${_scopeId}>store</span><span class="fw-bold small" data-v-b0801fb5${_scopeId}>مركز الاستلام</span></div></div></label></div></div><div class="line-outline-30" data-v-b0801fb5${_scopeId}></div><div class="d-flex flex-column gap-3" data-v-b0801fb5${_scopeId}><div class="d-flex align-items-start gap-3" data-v-b0801fb5${_scopeId}><div class="rounded-circle bg-primary-10 d-flex align-items-center justify-content-center text-primary-custom flex-shrink-0 mt-1" style="${ssrRenderStyle({ "width": "2.5rem", "height": "2.5rem" })}" data-v-b0801fb5${_scopeId}><span class="material-symbols-outlined fs-20" style="${ssrRenderStyle({ "font-variation-settings": "'FILL' 1" })}" data-v-b0801fb5${_scopeId}>location_on</span></div><div class="min-w-0" data-v-b0801fb5${_scopeId}><h4 class="fw-bold fs-6" data-v-b0801fb5${_scopeId}>عنوان التوصيل</h4><p class="text-on-surface-variant small text-truncate mb-0" data-v-b0801fb5${_scopeId}>لم يتم تحديد موقع التوصيل بعد</p></div></div><button class="btn w-100 btn-map px-4 py-3 rounded-3 fw-bold small transition-opacity active-scale d-flex align-items-center justify-content-center gap-2" data-v-b0801fb5${_scopeId}><span class="material-symbols-outlined fs-18" data-v-b0801fb5${_scopeId}>map</span> تحديد موقعي </button></div></div></div><div class="col-12 col-lg-4 mb-4" data-v-b0801fb5${_scopeId}><div class="bg-surface-container-low rounded-3xl p-4 p-sm-5 sticky-top shadow-sm border border-outline-10" style="${ssrRenderStyle({ "top": "2rem" })}" data-v-b0801fb5${_scopeId}><h3 class="h4 fw-bolder mb-4 pb-3 border-bottom border-outline-20" data-v-b0801fb5${_scopeId}>${ssrInterpolate(trans("Information Order"))}</h3><div class="d-flex flex-column gap-3 mb-4" data-v-b0801fb5${_scopeId}><div class="d-flex justify-content-between text-on-surface-variant small fs-sm-6" data-v-b0801fb5${_scopeId}><span data-v-b0801fb5${_scopeId}>${ssrInterpolate(trans("Subtotal"))}</span><span class="fw-semibold text-on-surface" data-v-b0801fb5${_scopeId}>${ssrInterpolate(subPrice.value)} $</span></div><div class="d-flex justify-content-between text-on-surface-variant small fs-sm-6" data-v-b0801fb5${_scopeId}><span data-v-b0801fb5${_scopeId}>${ssrInterpolate(trans("Shipping"))}</span><span class="fw-semibold text-on-surface" data-v-b0801fb5${_scopeId}>${ssrInterpolate(shippingCost.value)} $</span></div><div class="pt-3 mt-3 border-top border-outline-30 d-flex justify-content-between align-items-baseline" data-v-b0801fb5${_scopeId}><span class="h5 fw-bold text-on-surface mb-0" data-v-b0801fb5${_scopeId}>${ssrInterpolate(trans("Total"))}</span><span class="display-6 fw-bolder text-primary-custom" data-v-b0801fb5${_scopeId}>${ssrInterpolate(shippingCost.value + subPrice.value)} $</span></div></div><div class="d-flex flex-column gap-3" data-v-b0801fb5${_scopeId}><form data-v-b0801fb5${_scopeId}><button class="btn w-100 py-3 rounded-3 btn-gradient fw-bold fs-5 shadow active-scale transition-all" data-v-b0801fb5${_scopeId}> إتمام عملية الشراء </button></form><div class="d-flex align-items-center justify-content-center gap-2 text-on-surface-variant-60 small py-2" data-v-b0801fb5${_scopeId}><span class="material-symbols-outlined" style="${ssrRenderStyle({ "font-size": "14px" })}" data-v-b0801fb5${_scopeId}>lock</span><span data-v-b0801fb5${_scopeId}>يمكنك الدفع عند الاستلام أو الدفع عبر شام كاش</span></div></div></div></div></div></main>`);
+            _push2(`<!--]--><div class="bg-surface-container-high rounded-2xl p-4 p-sm-5 d-flex flex-column gap-4" data-v-7282490f${_scopeId}><div data-v-7282490f${_scopeId}><h4 class="fw-bold h5 mb-4 d-flex align-items-center gap-2" data-v-7282490f${_scopeId}><span class="material-symbols-outlined text-primary-custom" data-v-7282490f${_scopeId}>local_shipping</span> طريقة الشحن </h4><div class="d-flex flex-column gap-3" data-v-7282490f${_scopeId}><label class="${ssrRenderClass([unref(createOrder).deliveryType == "home" ? "bg-danger" : "bg-surface-container-lowest", "d-flex align-items-center gap-3 p-4 rounded-3 border border-transparent hover-border-outline-30 transition-all"])}" for="home-delivery" data-v-7282490f${_scopeId}><input checked="" id="home-delivery" name="shipping-method" value="home" type="radio"${ssrIncludeBooleanAttr(ssrLooseEqual(unref(createOrder).deliveryType, "home")) ? " checked" : ""} data-v-7282490f${_scopeId}><div class="flex-grow-1 d-flex justify-content-between align-items-center" data-v-7282490f${_scopeId}><div class="d-flex align-items-center gap-2" data-v-7282490f${_scopeId}><span class="material-symbols-outlined text-on-surface-variant fs-20" data-v-7282490f${_scopeId}>home</span><span class="fw-bold small" data-v-7282490f${_scopeId}>${ssrInterpolate(trans("Shipping to Home"))}</span></div></div></label><label class="${ssrRenderClass([unref(createOrder).deliveryType == "office" ? "bg-danger" : "bg-surface-container-lowest", "d-flex align-items-center gap-3 p-4 rounded-3 border border-transparent hover-border-outline-30 transition-all"])}" for="pickup-center" data-v-7282490f${_scopeId}><input id="pickup-center" name="shipping-method" value="office" type="radio"${ssrIncludeBooleanAttr(ssrLooseEqual(unref(createOrder).deliveryType, "office")) ? " checked" : ""} data-v-7282490f${_scopeId}><div class="flex-grow-1 d-flex justify-content-between align-items-center" data-v-7282490f${_scopeId}><div class="d-flex align-items-center gap-2" data-v-7282490f${_scopeId}><span class="material-symbols-outlined text-on-surface-variant fs-20" data-v-7282490f${_scopeId}>store</span><span class="fw-bold small" data-v-7282490f${_scopeId}>${ssrInterpolate(trans("Pickup Center"))}</span></div></div></label></div></div><div class="line-outline-30" data-v-7282490f${_scopeId}></div>`);
+            if (unref(createOrder).deliveryType === "home") {
+              _push2(`<div class="d-flex flex-column gap-3" data-v-7282490f${_scopeId}><div class="d-flex align-items-start gap-3" data-v-7282490f${_scopeId}><div class="rounded-circle bg-primary-10 d-flex align-items-center justify-content-center text-primary-custom flex-shrink-0 mt-1" style="${ssrRenderStyle({ "width": "2.5rem", "height": "2.5rem" })}" data-v-7282490f${_scopeId}><span class="material-symbols-outlined fs-20" style="${ssrRenderStyle({ "font-variation-settings": "'FILL' 1" })}" data-v-7282490f${_scopeId}>location_on</span></div><div class="min-w-0" data-v-7282490f${_scopeId}><h4 class="fw-bold fs-6" data-v-7282490f${_scopeId}>${ssrInterpolate(trans("Address"))}</h4>`);
+              if (msgErrorLocation.value.length > 0) {
+                _push2(`<p data-v-7282490f${_scopeId}>${ssrInterpolate(msgErrorLocation.value)}</p>`);
+              } else {
+                _push2(`<!---->`);
+              }
+              if (unref(createOrder).map == null) {
+                _push2(`<p class="text-on-surface-variant small text-truncate mb-0" data-v-7282490f${_scopeId}>${ssrInterpolate(trans("Doesn't  have a location"))}</p>`);
+              } else {
+                _push2(`<p class="text-on-surface-variant small text-truncate mb-0" data-v-7282490f${_scopeId}><a${ssrRenderAttr("href", unref(createOrder).map)} target="_blank" data-v-7282490f${_scopeId}>${ssrInterpolate(trans("View Location"))}</a></p>`);
+              }
+              _push2(`</div></div><button class="btn w-100 btn-map px-4 py-3 rounded-3 fw-bold small transition-opacity active-scale d-flex align-items-center justify-content-center gap-2" data-v-7282490f${_scopeId}><span class="material-symbols-outlined fs-18" data-v-7282490f${_scopeId}>map</span> ${ssrInterpolate(trans("Get Location"))}</button></div>`);
+            } else {
+              _push2(`<!---->`);
+            }
+            _push2(`</div></div><div class="col-12 col-lg-4 mb-4" data-v-7282490f${_scopeId}><div class="bg-surface-container-low rounded-3xl p-4 p-sm-5 sticky-top shadow-sm border border-outline-10" style="${ssrRenderStyle({ "top": "2rem" })}" data-v-7282490f${_scopeId}><h3 class="h4 fw-bolder mb-4 pb-3 border-bottom border-outline-20" data-v-7282490f${_scopeId}>${ssrInterpolate(trans("Information Order"))}</h3><div class="d-flex flex-column gap-3 mb-4" data-v-7282490f${_scopeId}><div class="d-flex justify-content-between text-on-surface-variant small fs-sm-6" data-v-7282490f${_scopeId}><span data-v-7282490f${_scopeId}>${ssrInterpolate(trans("Subtotal"))}</span><span class="fw-semibold text-on-surface" data-v-7282490f${_scopeId}>${ssrInterpolate(subPrice.value)} $</span></div><div class="d-flex justify-content-between text-on-surface-variant small fs-sm-6" data-v-7282490f${_scopeId}><span data-v-7282490f${_scopeId}>${ssrInterpolate(trans("Shipping"))}</span><span class="fw-semibold text-on-surface" data-v-7282490f${_scopeId}>${ssrInterpolate(shippingCost.value)} $</span></div><div class="pt-3 mt-3 border-top border-outline-30 d-flex justify-content-between align-items-baseline" data-v-7282490f${_scopeId}><span class="h5 fw-bold text-on-surface mb-0" data-v-7282490f${_scopeId}>${ssrInterpolate(trans("Total"))}</span><span class="display-6 fw-bolder text-primary-custom" data-v-7282490f${_scopeId}>${ssrInterpolate(shippingCost.value + subPrice.value)} $</span></div></div><div class="d-flex flex-column gap-3" data-v-7282490f${_scopeId}>`);
+            if (carts.value.length > 0) {
+              _push2(`<form data-v-7282490f${_scopeId}><button class="btn w-100 py-3 rounded-3 btn-gradient fw-bold fs-5 shadow active-scale transition-all" data-v-7282490f${_scopeId}>${ssrInterpolate(trans("Create Order"))}</button></form>`);
+            } else {
+              _push2(`<!---->`);
+            }
+            _push2(`<div class="d-flex align-items-center justify-content-center gap-2 text-on-surface-variant-60 small py-2" data-v-7282490f${_scopeId}><span class="material-symbols-outlined" style="${ssrRenderStyle({ "font-size": "14px" })}" data-v-7282490f${_scopeId}>lock</span><span data-v-7282490f${_scopeId}>يمكنك الدفع عند الاستلام أو الدفع عبر شام كاش</span></div></div></div></div></div></main>`);
           } else {
             return [
               createVNode("main", { class: "py-5 px-3 max-w-5xl mx-auto overflow-hidden" }, [
@@ -1517,6 +1648,12 @@ const _sfc_main$a = {
                 ]),
                 createVNode("div", { class: "row g-4" }, [
                   createVNode("div", { class: "col-12 col-lg-8 d-flex flex-column gap-3" }, [
+                    submitSuccess.value ? (openBlock(), createBlock("div", {
+                      key: 0,
+                      class: "col-12 mt-3"
+                    }, [
+                      createVNode("div", { class: "alert alert-success" }, toDisplayString(trans("The order has been sent for review")), 1)
+                    ])) : createCommentVNode("", true),
                     (openBlock(true), createBlock(Fragment, null, renderList(carts.value, (cart) => {
                       return openBlock(), createBlock("div", { class: "bg-surface-container-lowest rounded-2xl p-3 p-sm-4 product-card-grid shadow-sm" }, [
                         createVNode("div", { class: "product-image-wrap rounded-3 overflow-hidden flex-shrink-0" }, [
@@ -1571,7 +1708,7 @@ const _sfc_main$a = {
                         ]),
                         createVNode("div", { class: "d-flex flex-column gap-3" }, [
                           createVNode("label", {
-                            class: "d-flex align-items-center gap-3 p-4 bg-surface-container-lowest rounded-3 border border-transparent hover-border-outline-30 transition-all",
+                            class: [unref(createOrder).deliveryType == "home" ? "bg-danger" : "bg-surface-container-lowest", "d-flex align-items-center gap-3 p-4 rounded-3 border border-transparent hover-border-outline-30 transition-all"],
                             for: "home-delivery"
                           }, [
                             withDirectives(createVNode("input", {
@@ -1587,12 +1724,12 @@ const _sfc_main$a = {
                             createVNode("div", { class: "flex-grow-1 d-flex justify-content-between align-items-center" }, [
                               createVNode("div", { class: "d-flex align-items-center gap-2" }, [
                                 createVNode("span", { class: "material-symbols-outlined text-on-surface-variant fs-20" }, "home"),
-                                createVNode("span", { class: "fw-bold small" }, "شحن للمنزل")
+                                createVNode("span", { class: "fw-bold small" }, toDisplayString(trans("Shipping to Home")), 1)
                               ])
                             ])
-                          ]),
+                          ], 2),
                           createVNode("label", {
-                            class: "d-flex align-items-center gap-3 p-4 bg-surface-container-lowest rounded-3 border border-transparent hover-border-outline-30 transition-all",
+                            class: [unref(createOrder).deliveryType == "office" ? "bg-danger" : "bg-surface-container-lowest", "d-flex align-items-center gap-3 p-4 rounded-3 border border-transparent hover-border-outline-30 transition-all"],
                             for: "pickup-center"
                           }, [
                             withDirectives(createVNode("input", {
@@ -1607,14 +1744,17 @@ const _sfc_main$a = {
                             createVNode("div", { class: "flex-grow-1 d-flex justify-content-between align-items-center" }, [
                               createVNode("div", { class: "d-flex align-items-center gap-2" }, [
                                 createVNode("span", { class: "material-symbols-outlined text-on-surface-variant fs-20" }, "store"),
-                                createVNode("span", { class: "fw-bold small" }, "مركز الاستلام")
+                                createVNode("span", { class: "fw-bold small" }, toDisplayString(trans("Pickup Center")), 1)
                               ])
                             ])
-                          ])
+                          ], 2)
                         ])
                       ]),
                       createVNode("div", { class: "line-outline-30" }),
-                      createVNode("div", { class: "d-flex flex-column gap-3" }, [
+                      unref(createOrder).deliveryType === "home" ? (openBlock(), createBlock("div", {
+                        key: 0,
+                        class: "d-flex flex-column gap-3"
+                      }, [
                         createVNode("div", { class: "d-flex align-items-start gap-3" }, [
                           createVNode("div", {
                             class: "rounded-circle bg-primary-10 d-flex align-items-center justify-content-center text-primary-custom flex-shrink-0 mt-1",
@@ -1626,15 +1766,30 @@ const _sfc_main$a = {
                             }, "location_on")
                           ]),
                           createVNode("div", { class: "min-w-0" }, [
-                            createVNode("h4", { class: "fw-bold fs-6" }, "عنوان التوصيل"),
-                            createVNode("p", { class: "text-on-surface-variant small text-truncate mb-0" }, "لم يتم تحديد موقع التوصيل بعد")
+                            createVNode("h4", { class: "fw-bold fs-6" }, toDisplayString(trans("Address")), 1),
+                            msgErrorLocation.value.length > 0 ? (openBlock(), createBlock("p", { key: 0 }, toDisplayString(msgErrorLocation.value), 1)) : createCommentVNode("", true),
+                            unref(createOrder).map == null ? (openBlock(), createBlock("p", {
+                              key: 1,
+                              class: "text-on-surface-variant small text-truncate mb-0"
+                            }, toDisplayString(trans("Doesn't  have a location")), 1)) : (openBlock(), createBlock("p", {
+                              key: 2,
+                              class: "text-on-surface-variant small text-truncate mb-0"
+                            }, [
+                              createVNode("a", {
+                                href: unref(createOrder).map,
+                                target: "_blank"
+                              }, toDisplayString(trans("View Location")), 9, ["href"])
+                            ]))
                           ])
                         ]),
-                        createVNode("button", { class: "btn w-100 btn-map px-4 py-3 rounded-3 fw-bold small transition-opacity active-scale d-flex align-items-center justify-content-center gap-2" }, [
+                        createVNode("button", {
+                          onClick: getLocation,
+                          class: "btn w-100 btn-map px-4 py-3 rounded-3 fw-bold small transition-opacity active-scale d-flex align-items-center justify-content-center gap-2"
+                        }, [
                           createVNode("span", { class: "material-symbols-outlined fs-18" }, "map"),
-                          createTextVNode(" تحديد موقعي ")
+                          createTextVNode(" " + toDisplayString(trans("Get Location")), 1)
                         ])
-                      ])
+                      ])) : createCommentVNode("", true)
                     ])
                   ]),
                   createVNode("div", { class: "col-12 col-lg-4 mb-4" }, [
@@ -1658,11 +1813,12 @@ const _sfc_main$a = {
                         ])
                       ]),
                       createVNode("div", { class: "d-flex flex-column gap-3" }, [
-                        createVNode("form", {
+                        carts.value.length > 0 ? (openBlock(), createBlock("form", {
+                          key: 0,
                           onSubmit: withModifiers(submitOrder, ["prevent"])
                         }, [
-                          createVNode("button", { class: "btn w-100 py-3 rounded-3 btn-gradient fw-bold fs-5 shadow active-scale transition-all" }, " إتمام عملية الشراء ")
-                        ], 32),
+                          createVNode("button", { class: "btn w-100 py-3 rounded-3 btn-gradient fw-bold fs-5 shadow active-scale transition-all" }, toDisplayString(trans("Create Order")), 1)
+                        ], 32)) : createCommentVNode("", true),
                         createVNode("div", { class: "d-flex align-items-center justify-content-center gap-2 text-on-surface-variant-60 small py-2" }, [
                           createVNode("span", {
                             class: "material-symbols-outlined",
@@ -1690,7 +1846,7 @@ _sfc_main$a.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("Modules/Cart/resources/assets/js/Pages/CartIndex.vue");
   return _sfc_setup$a ? _sfc_setup$a(props, ctx) : void 0;
 };
-const CartIndex = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["__scopeId", "data-v-b0801fb5"]]);
+const CartIndex = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["__scopeId", "data-v-7282490f"]]);
 const __vite_glob_0_2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: CartIndex
@@ -1704,9 +1860,9 @@ const _sfc_main$9 = /* @__PURE__ */ Object.assign(__default__$4, {
   __name: "ShopIndex",
   __ssrInlineRender: true,
   setup(__props) {
-    const page = usePage();
+    const page2 = usePage();
     const trans = (key, params = {}) => {
-      let translation = page.props.translations[key] || key;
+      let translation = page2.props.translations[key] || key;
       if (params && Object.keys(params).length > 0) {
         Object.keys(params).forEach((param) => {
           translation = translation.replace(`:${param}`, params[param]);
@@ -1714,10 +1870,10 @@ const _sfc_main$9 = /* @__PURE__ */ Object.assign(__default__$4, {
       }
       return translation;
     };
-    const products = computed(() => page.props.products);
-    const categories = computed(() => page.props.categories);
-    const settings = computed(() => page.props.settings || {});
-    const asset_path = computed(() => page.props.asset_path || "");
+    const products = computed(() => page2.props.products);
+    const categories = computed(() => page2.props.categories);
+    const settings = computed(() => page2.props.settings || {});
+    const asset_path = computed(() => page2.props.asset_path || "");
     const whatsappHref = computed(() => {
       const s = settings.value || {};
       const raw = s.whatsapp || s.sales_whatsapp;
@@ -1750,7 +1906,7 @@ const _sfc_main$9 = /* @__PURE__ */ Object.assign(__default__$4, {
       delete q.category;
       return q;
     });
-    watch(() => page.url, () => {
+    watch(() => page2.url, () => {
       const params = new URLSearchParams(window.location.search);
       const newSort = params.get("sort") || "default";
       if (sortValue.value !== newSort) {
@@ -2306,14 +2462,14 @@ const _sfc_main$8 = /* @__PURE__ */ Object.assign(__default__$3, {
   __name: "ShopShow",
   __ssrInlineRender: true,
   setup(__props) {
-    const page = usePage();
-    const trans = (key) => page.props.translations[key] || key;
-    computed(() => page.props.seo);
-    const settings = computed(() => page.props.settings || {});
-    const product = computed(() => page.props.product);
-    const relatedProducts = computed(() => page.props.relatedProducts);
-    const subProducts = computed(() => page.props.subProducts || []);
-    const asset_path = computed(() => page.props.asset_path || "");
+    const page2 = usePage();
+    const trans = (key) => page2.props.translations[key] || key;
+    computed(() => page2.props.seo);
+    const settings = computed(() => page2.props.settings || {});
+    const product = computed(() => page2.props.product);
+    const relatedProducts = computed(() => page2.props.relatedProducts);
+    const subProducts = computed(() => page2.props.subProducts || []);
+    const asset_path = computed(() => page2.props.asset_path || "");
     const whatsappHref = computed(() => {
       const s = settings.value || {};
       const raw = s.whatsapp || s.sales_whatsapp;
@@ -3015,14 +3171,14 @@ const _sfc_main$7 = /* @__PURE__ */ Object.assign(__default__$2, {
   __name: "Index",
   __ssrInlineRender: true,
   setup(__props) {
-    const page = usePage();
-    const trans = (key) => page.props.translations[key] || key;
-    computed(() => page.props.seo);
-    const asset_path = computed(() => page.props.asset_path || "");
-    const locale = computed(() => page.props.locale || "en");
-    const settings = computed(() => page.props.settings || {});
-    const branches = computed(() => page.props.branches || []);
-    const faqs = computed(() => page.props.faqs || []);
+    const page2 = usePage();
+    const trans = (key) => page2.props.translations[key] || key;
+    computed(() => page2.props.seo);
+    const asset_path = computed(() => page2.props.asset_path || "");
+    const locale = computed(() => page2.props.locale || "en");
+    const settings = computed(() => page2.props.settings || {});
+    const branches = computed(() => page2.props.branches || []);
+    const faqs = computed(() => page2.props.faqs || []);
     const openBranchId = ref(null);
     const submitSuccess = ref(false);
     const splitLines = (value) => {
@@ -3144,11 +3300,11 @@ const _sfc_main$7 = /* @__PURE__ */ Object.assign(__default__$2, {
         if (typeof route !== "undefined" && route) {
           contactUrl = route("contact-us.store");
         } else {
-          const currentLocale = page.props.locale || "";
+          const currentLocale = page2.props.locale || "";
           contactUrl = currentLocale ? `/${currentLocale}/contact-us` : "/contact-us";
         }
       } catch (e) {
-        const currentLocale = page.props.locale || "";
+        const currentLocale = page2.props.locale || "";
         contactUrl = currentLocale ? `/${currentLocale}/contact-us` : "/contact-us";
       }
       contactForm.post(contactUrl, {
@@ -3574,12 +3730,12 @@ const _sfc_main$6 = {
   },
   setup(__props) {
     const props = __props;
-    const page = usePage();
-    const locale = computed(() => page.props.locale || "");
+    const page2 = usePage();
+    const locale = computed(() => page2.props.locale || "");
     const trans = (key) => {
       var _a;
       try {
-        return ((_a = page.props.translations) == null ? void 0 : _a[key]) || key;
+        return ((_a = page2.props.translations) == null ? void 0 : _a[key]) || key;
       } catch (e) {
         return key;
       }
@@ -3693,12 +3849,12 @@ const _sfc_main$5 = {
     errors: Object
   },
   setup() {
-    const page = usePage();
-    const seo = computed(() => page.props.seo);
+    const page2 = usePage();
+    const seo = computed(() => page2.props.seo);
     const trans = (key) => {
       var _a;
       try {
-        return ((_a = page.props.translations) == null ? void 0 : _a[key]) || key;
+        return ((_a = page2.props.translations) == null ? void 0 : _a[key]) || key;
       } catch (e) {
         return key;
       }
@@ -3858,12 +4014,12 @@ const _sfc_main$4 = {
     errors: Object
   },
   setup() {
-    const page = usePage();
-    const seo = computed(() => page.props.seo);
+    const page2 = usePage();
+    const seo = computed(() => page2.props.seo);
     const trans = (key) => {
       var _a;
       try {
-        return ((_a = page.props.translations) == null ? void 0 : _a[key]) || key;
+        return ((_a = page2.props.translations) == null ? void 0 : _a[key]) || key;
       } catch (e) {
         return key;
       }
@@ -4099,12 +4255,12 @@ const _sfc_main$3 = {
     errors: Object
   },
   setup() {
-    const page = usePage();
-    const seo = computed(() => page.props.seo);
+    const page2 = usePage();
+    const seo = computed(() => page2.props.seo);
     const trans = (key) => {
       var _a;
       try {
-        return ((_a = page.props.translations) == null ? void 0 : _a[key]) || key;
+        return ((_a = page2.props.translations) == null ? void 0 : _a[key]) || key;
       } catch (e) {
         return key;
       }
@@ -4396,12 +4552,12 @@ const _sfc_main$2 = {
     email: String
   },
   setup(props) {
-    const page = usePage();
-    const seo = computed(() => page.props.seo);
+    const page2 = usePage();
+    const seo = computed(() => page2.props.seo);
     const trans = (key) => {
       var _a;
       try {
-        return ((_a = page.props.translations) == null ? void 0 : _a[key]) || key;
+        return ((_a = page2.props.translations) == null ? void 0 : _a[key]) || key;
       } catch (e) {
         return key;
       }
@@ -4632,17 +4788,17 @@ const _sfc_main$1 = /* @__PURE__ */ Object.assign(__default__$1, {
   __name: "Error404",
   __ssrInlineRender: true,
   setup(__props) {
-    const page = usePage();
+    const page2 = usePage();
     const trans = (key) => {
       var _a;
       try {
-        return ((_a = page.props.translations) == null ? void 0 : _a[key]) || key;
+        return ((_a = page2.props.translations) == null ? void 0 : _a[key]) || key;
       } catch (e) {
         return key;
       }
     };
-    computed(() => page.props.seo || { website_name: "Sham Vision" });
-    const asset_path = computed(() => page.props.asset_path || "/");
+    computed(() => page2.props.seo || { website_name: "Sham Vision" });
+    const asset_path = computed(() => page2.props.asset_path || "/");
     const getHomeUrl = () => {
       try {
         return route("home");
@@ -4834,18 +4990,18 @@ const _sfc_main = /* @__PURE__ */ Object.assign(__default__, {
   __name: "Error500",
   __ssrInlineRender: true,
   setup(__props) {
-    const page = usePage();
+    const page2 = usePage();
     const trans = (key) => {
       var _a;
       try {
-        return ((_a = page.props.translations) == null ? void 0 : _a[key]) || key;
+        return ((_a = page2.props.translations) == null ? void 0 : _a[key]) || key;
       } catch (e) {
         return key;
       }
     };
-    computed(() => page.props.seo || { website_name: "Sham Vision" });
-    const asset_path = computed(() => page.props.asset_path || "/");
-    const appEnv = computed(() => page.props.app_env || "production");
+    computed(() => page2.props.seo || { website_name: "Sham Vision" });
+    const asset_path = computed(() => page2.props.asset_path || "/");
+    const appEnv = computed(() => page2.props.app_env || "production");
     const isNonProduction = computed(() => appEnv.value !== "production");
     const getHomeUrl = () => {
       try {
@@ -4888,15 +5044,15 @@ const _sfc_main = /* @__PURE__ */ Object.assign(__default__, {
               _: 1
             }, _parent2, _scopeId));
             _push2(`</span></li><li class="active" data-v-85422890${_scopeId}><span data-v-85422890${_scopeId}>${ssrInterpolate(trans("500 Error"))}</span></li></ul></nav></div></div></div></div></div></div><section class="error section-space" data-v-85422890${_scopeId}><div class="container" data-v-85422890${_scopeId}><div class="row" data-v-85422890${_scopeId}><div class="col-12" data-v-85422890${_scopeId}><div class="error__content" data-v-85422890${_scopeId}><div class="section__title-wrapper text-center" data-v-85422890${_scopeId}><h3 class="section__title mb-15 mb-xs-10 wow fadeIn animated" data-wow-delay=".3s" data-v-85422890${_scopeId}>${ssrInterpolate(trans("Internal Server Error"))}</h3><p class="mb-40 mb-sm-25 mb-xs-20 wow fadeIn animated" data-wow-delay=".5s" data-v-85422890${_scopeId}>${ssrInterpolate(trans("We're sorry, but something went wrong on our end. Please try again later or contact support if the problem persists."))}</p>`);
-            if (isNonProduction.value && (((_b = (_a = unref(page)) == null ? void 0 : _a.props) == null ? void 0 : _b.error) || ((_d = (_c = unref(page)) == null ? void 0 : _c.props) == null ? void 0 : _d.trace))) {
+            if (isNonProduction.value && (((_b = (_a = unref(page2)) == null ? void 0 : _a.props) == null ? void 0 : _b.error) || ((_d = (_c = unref(page2)) == null ? void 0 : _c.props) == null ? void 0 : _d.trace))) {
               _push2(`<div class="alert alert-danger text-start mb-40" style="${ssrRenderStyle({ "white-space": "pre-wrap", "word-break": "break-word" })}" data-v-85422890${_scopeId}><strong data-v-85422890${_scopeId}>Debug Error:</strong>`);
-              if ((_f = (_e = unref(page)) == null ? void 0 : _e.props) == null ? void 0 : _f.error) {
-                _push2(`<div data-v-85422890${_scopeId}>${ssrInterpolate(unref(page).props.error)}</div>`);
+              if ((_f = (_e = unref(page2)) == null ? void 0 : _e.props) == null ? void 0 : _f.error) {
+                _push2(`<div data-v-85422890${_scopeId}>${ssrInterpolate(unref(page2).props.error)}</div>`);
               } else {
                 _push2(`<!---->`);
               }
-              if ((_h = (_g = unref(page)) == null ? void 0 : _g.props) == null ? void 0 : _h.trace) {
-                _push2(`<details class="mt-3" data-v-85422890${_scopeId}><summary data-v-85422890${_scopeId}>Stack trace</summary><pre class="mt-2" data-v-85422890${_scopeId}>${ssrInterpolate(unref(page).props.trace)}</pre></details>`);
+              if ((_h = (_g = unref(page2)) == null ? void 0 : _g.props) == null ? void 0 : _h.trace) {
+                _push2(`<details class="mt-3" data-v-85422890${_scopeId}><summary data-v-85422890${_scopeId}>Stack trace</summary><pre class="mt-2" data-v-85422890${_scopeId}>${ssrInterpolate(unref(page2).props.trace)}</pre></details>`);
               } else {
                 _push2(`<!---->`);
               }
@@ -5002,19 +5158,19 @@ const _sfc_main = /* @__PURE__ */ Object.assign(__default__, {
                             class: "mb-40 mb-sm-25 mb-xs-20 wow fadeIn animated",
                             "data-wow-delay": ".5s"
                           }, toDisplayString(trans("We're sorry, but something went wrong on our end. Please try again later or contact support if the problem persists.")), 1),
-                          isNonProduction.value && (((_j = (_i = unref(page)) == null ? void 0 : _i.props) == null ? void 0 : _j.error) || ((_l = (_k = unref(page)) == null ? void 0 : _k.props) == null ? void 0 : _l.trace)) ? (openBlock(), createBlock("div", {
+                          isNonProduction.value && (((_j = (_i = unref(page2)) == null ? void 0 : _i.props) == null ? void 0 : _j.error) || ((_l = (_k = unref(page2)) == null ? void 0 : _k.props) == null ? void 0 : _l.trace)) ? (openBlock(), createBlock("div", {
                             key: 0,
                             class: "alert alert-danger text-start mb-40",
                             style: { "white-space": "pre-wrap", "word-break": "break-word" }
                           }, [
                             createVNode("strong", null, "Debug Error:"),
-                            ((_n = (_m = unref(page)) == null ? void 0 : _m.props) == null ? void 0 : _n.error) ? (openBlock(), createBlock("div", { key: 0 }, toDisplayString(unref(page).props.error), 1)) : createCommentVNode("", true),
-                            ((_p = (_o = unref(page)) == null ? void 0 : _o.props) == null ? void 0 : _p.trace) ? (openBlock(), createBlock("details", {
+                            ((_n = (_m = unref(page2)) == null ? void 0 : _m.props) == null ? void 0 : _n.error) ? (openBlock(), createBlock("div", { key: 0 }, toDisplayString(unref(page2).props.error), 1)) : createCommentVNode("", true),
+                            ((_p = (_o = unref(page2)) == null ? void 0 : _o.props) == null ? void 0 : _p.trace) ? (openBlock(), createBlock("details", {
                               key: 1,
                               class: "mt-3"
                             }, [
                               createVNode("summary", null, "Stack trace"),
-                              createVNode("pre", { class: "mt-2" }, toDisplayString(unref(page).props.trace), 1)
+                              createVNode("pre", { class: "mt-2" }, toDisplayString(unref(page2).props.trace), 1)
                             ])) : createCommentVNode("", true)
                           ])) : createCommentVNode("", true),
                           createVNode("div", { class: "error-btn-wrap" }, [
@@ -5057,17 +5213,17 @@ const __vite_glob_1_1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.def
 }, Symbol.toStringTag, { value: "Module" }));
 async function resolvePageComponent(path, pages) {
   for (const p of Array.isArray(path) ? path : [path]) {
-    const page = pages[p];
-    if (typeof page === "undefined") {
+    const page2 = pages[p];
+    if (typeof page2 === "undefined") {
       continue;
     }
-    return typeof page === "function" ? page() : page;
+    return typeof page2 === "function" ? page2() : page2;
   }
   throw new Error(`Page not found: ${path}`);
 }
 createServer(
-  (page) => createInertiaApp({
-    page,
+  (page2) => createInertiaApp({
+    page: page2,
     render: renderToString,
     resolve: (name) => {
       const modules = name.split("::");

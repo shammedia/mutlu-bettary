@@ -25,7 +25,7 @@ class Item extends Model
 
     public function product(): BelongsTo
     {
-        return $this->belongsTo(SubProduct::class, 'sub_product_id');
+        return $this->belongsTo(SubProduct::class, 'product_sub_product_id');
     }
     // protected static function newFactory(): ItemFactory
     // {

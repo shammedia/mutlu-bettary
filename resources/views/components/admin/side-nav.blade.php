@@ -94,6 +94,13 @@
                     <span class="menu-title">{{ __('Products') }}</span>
                 </a>
             </div>
+            <div class="menu-item">
+                <a class="menu-link {{ isset($active['shipping']) ? 'active' : '' }}"
+                   href="{{ route('admin.orders.all') }}">
+                    <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                    <span class="menu-title">{{ __('Orders') }}</span>
+                </a>
+            </div>
         </div>
     </div>
 @endcan

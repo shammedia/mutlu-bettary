@@ -161,7 +161,19 @@
             </div>
         </div>
 
-
+        <div class="row mb-8">
+            <!--begin::Col-->
+            <div class="col-xl-3">
+                <div class="fs-6 fw-bold mt-2 mb-3"><i
+                        class="bi bi-phone mx-1 text-primary"></i> {{__('Shipping Phone')}}</div>
+            </div>
+            <!--end::Col-->
+            <!--begin::Col-->
+            <div class="col-xl-9 fv-row">
+                <input type="text" class="form-control form-control-solid" name="data[shipping_phone]"
+                       value="{{$settings->get('shipping_phone')}}" placeholder="9639xxxxxxxx"/>
+            </div>
+        </div>
         <div class="row mb-8">
             <!--begin::Col-->
             <div class="col-xl-3">
