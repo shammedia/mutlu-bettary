@@ -48,6 +48,16 @@
                                             <th>{{ __('Total') }}</th>
                                             <td>{{ $order->total }}</td>
                                         </tr>
+                                        @if($order->address!='')
+                                        <tr>
+                                            <th>{{ __('Address') }}</th>
+                                            <td>{{ $order->address }}</td>
+                                        </tr>
+                                        @endif
+                                        <tr>
+                                            <th>{{ __('Phone') }}</th>
+                                            <td><a href="https://wa.me/{{ ltrim($order->phone,'+') }}"></a></td>
+                                        </tr>
                                         <tr>
                                             <th>{{ __('Created At') }}</th>
                                             <td>{{ $order->created_at->diffForHumans() }}</td>
