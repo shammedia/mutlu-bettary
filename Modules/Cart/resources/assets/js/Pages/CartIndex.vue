@@ -103,17 +103,13 @@
                         <div class="line-outline-30"></div>
                         <div class="d-flex flex-column gap-3" v-if="createOrder.deliveryType==='home'">
                             <div class="d-flex align-items-start gap-3">
-                                <div
-                                    class="rounded-circle bg-primary-10 d-flex align-items-center justify-content-center text-primary-custom flex-shrink-0 mt-1"
-                                    style="width: 2.5rem; height: 2.5rem;">
-                                    <span class="material-symbols-outlined fs-20"
-                                          style="font-variation-settings: 'FILL' 1;">location_on</span>
-                                </div>
-                                <div class="min-w-0" style="overflow: auto">
+
+                                <div class="min-w-0 w-full" style="overflow: auto;">
 <!--                                    <h4 class="fw-bold fs-6">{{ trans('Address') }}</h4>-->
-                                   <div class="d-flex flex-column flex-md-row  gap-2">
-                                       <input type="text" :placeholder="trans('Address')" class="form-control-sm" v-model="createOrder.address">
-                                       <input type="text" :placeholder="trans('Phone')" class="form-control-sm" v-model="createOrder.phone">
+                                   <div class="d-flex flex-column  gap-2 flex-auto" >
+                                       <input type="text" :placeholder="trans('Name')" class="form-control" v-model="createOrder.name">
+                                       <input type="text" :placeholder="trans('Address')" class="form-control" v-model="createOrder.address">
+                                       <input type="text" :placeholder="trans('Phone')" class="form-control" v-model="createOrder.phone">
                                    </div>
 <!--                                    <p v-if="createOrder.map==null"
                                        class="text-on-surface-variant small text-truncate mb-0">
@@ -199,6 +195,7 @@ const createOrder = useForm({
     subPrice: 0,
     map: null,
     phone: '',
+    name:''
 })
 const submitSuccess = ref(false)
 
@@ -232,6 +229,11 @@ const submitOrder = () => {
     }
     if(createOrder.phone==''){
         msgErrorLocation.value = trans('Please insert your phone number');
+        toastr.error(msgErrorLocation.value)
+        return;
+    }
+    if(createOrder.name==''){
+        msgErrorLocation.value = trans('Please insert your Name');
         toastr.error(msgErrorLocation.value)
         return;
     }
@@ -401,7 +403,11 @@ const subPrice = computed(() => {
 }
 </style>
 <style scoped>
-
+.w-full{
+    width: -webkit-fill-available;
+    width: -moz-available;
+    width: stretch;
+}
 body {
     font-family: 'Noto Sans Arabic', 'Plus Jakarta Sans', sans-serif;
     overflow-x: hidden;

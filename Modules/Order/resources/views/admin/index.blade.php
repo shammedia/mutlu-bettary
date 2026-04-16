@@ -22,6 +22,7 @@
                            data-kt-check-target="#dataTable .form-check-input" value="1"/>
                 </div>
             </th>
+            <th class="min-w-100px">{{__('Customer Name')}}</th>
             <th class="min-w-100px">{{__('Delivery Type')}}</th>
             <th class="min-w-100px">{{__('Status')}}</th>
             <th class="min-w-100px">{{__('Shipping')}}</th>
@@ -38,6 +39,7 @@
                         <input class="form-check-input" type="checkbox" name="ids[]" value="{{$order->id}}"/>
                     </div>
                 </td>
+                <td>{{$order->name}}</td>
                 <td>{{\Modules\Order\app\Enums\DeliveryTypeEnum::tryFrom($order->delivery_type)?->getLabel()}}</td>
                 <td>{{\Modules\Order\app\Enums\OrderEnum::tryFrom($order->status)?->getLabel()}}</td>
                 <td>{{$order->shipping}}</td>

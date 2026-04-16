@@ -1609,7 +1609,8 @@ const _sfc_main$a = {
       address: "",
       subPrice: 0,
       map: null,
-      phone: ""
+      phone: "",
+      name: ""
     });
     const submitSuccess = ref(false);
     const getLocation = () => {
@@ -1638,6 +1639,11 @@ const _sfc_main$a = {
       }
       if (createOrder.phone == "") {
         msgErrorLocation.value = trans("Please insert your phone number");
+        toastr.error(msgErrorLocation.value);
+        return;
+      }
+      if (createOrder.name == "") {
+        msgErrorLocation.value = trans("Please insert your Name");
         toastr.error(msgErrorLocation.value);
         return;
       }
@@ -1725,7 +1731,7 @@ const _sfc_main$a = {
       _push(ssrRenderComponent(unref(Head), null, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<title data-v-d181602b${_scopeId}>${ssrInterpolate(trans("Our Products"))} | Mutlu</title>`);
+            _push2(`<title data-v-9f983db7${_scopeId}>${ssrInterpolate(trans("Our Products"))} | Mutlu</title>`);
           } else {
             return [
               createVNode("title", null, toDisplayString(trans("Our Products")) + " | Mutlu", 1)
@@ -1737,40 +1743,40 @@ const _sfc_main$a = {
       _push(ssrRenderComponent(AppLayout, null, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<main class="py-5 px-3 max-w-5xl mx-auto overflow-hidden" data-v-d181602b${_scopeId}><section class="mb-4 text-center" data-v-d181602b${_scopeId}><h2 class="display-6 fw-bold text-on-surface mb-1" data-v-d181602b${_scopeId}>سلة المقتنيات</h2><p class="text-on-surface-variant-80 small" data-v-d181602b${_scopeId}>يتوفر شحن حتى باب المنزل.</p></section><div class="row g-4" data-v-d181602b${_scopeId}><div class="col-12 col-lg-8 d-flex flex-column gap-3" data-v-d181602b${_scopeId}>`);
+            _push2(`<main class="py-5 px-3 max-w-5xl mx-auto overflow-hidden" data-v-9f983db7${_scopeId}><section class="mb-4 text-center" data-v-9f983db7${_scopeId}><h2 class="display-6 fw-bold text-on-surface mb-1" data-v-9f983db7${_scopeId}>سلة المقتنيات</h2><p class="text-on-surface-variant-80 small" data-v-9f983db7${_scopeId}>يتوفر شحن حتى باب المنزل.</p></section><div class="row g-4" data-v-9f983db7${_scopeId}><div class="col-12 col-lg-8 d-flex flex-column gap-3" data-v-9f983db7${_scopeId}>`);
             if (submitSuccess.value) {
-              _push2(`<div class="col-12 mt-3" data-v-d181602b${_scopeId}><div class="alert alert-success" data-v-d181602b${_scopeId}>${ssrInterpolate(trans("The order has been sent for review"))}</div></div>`);
+              _push2(`<div class="col-12 mt-3" data-v-9f983db7${_scopeId}><div class="alert alert-success" data-v-9f983db7${_scopeId}>${ssrInterpolate(trans("The order has been sent for review"))}</div></div>`);
             } else {
               _push2(`<!---->`);
             }
             _push2(`<!--[-->`);
             ssrRenderList(unref(cartStore).carts, (cart) => {
-              _push2(`<div class="bg-surface-container-lowest rounded-2xl p-3 p-sm-4 product-card-grid shadow-sm" data-v-d181602b${_scopeId}><div class="product-image-wrap rounded-3 overflow-hidden flex-shrink-0" data-v-d181602b${_scopeId}><img alt="بطارية" class="w-100 h-100 object-fit-cover"${ssrRenderAttr("src", cart.primary_slide)} data-v-d181602b${_scopeId}></div><div class="d-flex flex-column justify-content-between min-w-0" data-v-d181602b${_scopeId}><div data-v-d181602b${_scopeId}><div class="d-flex justify-content-between align-items-start gap-2" data-v-d181602b${_scopeId}><h3 class="fs-6 fs-sm-5 fw-bold text-on-surface lh-sm text-truncate" data-v-d181602b${_scopeId}>بطارية 35Ah B20 (NS40)</h3><button class="btn p-0 text-primary-60 flex-shrink-0" data-v-d181602b${_scopeId}><span class="material-symbols-outlined fs-20" data-v-d181602b${_scopeId}>delete</span></button></div><div class="fs-11 small text-on-surface-variant-80 mt-1" data-v-d181602b${_scopeId}><p class="mb-1" data-v-d181602b${_scopeId}>${ssrInterpolate(trans("Capacity (Ah)"))}${ssrInterpolate(formatCapacityLabel(cart.capacity))}</p><p class="mb-0" data-v-d181602b${_scopeId}>${ssrInterpolate(trans("Voltage (V)"))} ${ssrInterpolate(cart.voltage)}</p></div></div><div class="d-flex justify-content-between align-items-center mt-3" data-v-d181602b${_scopeId}><div class="d-flex align-items-center bg-surface-container rounded-3 p-1" data-v-d181602b${_scopeId}><button class="btn p-0 qty-btn d-flex align-items-center justify-content-center text-primary-custom active-scale-sm" data-v-d181602b${_scopeId}><span class="material-symbols-outlined fs-18" data-v-d181602b${_scopeId}>remove</span></button><span class="px-2 px-sm-4 fw-bold small fs-sm-6" data-v-d181602b${_scopeId}>${ssrInterpolate(cart.quantity)}</span><button class="btn p-0 qty-btn d-flex align-items-center justify-content-center text-primary-custom active-scale-sm" data-v-d181602b${_scopeId}><span class="material-symbols-outlined fs-18" data-v-d181602b${_scopeId}>add</span></button></div><span class="h5 mb-0 fw-bolder text-on-surface" data-v-d181602b${_scopeId}>${ssrInterpolate(cart.price)} $</span></div></div></div>`);
+              _push2(`<div class="bg-surface-container-lowest rounded-2xl p-3 p-sm-4 product-card-grid shadow-sm" data-v-9f983db7${_scopeId}><div class="product-image-wrap rounded-3 overflow-hidden flex-shrink-0" data-v-9f983db7${_scopeId}><img alt="بطارية" class="w-100 h-100 object-fit-cover"${ssrRenderAttr("src", cart.primary_slide)} data-v-9f983db7${_scopeId}></div><div class="d-flex flex-column justify-content-between min-w-0" data-v-9f983db7${_scopeId}><div data-v-9f983db7${_scopeId}><div class="d-flex justify-content-between align-items-start gap-2" data-v-9f983db7${_scopeId}><h3 class="fs-6 fs-sm-5 fw-bold text-on-surface lh-sm text-truncate" data-v-9f983db7${_scopeId}>بطارية 35Ah B20 (NS40)</h3><button class="btn p-0 text-primary-60 flex-shrink-0" data-v-9f983db7${_scopeId}><span class="material-symbols-outlined fs-20" data-v-9f983db7${_scopeId}>delete</span></button></div><div class="fs-11 small text-on-surface-variant-80 mt-1" data-v-9f983db7${_scopeId}><p class="mb-1" data-v-9f983db7${_scopeId}>${ssrInterpolate(trans("Capacity (Ah)"))}${ssrInterpolate(formatCapacityLabel(cart.capacity))}</p><p class="mb-0" data-v-9f983db7${_scopeId}>${ssrInterpolate(trans("Voltage (V)"))} ${ssrInterpolate(cart.voltage)}</p></div></div><div class="d-flex justify-content-between align-items-center mt-3" data-v-9f983db7${_scopeId}><div class="d-flex align-items-center bg-surface-container rounded-3 p-1" data-v-9f983db7${_scopeId}><button class="btn p-0 qty-btn d-flex align-items-center justify-content-center text-primary-custom active-scale-sm" data-v-9f983db7${_scopeId}><span class="material-symbols-outlined fs-18" data-v-9f983db7${_scopeId}>remove</span></button><span class="px-2 px-sm-4 fw-bold small fs-sm-6" data-v-9f983db7${_scopeId}>${ssrInterpolate(cart.quantity)}</span><button class="btn p-0 qty-btn d-flex align-items-center justify-content-center text-primary-custom active-scale-sm" data-v-9f983db7${_scopeId}><span class="material-symbols-outlined fs-18" data-v-9f983db7${_scopeId}>add</span></button></div><span class="h5 mb-0 fw-bolder text-on-surface" data-v-9f983db7${_scopeId}>${ssrInterpolate(cart.price)} $</span></div></div></div>`);
             });
-            _push2(`<!--]--><div class="bg-surface-container-high rounded-2xl p-4 p-sm-5 d-flex flex-column gap-4" data-v-d181602b${_scopeId}><div data-v-d181602b${_scopeId}><h4 class="fw-bold h5 mb-4 d-flex align-items-center gap-2" data-v-d181602b${_scopeId}><span class="material-symbols-outlined text-primary-custom" data-v-d181602b${_scopeId}>local_shipping</span> طريقة الشحن </h4><div class="d-flex flex-column gap-3" data-v-d181602b${_scopeId}><label class="${ssrRenderClass([unref(createOrder).deliveryType == "home" ? "bg-danger" : "bg-surface-container-lowest", "d-flex align-items-center gap-3 p-4 rounded-3 border border-transparent hover-border-outline-30 transition-all"])}" for="home-delivery" data-v-d181602b${_scopeId}><input checked="" id="home-delivery" name="shipping-method" value="home" type="radio"${ssrIncludeBooleanAttr(ssrLooseEqual(unref(createOrder).deliveryType, "home")) ? " checked" : ""} data-v-d181602b${_scopeId}><div class="flex-grow-1 d-flex justify-content-between align-items-center" data-v-d181602b${_scopeId}><div class="d-flex align-items-center gap-2" data-v-d181602b${_scopeId}><span class="material-symbols-outlined text-on-surface-variant fs-20" data-v-d181602b${_scopeId}>home</span><span class="fw-bold small" data-v-d181602b${_scopeId}>${ssrInterpolate(trans("Shipping to Home"))}</span></div></div></label><label class="${ssrRenderClass([unref(createOrder).deliveryType == "office" ? "bg-danger" : "bg-surface-container-lowest", "d-flex align-items-center gap-3 p-4 rounded-3 border border-transparent hover-border-outline-30 transition-all"])}" for="pickup-center" data-v-d181602b${_scopeId}><input id="pickup-center" name="shipping-method" value="office" type="radio"${ssrIncludeBooleanAttr(ssrLooseEqual(unref(createOrder).deliveryType, "office")) ? " checked" : ""} data-v-d181602b${_scopeId}><div class="flex-grow-1 d-flex justify-content-between align-items-center" data-v-d181602b${_scopeId}><div class="d-flex align-items-center gap-2" data-v-d181602b${_scopeId}><span class="material-symbols-outlined text-on-surface-variant fs-20" data-v-d181602b${_scopeId}>store</span><span class="fw-bold small" data-v-d181602b${_scopeId}>${ssrInterpolate(trans("Pickup Center"))}</span></div></div></label></div></div><div class="line-outline-30" data-v-d181602b${_scopeId}></div>`);
+            _push2(`<!--]--><div class="bg-surface-container-high rounded-2xl p-4 p-sm-5 d-flex flex-column gap-4" data-v-9f983db7${_scopeId}><div data-v-9f983db7${_scopeId}><h4 class="fw-bold h5 mb-4 d-flex align-items-center gap-2" data-v-9f983db7${_scopeId}><span class="material-symbols-outlined text-primary-custom" data-v-9f983db7${_scopeId}>local_shipping</span> طريقة الشحن </h4><div class="d-flex flex-column gap-3" data-v-9f983db7${_scopeId}><label class="${ssrRenderClass([unref(createOrder).deliveryType == "home" ? "bg-danger" : "bg-surface-container-lowest", "d-flex align-items-center gap-3 p-4 rounded-3 border border-transparent hover-border-outline-30 transition-all"])}" for="home-delivery" data-v-9f983db7${_scopeId}><input checked="" id="home-delivery" name="shipping-method" value="home" type="radio"${ssrIncludeBooleanAttr(ssrLooseEqual(unref(createOrder).deliveryType, "home")) ? " checked" : ""} data-v-9f983db7${_scopeId}><div class="flex-grow-1 d-flex justify-content-between align-items-center" data-v-9f983db7${_scopeId}><div class="d-flex align-items-center gap-2" data-v-9f983db7${_scopeId}><span class="material-symbols-outlined text-on-surface-variant fs-20" data-v-9f983db7${_scopeId}>home</span><span class="fw-bold small" data-v-9f983db7${_scopeId}>${ssrInterpolate(trans("Shipping to Home"))}</span></div></div></label><label class="${ssrRenderClass([unref(createOrder).deliveryType == "office" ? "bg-danger" : "bg-surface-container-lowest", "d-flex align-items-center gap-3 p-4 rounded-3 border border-transparent hover-border-outline-30 transition-all"])}" for="pickup-center" data-v-9f983db7${_scopeId}><input id="pickup-center" name="shipping-method" value="office" type="radio"${ssrIncludeBooleanAttr(ssrLooseEqual(unref(createOrder).deliveryType, "office")) ? " checked" : ""} data-v-9f983db7${_scopeId}><div class="flex-grow-1 d-flex justify-content-between align-items-center" data-v-9f983db7${_scopeId}><div class="d-flex align-items-center gap-2" data-v-9f983db7${_scopeId}><span class="material-symbols-outlined text-on-surface-variant fs-20" data-v-9f983db7${_scopeId}>store</span><span class="fw-bold small" data-v-9f983db7${_scopeId}>${ssrInterpolate(trans("Pickup Center"))}</span></div></div></label></div></div><div class="line-outline-30" data-v-9f983db7${_scopeId}></div>`);
             if (unref(createOrder).deliveryType === "home") {
-              _push2(`<div class="d-flex flex-column gap-3" data-v-d181602b${_scopeId}><div class="d-flex align-items-start gap-3" data-v-d181602b${_scopeId}><div class="rounded-circle bg-primary-10 d-flex align-items-center justify-content-center text-primary-custom flex-shrink-0 mt-1" style="${ssrRenderStyle({ "width": "2.5rem", "height": "2.5rem" })}" data-v-d181602b${_scopeId}><span class="material-symbols-outlined fs-20" style="${ssrRenderStyle({ "font-variation-settings": "'FILL' 1" })}" data-v-d181602b${_scopeId}>location_on</span></div><div class="min-w-0" style="${ssrRenderStyle({ "overflow": "auto" })}" data-v-d181602b${_scopeId}><div class="d-flex flex-column flex-md-row gap-2" data-v-d181602b${_scopeId}><input type="text"${ssrRenderAttr("placeholder", trans("Address"))} class="form-control-sm"${ssrRenderAttr("value", unref(createOrder).address)} data-v-d181602b${_scopeId}><input type="text"${ssrRenderAttr("placeholder", trans("Phone"))} class="form-control-sm"${ssrRenderAttr("value", unref(createOrder).phone)} data-v-d181602b${_scopeId}></div>`);
+              _push2(`<div class="d-flex flex-column gap-3" data-v-9f983db7${_scopeId}><div class="d-flex align-items-start gap-3" data-v-9f983db7${_scopeId}><div class="min-w-0 w-full" style="${ssrRenderStyle({ "overflow": "auto" })}" data-v-9f983db7${_scopeId}><div class="d-flex flex-column gap-2 flex-auto" data-v-9f983db7${_scopeId}><input type="text"${ssrRenderAttr("placeholder", trans("Name"))} class="form-control"${ssrRenderAttr("value", unref(createOrder).name)} data-v-9f983db7${_scopeId}><input type="text"${ssrRenderAttr("placeholder", trans("Address"))} class="form-control"${ssrRenderAttr("value", unref(createOrder).address)} data-v-9f983db7${_scopeId}><input type="text"${ssrRenderAttr("placeholder", trans("Phone"))} class="form-control"${ssrRenderAttr("value", unref(createOrder).phone)} data-v-9f983db7${_scopeId}></div>`);
               if (lat.value > 0 && lng.value > 0) {
-                _push2(`<p class="text-on-surface-variant small text-truncate mb-0" data-v-d181602b${_scopeId}>`);
+                _push2(`<p class="text-on-surface-variant small text-truncate mb-0" data-v-9f983db7${_scopeId}>`);
                 _push2(ssrRenderComponent(_sfc_main$b, {
                   lat: lat.value,
                   lng: lng.value
                 }, null, _parent2, _scopeId));
-                _push2(`<a${ssrRenderAttr("href", unref(createOrder).map)} target="_blank" data-v-d181602b${_scopeId}>${ssrInterpolate(trans("View Location"))}</a></p>`);
+                _push2(`<a${ssrRenderAttr("href", unref(createOrder).map)} target="_blank" data-v-9f983db7${_scopeId}>${ssrInterpolate(trans("View Location"))}</a></p>`);
               } else {
                 _push2(`<!---->`);
               }
-              _push2(`</div></div><button class="btn w-100 btn-map px-4 py-3 rounded-3 fw-bold small transition-opacity active-scale d-flex align-items-center justify-content-center gap-2" data-v-d181602b${_scopeId}><span class="material-symbols-outlined fs-18" data-v-d181602b${_scopeId}>map</span> ${ssrInterpolate(trans("Get Location"))}</button></div>`);
+              _push2(`</div></div><button class="btn w-100 btn-map px-4 py-3 rounded-3 fw-bold small transition-opacity active-scale d-flex align-items-center justify-content-center gap-2" data-v-9f983db7${_scopeId}><span class="material-symbols-outlined fs-18" data-v-9f983db7${_scopeId}>map</span> ${ssrInterpolate(trans("Get Location"))}</button></div>`);
             } else {
               _push2(`<!---->`);
             }
-            _push2(`</div></div><div class="col-12 col-lg-4 mb-4" data-v-d181602b${_scopeId}><div class="bg-surface-container-low rounded-3xl p-4 p-sm-5 sticky-top shadow-sm border border-outline-10" style="${ssrRenderStyle({ "top": "2rem" })}" data-v-d181602b${_scopeId}><h3 class="h4 fw-bolder mb-4 pb-3 border-bottom border-outline-20" data-v-d181602b${_scopeId}>${ssrInterpolate(trans("Information Order"))}</h3><div class="d-flex flex-column gap-3 mb-4" data-v-d181602b${_scopeId}><div class="d-flex justify-content-between text-on-surface-variant small fs-sm-6" data-v-d181602b${_scopeId}><span data-v-d181602b${_scopeId}>${ssrInterpolate(trans("Subtotal"))}</span><span class="fw-semibold text-on-surface" data-v-d181602b${_scopeId}>${ssrInterpolate(subPrice.value)} $</span></div><div class="d-flex justify-content-between text-on-surface-variant small fs-sm-6" data-v-d181602b${_scopeId}><span data-v-d181602b${_scopeId}>${ssrInterpolate(trans("Shipping"))}</span><span class="fw-semibold text-on-surface" data-v-d181602b${_scopeId}>${ssrInterpolate(shippingCost.value)} $</span></div><div class="pt-3 mt-3 border-top border-outline-30 d-flex justify-content-between align-items-baseline" data-v-d181602b${_scopeId}><span class="h5 fw-bold text-on-surface mb-0" data-v-d181602b${_scopeId}>${ssrInterpolate(trans("Total"))}</span><span class="display-6 fw-bolder text-primary-custom" data-v-d181602b${_scopeId}>${ssrInterpolate(shippingCost.value + subPrice.value)} $</span></div></div><div class="d-flex flex-column gap-3" data-v-d181602b${_scopeId}>`);
+            _push2(`</div></div><div class="col-12 col-lg-4 mb-4" data-v-9f983db7${_scopeId}><div class="bg-surface-container-low rounded-3xl p-4 p-sm-5 sticky-top shadow-sm border border-outline-10" style="${ssrRenderStyle({ "top": "2rem" })}" data-v-9f983db7${_scopeId}><h3 class="h4 fw-bolder mb-4 pb-3 border-bottom border-outline-20" data-v-9f983db7${_scopeId}>${ssrInterpolate(trans("Information Order"))}</h3><div class="d-flex flex-column gap-3 mb-4" data-v-9f983db7${_scopeId}><div class="d-flex justify-content-between text-on-surface-variant small fs-sm-6" data-v-9f983db7${_scopeId}><span data-v-9f983db7${_scopeId}>${ssrInterpolate(trans("Subtotal"))}</span><span class="fw-semibold text-on-surface" data-v-9f983db7${_scopeId}>${ssrInterpolate(subPrice.value)} $</span></div><div class="d-flex justify-content-between text-on-surface-variant small fs-sm-6" data-v-9f983db7${_scopeId}><span data-v-9f983db7${_scopeId}>${ssrInterpolate(trans("Shipping"))}</span><span class="fw-semibold text-on-surface" data-v-9f983db7${_scopeId}>${ssrInterpolate(shippingCost.value)} $</span></div><div class="pt-3 mt-3 border-top border-outline-30 d-flex justify-content-between align-items-baseline" data-v-9f983db7${_scopeId}><span class="h5 fw-bold text-on-surface mb-0" data-v-9f983db7${_scopeId}>${ssrInterpolate(trans("Total"))}</span><span class="display-6 fw-bolder text-primary-custom" data-v-9f983db7${_scopeId}>${ssrInterpolate(shippingCost.value + subPrice.value)} $</span></div></div><div class="d-flex flex-column gap-3" data-v-9f983db7${_scopeId}>`);
             if (unref(cartStore).carts.length > 0) {
-              _push2(`<form data-v-d181602b${_scopeId}><button class="btn w-100 py-3 rounded-3 btn-gradient fw-bold fs-5 shadow active-scale transition-all" data-v-d181602b${_scopeId}>${ssrInterpolate(trans("Create Order"))}</button></form>`);
+              _push2(`<form data-v-9f983db7${_scopeId}><button class="btn w-100 py-3 rounded-3 btn-gradient fw-bold fs-5 shadow active-scale transition-all" data-v-9f983db7${_scopeId}>${ssrInterpolate(trans("Create Order"))}</button></form>`);
             } else {
               _push2(`<!---->`);
             }
-            _push2(`<div class="d-flex align-items-center justify-content-center gap-2 text-on-surface-variant-60 small py-2" data-v-d181602b${_scopeId}><span class="material-symbols-outlined" style="${ssrRenderStyle({ "font-size": "14px" })}" data-v-d181602b${_scopeId}>lock</span><span data-v-d181602b${_scopeId}>يمكنك الدفع عند الاستلام أو الدفع عبر شام كاش</span></div></div></div></div></div></main>`);
+            _push2(`<div class="d-flex align-items-center justify-content-center gap-2 text-on-surface-variant-60 small py-2" data-v-9f983db7${_scopeId}><span class="material-symbols-outlined" style="${ssrRenderStyle({ "font-size": "14px" })}" data-v-9f983db7${_scopeId}>lock</span><span data-v-9f983db7${_scopeId}>يمكنك الدفع عند الاستلام أو الدفع عبر شام كاش</span></div></div></div></div></div></main>`);
           } else {
             return [
               createVNode("main", { class: "py-5 px-3 max-w-5xl mx-auto overflow-hidden" }, [
@@ -1889,23 +1895,22 @@ const _sfc_main$a = {
                       }, [
                         createVNode("div", { class: "d-flex align-items-start gap-3" }, [
                           createVNode("div", {
-                            class: "rounded-circle bg-primary-10 d-flex align-items-center justify-content-center text-primary-custom flex-shrink-0 mt-1",
-                            style: { "width": "2.5rem", "height": "2.5rem" }
-                          }, [
-                            createVNode("span", {
-                              class: "material-symbols-outlined fs-20",
-                              style: { "font-variation-settings": "'FILL' 1" }
-                            }, "location_on")
-                          ]),
-                          createVNode("div", {
-                            class: "min-w-0",
+                            class: "min-w-0 w-full",
                             style: { "overflow": "auto" }
                           }, [
-                            createVNode("div", { class: "d-flex flex-column flex-md-row gap-2" }, [
+                            createVNode("div", { class: "d-flex flex-column gap-2 flex-auto" }, [
+                              withDirectives(createVNode("input", {
+                                type: "text",
+                                placeholder: trans("Name"),
+                                class: "form-control",
+                                "onUpdate:modelValue": ($event) => unref(createOrder).name = $event
+                              }, null, 8, ["placeholder", "onUpdate:modelValue"]), [
+                                [vModelText, unref(createOrder).name]
+                              ]),
                               withDirectives(createVNode("input", {
                                 type: "text",
                                 placeholder: trans("Address"),
-                                class: "form-control-sm",
+                                class: "form-control",
                                 "onUpdate:modelValue": ($event) => unref(createOrder).address = $event
                               }, null, 8, ["placeholder", "onUpdate:modelValue"]), [
                                 [vModelText, unref(createOrder).address]
@@ -1913,7 +1918,7 @@ const _sfc_main$a = {
                               withDirectives(createVNode("input", {
                                 type: "text",
                                 placeholder: trans("Phone"),
-                                class: "form-control-sm",
+                                class: "form-control",
                                 "onUpdate:modelValue": ($event) => unref(createOrder).phone = $event
                               }, null, 8, ["placeholder", "onUpdate:modelValue"]), [
                                 [vModelText, unref(createOrder).phone]
@@ -1998,7 +2003,7 @@ _sfc_main$a.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("Modules/Cart/resources/assets/js/Pages/CartIndex.vue");
   return _sfc_setup$a ? _sfc_setup$a(props, ctx) : void 0;
 };
-const CartIndex = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["__scopeId", "data-v-d181602b"]]);
+const CartIndex = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["__scopeId", "data-v-9f983db7"]]);
 const __vite_glob_0_2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: CartIndex

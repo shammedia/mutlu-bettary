@@ -33,6 +33,7 @@ class OrderController extends Controller
     private function generateMsg($order)
     {
         $message = "";
+        $message .= " العميل : {$order->name}\n";
         $message .= "رقم الطلب : {$order->id}\n";
         $message .= "شحن إلى : " . DeliveryTypeEnum::tryFrom($order->delivery_type)?->getLabel() . "\n";
         $message .= "السعر  : {$order->subtotal}\n";
