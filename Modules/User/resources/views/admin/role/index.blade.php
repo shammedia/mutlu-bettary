@@ -218,6 +218,7 @@
                 <div class="modal-body scroll-y mx-lg-5 my-7">
                     <!--begin::Form-->
                     <form id="kt_modal_add_role_form" class="form" method="post"
+
                           action="{{route('admin.roles.store')}}">
                         @csrf
                         <!--begin::Scroll-->
