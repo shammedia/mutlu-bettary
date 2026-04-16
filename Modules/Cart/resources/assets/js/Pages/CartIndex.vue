@@ -17,9 +17,14 @@
                             {{ trans("The order has been sent for review") }}
                         </div>
                     </div>
+                    <div v-if="msgErrorLocation!=''" class="col-12 mt-3">
+                        <div class="alert alert-danger">
+                            {{ msgErrorLocation }}
+                        </div>
+                    </div>
                     <!-- Product Card 1 -->
                     <div class="bg-surface-container-lowest rounded-2xl p-3 p-sm-4 product-card-grid shadow-sm"
-                         v-for="cart in carts">
+                         v-for="cart in cartStore.carts">
                         <div class="product-image-wrap rounded-3 overflow-hidden flex-shrink-0">
                             <img alt="بطارية" class="w-100 h-100 object-fit-cover" :src="cart.primary_slide"/>
                         </div>
@@ -28,7 +33,7 @@
                                 <div class="d-flex justify-content-between align-items-start gap-2">
                                     <h3 class="fs-6 fs-sm-5 fw-bold text-on-surface lh-sm text-truncate">بطارية 35Ah B20
                                         (NS40)</h3>
-                                    <button @click="removeFromCart(cart)" class="btn p-0 text-primary-60 flex-shrink-0">
+                                    <button @click="cartStore.removeFromCart(cart)" class="btn p-0 text-primary-60 flex-shrink-0">
                                         <span class="material-symbols-outlined fs-20">delete</span>
                                     </button>
                                 </div>
@@ -40,12 +45,12 @@
                             </div>
                             <div class="d-flex justify-content-between align-items-center mt-3">
                                 <div class="d-flex align-items-center bg-surface-container rounded-3 p-1">
-                                    <button @click="decreaseQty(cart)"
+                                    <button @click="cartStore.decreaseQuantity(cart)"
                                             class="btn p-0 qty-btn d-flex align-items-center justify-content-center text-primary-custom active-scale-sm">
                                         <span class="material-symbols-outlined fs-18">remove</span>
                                     </button>
                                     <span class="px-2 px-sm-4 fw-bold small fs-sm-6">{{ cart.quantity }}</span>
-                                    <button @click="addToCart(cart)"
+                                    <button @click="cartStore.addQuantity(cart)"
                                             class="btn p-0 qty-btn d-flex align-items-center justify-content-center text-primary-custom active-scale-sm">
                                         <span class="material-symbols-outlined fs-18">add</span>
                                     </button>
@@ -106,14 +111,13 @@
                                 </div>
                                 <div class="min-w-0">
                                     <h4 class="fw-bold fs-6">{{ trans('Address') }}</h4>
-                                    <p v-if="msgErrorLocation.length > 0">
-                                        {{ msgErrorLocation }}
-                                    </p>
+
                                     <p v-if="createOrder.map==null"
                                        class="text-on-surface-variant small text-truncate mb-0">
                                         {{ trans("Doesn't  have a location") }}
                                     </p>
                                     <p v-else class="text-on-surface-variant small text-truncate mb-0">
+                              <LeafletMap :lat="lat" :lng="lng"/>
                                         <a :href="createOrder.map" target="_blank">{{ trans('View Location') }} </a>
                                     </p>
                                 </div>
@@ -152,7 +156,7 @@
                             </div>
                         </div>
                         <div class="d-flex flex-column gap-3">
-                            <form @submit.prevent="submitOrder" v-if="carts.length>0">
+                            <form @submit.prevent="submitOrder" v-if="cartStore.carts.length>0">
                                 <button
                                     class="btn w-100 py-3 rounded-3 btn-gradient fw-bold fs-5 shadow active-scale transition-all">
                                     {{ trans('Create Order') }}
@@ -175,15 +179,18 @@ import {computed, ref, watch, onMounted, nextTick} from 'vue'
 import {usePage, useForm, Link, router, Head} from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/App.vue'
 
+import {useCartStore} from "@/Store/cart.js";
+import LeafletMap from "../Components/LeafletMap.vue";
+const cartStore=useCartStore()
+
 const page = usePage()
-const carts = ref([]);
-carts.value = JSON.parse(localStorage.getItem('carts') || '[]');
 
 const msgErrorLocation = ref('')
-
+const lat=ref(0);
+const lng=ref(0);
 const createOrder = useForm({
     items: [],
-    deliveryType: 'office',
+    deliveryType: 'home',
     shippingCost: 0,
     address: '',
     subPrice: 0,
@@ -195,14 +202,13 @@ const getLocation = () => {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             function (position) {
-                const lat = position.coords.latitude;
-                const lng = position.coords.longitude;
+                 lat.value = position.coords.latitude;
+                 lng.value = position.coords.longitude;
 
-                console.log("Latitude:", lat);
-                console.log("Longitude:", lng);
+
 
                 // مثال: إنشاء رابط Google Maps
-                const mapUrl = `https://www.google.com/maps?q=${lat},${lng}`;
+                const mapUrl = `https://www.google.com/maps?q=${lat.value},${lng.value}`;
                 createOrder.map = mapUrl
                 console.log("Map URL:", mapUrl);
             },
@@ -215,21 +221,19 @@ const getLocation = () => {
     }
 }
 const submitOrder = () => {
-    if (createOrder.deliveryType === 'home' && createOrder.map === null) {
-        msgErrorLocation.value = 'Please select your location';
+    if ( createOrder.map === null || createOrder.map=='') {
+        msgErrorLocation.value = trans('Please select your location');
+        console.log(msgErrorLocation.value)
         return;
     }
-    if (createOrder.deliveryType === 'office') {
-        createOrder.map = '';
-    }
-    createOrder.items = carts.value;
+    createOrder.items = cartStore.carts;
     createOrder.subPrice = subPrice.value;
     createOrder.shippingCost = shippingCost.value;
 
     let cartUrl = '/cart';
     try {
         if (typeof route !== 'undefined' && route) {
-            cartUrl = route('orders.store');
+            cartUrl = route('orders.Store');
         } else {
             const currentLocale = page.props.locale || '';
             cartUrl = currentLocale ? `/${currentLocale}/orders` : '/orders';
@@ -249,8 +253,8 @@ const submitOrder = () => {
             submitSuccess.value = true;
             createOrder.reset();
             createOrder.clearErrors();
-            localStorage.removeItem('carts');
-            carts.value = [];
+
+            cartStore.emptyCart();
             setTimeout(() => {
                 submitSuccess.value = false;
             }, 5000);
@@ -275,12 +279,12 @@ const formatCapacityLabel = (cap) => {
 const shippingCost = computed(() => {
 
     // 1️⃣ حساب إجمالي الكمية
-    const totalQty = carts.value.reduce((sum, item) => {
+    const totalQty = cartStore.carts.reduce((sum, item) => {
         return sum + (item.quantity || 0);
     }, 0);
 
     // 2️⃣ حساب الوزن الكلي (kg)
-    const totalWeightKg = carts.value.reduce((sum, item) => {
+    const totalWeightKg = cartStore.carts.reduce((sum, item) => {
         return sum + ((item.weight || 0) * (item.quantity || 0));
     }, 0);
 
@@ -321,54 +325,12 @@ const shippingCost = computed(() => {
 
 
 const subPrice = computed(() => {
-    return carts.value.reduce((total, item) => {
+    return cartStore.carts.reduce((total, item) => {
         return total + (item.price * item.quantity);
     }, 0);
 });
 
-const addToCart = (cart) => {
 
-    const index = carts.value.findIndex(item =>
-        item.id === cart.id &&
-        item.product_id === cart.product_id
-    );
-
-    if (index !== -1) {
-        carts.value[index].quantity += 1;
-    }
-
-    localStorage.setItem('carts', JSON.stringify(carts.value));
-    console.log(carts.value)
-};
-
-const removeFromCart = (cart) => {
-
-    carts.value = carts.value.filter(item =>
-        !(item.id === cart.id && item.product_id === cart.product_id)
-    );
-
-    localStorage.setItem('carts', JSON.stringify(carts.value));
-};
-
-const decreaseQty = (cart) => {
-
-    const item = carts.value.find(item =>
-        item.id === cart.id &&
-        item.product_id === cart.product_id
-    );
-
-    if (!item) return;
-
-    if (item.quantity > 1) {
-        item.quantity--;
-    } else {
-        carts.value = carts.value.filter(item =>
-            !(item.id === cart.id && item.product_id === cart.product_id)
-        );
-    }
-
-    localStorage.setItem('carts', JSON.stringify(carts.value));
-};
 </script>
 <style>
 @import "bootstrap";

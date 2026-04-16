@@ -25,6 +25,7 @@
         "leaflet": "^1.9.4",
         "nprogress": "^0.2.0",
         "path": "^0.12.7",
+        "pinia": "^3.0.4",
         "toastr": "^2.1.4",
         "vite-plugin-html": "^3.2.2",
         "vite-plugin-vue-devtools": "^7.6.8"

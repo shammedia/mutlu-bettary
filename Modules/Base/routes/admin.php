@@ -12,8 +12,8 @@ use UniSharp\LaravelFilemanager\Lfm;
 
 // Group for Settings Management
 Route::middleware('can:Settings Management')->group(function () {
-    Route::resource('settings', SettingsController::class)->only(['index', 'store']);
-    Route::resource('seo', SeoController::class)->only(['index', 'store']);
+    Route::resource('settings', SettingsController::class)->only(['index', 'Store']);
+    Route::resource('seo', SeoController::class)->only(['index', 'Store']);
 
     Route::delete('branches', [BranchController::class, 'deleteMulti'])->name('branches.deleteMulti');
     Route::resource('branches', BranchController::class)->except(['show', 'destroy']);

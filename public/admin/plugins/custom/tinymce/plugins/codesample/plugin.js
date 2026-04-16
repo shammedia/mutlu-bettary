@@ -2185,19 +2185,19 @@
           ],
           14: [
             function (require, module, exports) {
-              var Prism = require('prismjs/components/prism-core');
-              require('prismjs/components/prism-clike');
-              require('prismjs/components/prism-markup-templating');
-              require('prismjs/components/prism-c');
-              require('prismjs/components/prism-cpp');
-              require('prismjs/components/prism-csharp');
-              require('prismjs/components/prism-css');
-              require('prismjs/components/prism-java');
-              require('prismjs/components/prism-javascript');
-              require('prismjs/components/prism-markup');
-              require('prismjs/components/prism-php');
-              require('prismjs/components/prism-python');
-              require('prismjs/components/prism-ruby');
+              var Prism = require('prismjs/Components/prism-core');
+              require('prismjs/Components/prism-clike');
+              require('prismjs/Components/prism-markup-templating');
+              require('prismjs/Components/prism-c');
+              require('prismjs/Components/prism-cpp');
+              require('prismjs/Components/prism-csharp');
+              require('prismjs/Components/prism-css');
+              require('prismjs/Components/prism-java');
+              require('prismjs/Components/prism-javascript');
+              require('prismjs/Components/prism-markup');
+              require('prismjs/Components/prism-php');
+              require('prismjs/Components/prism-python');
+              require('prismjs/Components/prism-ruby');
               module.exports = { boltExport: Prism };
             },
             {

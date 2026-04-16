@@ -12,7 +12,7 @@
 @endsection
 
 <x-admin-layout>
-    <x-admin.create-card title="Seo Configurations" :formUrl="route('admin.seo.store')">
+    <x-admin.create-card title="Seo Configurations" :formUrl="route('admin.seo.Store')">
         <div class="row mb-8">
             <!--begin::Col-->
             <div class="col-xl-3">

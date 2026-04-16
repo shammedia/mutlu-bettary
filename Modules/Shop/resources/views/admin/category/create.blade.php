@@ -5,7 +5,7 @@
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{{ route('admin.shop_categories.store') }}" method="POST">
+                <form action="{{ route('admin.shop_categories.Store') }}" method="POST">
                     @csrf
                     <div class="modal-header">
                         <h5 class="modal-title" id="createCategoryModalLabel">{{ __('Add New Shop Category') }}</h5>

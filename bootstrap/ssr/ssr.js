@@ -1,13 +1,68 @@
-import { computed, ref, unref, mergeProps, withCtx, openBlock, createBlock, toDisplayString, createCommentVNode, createVNode, useSSRContext, createTextVNode, Fragment, renderList, withModifiers, withDirectives, vModelText, vModelRadio, watch, onMounted, nextTick, vModelSelect, reactive, renderSlot, resolveComponent, vModelCheckbox, createSSRApp, h } from "vue";
+import { ref, computed, unref, mergeProps, withCtx, openBlock, createBlock, toDisplayString, createCommentVNode, createVNode, useSSRContext, createTextVNode, Fragment, renderList, withModifiers, withDirectives, vModelText, onMounted, watch, vModelRadio, nextTick, vModelSelect, reactive, renderSlot, resolveComponent, vModelCheckbox, createSSRApp, h } from "vue";
 import { ssrRenderComponent, ssrInterpolate, ssrRenderAttr, ssrRenderClass, ssrRenderList, ssrRenderSlot, ssrRenderStyle, ssrRenderAttrs, ssrIncludeBooleanAttr, ssrLooseEqual, ssrLooseContain } from "vue/server-renderer";
 import { Link, usePage, Head, useForm, router, createInertiaApp } from "@inertiajs/vue3";
+import { defineStore, storeToRefs } from "pinia";
 import L from "leaflet";
 import createServer from "@inertiajs/vue3/server";
 import { renderToString } from "@vue/server-renderer";
-const _sfc_main$f = {
+const useCartStore = defineStore("cart", () => {
+  const carts = ref(JSON.parse(localStorage.getItem("carts") || "[]"));
+  const count = computed(() => {
+    return carts.value.reduce((total, item) => total + 1, 0);
+  });
+  const emptyCart = () => {
+    carts.value = [];
+    localStorage.setItem("carts", JSON.stringify(carts.value));
+  };
+  const addToCart = (sp) => {
+    const index = carts.value.findIndex((item) => item.id === sp.id);
+    if (index !== -1) {
+      carts.value[index].quantity += 1;
+    } else {
+      carts.value.push({
+        ...sp,
+        quantity: 1
+      });
+    }
+    localStorage.setItem("carts", JSON.stringify(carts.value));
+  };
+  const removeFromCart = (cart) => {
+    carts.value = carts.value.filter(
+      (item) => !(item.id === cart.id && item.product_id === cart.product_id)
+    );
+    localStorage.setItem("carts", JSON.stringify(carts.value));
+  };
+  const addQuantity = (cart) => {
+    const index = carts.value.findIndex(
+      (item) => item.id === cart.id && item.product_id === cart.product_id
+    );
+    if (index !== -1) {
+      carts.value[index].quantity += 1;
+    }
+    localStorage.setItem("carts", JSON.stringify(carts.value));
+  };
+  const decreaseQuantity = (cart) => {
+    const item = carts.value.find(
+      (item2) => item2.id === cart.id && item2.product_id === cart.product_id
+    );
+    if (!item) return;
+    if (item.quantity > 1) {
+      item.quantity--;
+    } else {
+      carts.value = carts.value.filter(
+        (item2) => !(item2.id === cart.id && item2.product_id === cart.product_id)
+      );
+    }
+    localStorage.setItem("carts", JSON.stringify(carts.value));
+  };
+  return { carts, count, addToCart, removeFromCart, addQuantity, decreaseQuantity, emptyCart };
+});
+const _sfc_main$g = {
   __name: "Cart",
   __ssrInlineRender: true,
   setup(__props) {
+    const cartStore = useCartStore();
+    const { count } = storeToRefs(cartStore);
     const withLocalePath = (path) => {
       const loc = page.props.locale || "";
       if (!path || typeof path !== "string") return path;
@@ -29,7 +84,7 @@ const _sfc_main$f = {
     const cartIndexUrl = computed(() => safeRoute("cart.index", {}, "/cart"));
     const carts = ref([]);
     carts.value = JSON.parse(localStorage.getItem("carts") || "[]");
-    const cartCount = carts.value.length;
+    carts.value.length;
     return (_ctx, _push, _parent, _attrs) => {
       _push(ssrRenderComponent(unref(Link), mergeProps({
         href: cartIndexUrl.value,
@@ -37,18 +92,18 @@ const _sfc_main$f = {
       }, _attrs), {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            if (unref(cartCount)) {
-              _push2(`<span class="position-absolute text-danger top-0 start-0 translate-middle badge rounded-pill bg-white"${_scopeId}>${ssrInterpolate(unref(cartCount))}</span>`);
+            if (unref(count)) {
+              _push2(`<span class="position-absolute text-danger top-0 start-0 translate-middle badge rounded-pill bg-white"${_scopeId}>${ssrInterpolate(unref(count))}</span>`);
             } else {
               _push2(`<!---->`);
             }
             _push2(`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cart4" viewBox="0 0 16 16"${_scopeId}><path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"${_scopeId}></path></svg>`);
           } else {
             return [
-              unref(cartCount) ? (openBlock(), createBlock("span", {
+              unref(count) ? (openBlock(), createBlock("span", {
                 key: 0,
                 class: "position-absolute text-danger top-0 start-0 translate-middle badge rounded-pill bg-white"
-              }, toDisplayString(unref(cartCount)), 1)) : createCommentVNode("", true),
+              }, toDisplayString(unref(count)), 1)) : createCommentVNode("", true),
               (openBlock(), createBlock("svg", {
                 xmlns: "http://www.w3.org/2000/svg",
                 width: "24",
@@ -67,11 +122,11 @@ const _sfc_main$f = {
     };
   }
 };
-const _sfc_setup$f = _sfc_main$f.setup;
-_sfc_main$f.setup = (props, ctx) => {
+const _sfc_setup$g = _sfc_main$g.setup;
+_sfc_main$g.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Components/Cart.vue");
-  return _sfc_setup$f ? _sfc_setup$f(props, ctx) : void 0;
+  return _sfc_setup$g ? _sfc_setup$g(props, ctx) : void 0;
 };
 const _export_sfc = (sfc, props) => {
   const target = sfc.__vccOpts || sfc;
@@ -80,7 +135,7 @@ const _export_sfc = (sfc, props) => {
   }
   return target;
 };
-const _sfc_main$e = {
+const _sfc_main$f = {
   __name: "App",
   __ssrInlineRender: true,
   setup(__props) {
@@ -399,7 +454,7 @@ const _sfc_main$e = {
           _push(`<a${ssrRenderAttr("href", item.url)} target="_blank" rel="noopener" data-v-23733349><i class="${ssrRenderClass(item.icon)}" data-v-23733349></i></a>`);
         });
         _push(`<!--]-->`);
-        _push(ssrRenderComponent(_sfc_main$f, null, null, _parent));
+        _push(ssrRenderComponent(_sfc_main$g, null, null, _parent));
         _push(`</div>`);
       } else {
         _push(`<!---->`);
@@ -556,19 +611,19 @@ const _sfc_main$e = {
     };
   }
 };
-const _sfc_setup$e = _sfc_main$e.setup;
-_sfc_main$e.setup = (props, ctx) => {
+const _sfc_setup$f = _sfc_main$f.setup;
+_sfc_main$f.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Layouts/App.vue");
-  return _sfc_setup$e ? _sfc_setup$e(props, ctx) : void 0;
+  return _sfc_setup$f ? _sfc_setup$f(props, ctx) : void 0;
 };
-const AppLayout = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["__scopeId", "data-v-23733349"]]);
+const AppLayout = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["__scopeId", "data-v-23733349"]]);
 const __default__$6 = {
   components: {
     AppLayout
   }
 };
-const _sfc_main$d = /* @__PURE__ */ Object.assign(__default__$6, {
+const _sfc_main$e = /* @__PURE__ */ Object.assign(__default__$6, {
   __name: "AboutUs",
   __ssrInlineRender: true,
   setup(__props) {
@@ -871,17 +926,17 @@ const _sfc_main$d = /* @__PURE__ */ Object.assign(__default__$6, {
     };
   }
 });
-const _sfc_setup$d = _sfc_main$d.setup;
-_sfc_main$d.setup = (props, ctx) => {
+const _sfc_setup$e = _sfc_main$e.setup;
+_sfc_main$e.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("Modules/Base/resources/assets/js/Pages/AboutUs.vue");
-  return _sfc_setup$d ? _sfc_setup$d(props, ctx) : void 0;
+  return _sfc_setup$e ? _sfc_setup$e(props, ctx) : void 0;
 };
 const __vite_glob_0_0 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: _sfc_main$d
+  default: _sfc_main$e
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$c = {
+const _sfc_main$d = {
   __name: "FaqSection",
   __ssrInlineRender: true,
   props: {
@@ -924,20 +979,20 @@ const _sfc_main$c = {
     };
   }
 };
-const _sfc_setup$c = _sfc_main$c.setup;
-_sfc_main$c.setup = (props, ctx) => {
+const _sfc_setup$d = _sfc_main$d.setup;
+_sfc_main$d.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Components/FaqSection.vue");
-  return _sfc_setup$c ? _sfc_setup$c(props, ctx) : void 0;
+  return _sfc_setup$d ? _sfc_setup$d(props, ctx) : void 0;
 };
-const FaqSection = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["__scopeId", "data-v-019b9652"]]);
+const FaqSection = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["__scopeId", "data-v-019b9652"]]);
 const __default__$5 = {
   components: {
     AppLayout,
     FaqSection
   }
 };
-const _sfc_main$b = /* @__PURE__ */ Object.assign(__default__$5, {
+const _sfc_main$c = /* @__PURE__ */ Object.assign(__default__$5, {
   __name: "Index",
   __ssrInlineRender: true,
   setup(__props) {
@@ -973,7 +1028,7 @@ const _sfc_main$b = /* @__PURE__ */ Object.assign(__default__$5, {
       let contactUrl = "/contact-us";
       try {
         if (typeof route !== "undefined" && route) {
-          contactUrl = route("contact-us.store");
+          contactUrl = route("contact-us.Store");
         } else {
           const currentLocale = page2.props.locale || "";
           contactUrl = currentLocale ? `/${currentLocale}/contact-us` : "/contact-us";
@@ -1424,27 +1479,86 @@ const _sfc_main$b = /* @__PURE__ */ Object.assign(__default__$5, {
     };
   }
 });
-const _sfc_setup$b = _sfc_main$b.setup;
-_sfc_main$b.setup = (props, ctx) => {
+const _sfc_setup$c = _sfc_main$c.setup;
+_sfc_main$c.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("Modules/Base/resources/assets/js/Pages/Index.vue");
-  return _sfc_setup$b ? _sfc_setup$b(props, ctx) : void 0;
+  return _sfc_setup$c ? _sfc_setup$c(props, ctx) : void 0;
 };
 const __vite_glob_0_1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: _sfc_main$b
+  default: _sfc_main$c
 }, Symbol.toStringTag, { value: "Module" }));
+const markerIcon = "/build/assets/marker-icon-hN30_KVU.png";
+const markerShadow = "/build/assets/marker-shadow-f7SaPCxT.png";
+const _sfc_main$b = {
+  __name: "LeafletMap",
+  __ssrInlineRender: true,
+  props: {
+    lat: Number,
+    lng: Number
+  },
+  setup(__props) {
+    delete L.Icon.Default.prototype._getIconUrl;
+    L.Icon.Default.mergeOptions({
+      iconUrl: markerIcon,
+      shadowUrl: markerShadow
+    });
+    const props = __props;
+    const mapEl = ref(null);
+    let map = null;
+    let marker = null;
+    onMounted(() => {
+      map = L.map(mapEl.value).setView(
+        [props.lat || 24.7136, props.lng || 46.6753],
+        13
+      );
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "&copy; OpenStreetMap"
+      }).addTo(map);
+      if (props.lat && props.lng) {
+        marker = L.marker([props.lat, props.lng]).addTo(map);
+      }
+    });
+    watch(
+      () => [props.lat, props.lng],
+      ([lat, lng]) => {
+        if (!lat || !lng || !map) return;
+        map.setView([lat, lng], 15);
+        if (marker) {
+          map.removeLayer(marker);
+        }
+        marker = L.marker([lat, lng]).addTo(map);
+      }
+    );
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(`<div${ssrRenderAttrs(mergeProps({
+        id: "map",
+        ref_key: "mapEl",
+        ref: mapEl,
+        style: { "height": "300px", "width": "300px" }
+      }, _attrs))}></div>`);
+    };
+  }
+};
+const _sfc_setup$b = _sfc_main$b.setup;
+_sfc_main$b.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("Modules/Cart/resources/assets/js/Components/LeafletMap.vue");
+  return _sfc_setup$b ? _sfc_setup$b(props, ctx) : void 0;
+};
 const _sfc_main$a = {
   __name: "CartIndex",
   __ssrInlineRender: true,
   setup(__props) {
+    const cartStore = useCartStore();
     const page2 = usePage();
-    const carts = ref([]);
-    carts.value = JSON.parse(localStorage.getItem("carts") || "[]");
     const msgErrorLocation = ref("");
+    const lat = ref(0);
+    const lng = ref(0);
     const createOrder = useForm({
       items: [],
-      deliveryType: "office",
+      deliveryType: "home",
       shippingCost: 0,
       address: "",
       subPrice: 0,
@@ -1455,11 +1569,9 @@ const _sfc_main$a = {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           function(position) {
-            const lat = position.coords.latitude;
-            const lng = position.coords.longitude;
-            console.log("Latitude:", lat);
-            console.log("Longitude:", lng);
-            const mapUrl = `https://www.google.com/maps?q=${lat},${lng}`;
+            lat.value = position.coords.latitude;
+            lng.value = position.coords.longitude;
+            const mapUrl = `https://www.google.com/maps?q=${lat.value},${lng.value}`;
             createOrder.map = mapUrl;
             console.log("Map URL:", mapUrl);
           },
@@ -1472,20 +1584,18 @@ const _sfc_main$a = {
       }
     };
     const submitOrder = () => {
-      if (createOrder.deliveryType === "home" && createOrder.map === null) {
-        msgErrorLocation.value = "Please select your location";
+      if (createOrder.map === null || createOrder.map == "") {
+        msgErrorLocation.value = trans("Please select your location");
+        console.log(msgErrorLocation.value);
         return;
       }
-      if (createOrder.deliveryType === "office") {
-        createOrder.map = "";
-      }
-      createOrder.items = carts.value;
+      createOrder.items = cartStore.carts;
       createOrder.subPrice = subPrice.value;
       createOrder.shippingCost = shippingCost.value;
       let cartUrl = "/cart";
       try {
         if (typeof route !== "undefined" && route) {
-          cartUrl = route("orders.store");
+          cartUrl = route("orders.Store");
         } else {
           const currentLocale = page2.props.locale || "";
           cartUrl = currentLocale ? `/${currentLocale}/orders` : "/orders";
@@ -1504,8 +1614,7 @@ const _sfc_main$a = {
           submitSuccess.value = true;
           createOrder.reset();
           createOrder.clearErrors();
-          localStorage.removeItem("carts");
-          carts.value = [];
+          cartStore.emptyCart();
           setTimeout(() => {
             submitSuccess.value = false;
           }, 5e3);
@@ -1526,10 +1635,10 @@ const _sfc_main$a = {
       return /ah$/i.test(c) ? c : `${c}Ah`;
     };
     const shippingCost = computed(() => {
-      const totalQty = carts.value.reduce((sum, item) => {
+      const totalQty = cartStore.carts.reduce((sum, item) => {
         return sum + (item.quantity || 0);
       }, 0);
-      const totalWeightKg = carts.value.reduce((sum, item) => {
+      const totalWeightKg = cartStore.carts.reduce((sum, item) => {
         return sum + (item.weight || 0) * (item.quantity || 0);
       }, 0);
       const totalWeightTon = totalWeightKg / 1e3;
@@ -1554,46 +1663,16 @@ const _sfc_main$a = {
       return 0;
     });
     const subPrice = computed(() => {
-      return carts.value.reduce((total, item) => {
+      return cartStore.carts.reduce((total, item) => {
         return total + item.price * item.quantity;
       }, 0);
     });
-    const addToCart = (cart) => {
-      const index = carts.value.findIndex(
-        (item) => item.id === cart.id && item.product_id === cart.product_id
-      );
-      if (index !== -1) {
-        carts.value[index].quantity += 1;
-      }
-      localStorage.setItem("carts", JSON.stringify(carts.value));
-      console.log(carts.value);
-    };
-    const removeFromCart = (cart) => {
-      carts.value = carts.value.filter(
-        (item) => !(item.id === cart.id && item.product_id === cart.product_id)
-      );
-      localStorage.setItem("carts", JSON.stringify(carts.value));
-    };
-    const decreaseQty = (cart) => {
-      const item = carts.value.find(
-        (item2) => item2.id === cart.id && item2.product_id === cart.product_id
-      );
-      if (!item) return;
-      if (item.quantity > 1) {
-        item.quantity--;
-      } else {
-        carts.value = carts.value.filter(
-          (item2) => !(item2.id === cart.id && item2.product_id === cart.product_id)
-        );
-      }
-      localStorage.setItem("carts", JSON.stringify(carts.value));
-    };
     return (_ctx, _push, _parent, _attrs) => {
       _push(`<!--[-->`);
       _push(ssrRenderComponent(unref(Head), null, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<title data-v-7282490f${_scopeId}>${ssrInterpolate(trans("Our Products"))} | Mutlu</title>`);
+            _push2(`<title data-v-6903177d${_scopeId}>${ssrInterpolate(trans("Our Products"))} | Mutlu</title>`);
           } else {
             return [
               createVNode("title", null, toDisplayString(trans("Our Products")) + " | Mutlu", 1)
@@ -1605,40 +1684,45 @@ const _sfc_main$a = {
       _push(ssrRenderComponent(AppLayout, null, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<main class="py-5 px-3 max-w-5xl mx-auto overflow-hidden" data-v-7282490f${_scopeId}><section class="mb-4 text-center" data-v-7282490f${_scopeId}><h2 class="display-6 fw-bold text-on-surface mb-1" data-v-7282490f${_scopeId}>سلة المقتنيات</h2><p class="text-on-surface-variant-80 small" data-v-7282490f${_scopeId}>يتوفر شحن حتى باب المنزل.</p></section><div class="row g-4" data-v-7282490f${_scopeId}><div class="col-12 col-lg-8 d-flex flex-column gap-3" data-v-7282490f${_scopeId}>`);
+            _push2(`<main class="py-5 px-3 max-w-5xl mx-auto overflow-hidden" data-v-6903177d${_scopeId}><section class="mb-4 text-center" data-v-6903177d${_scopeId}><h2 class="display-6 fw-bold text-on-surface mb-1" data-v-6903177d${_scopeId}>سلة المقتنيات</h2><p class="text-on-surface-variant-80 small" data-v-6903177d${_scopeId}>يتوفر شحن حتى باب المنزل.</p></section><div class="row g-4" data-v-6903177d${_scopeId}><div class="col-12 col-lg-8 d-flex flex-column gap-3" data-v-6903177d${_scopeId}>`);
             if (submitSuccess.value) {
-              _push2(`<div class="col-12 mt-3" data-v-7282490f${_scopeId}><div class="alert alert-success" data-v-7282490f${_scopeId}>${ssrInterpolate(trans("The order has been sent for review"))}</div></div>`);
+              _push2(`<div class="col-12 mt-3" data-v-6903177d${_scopeId}><div class="alert alert-success" data-v-6903177d${_scopeId}>${ssrInterpolate(trans("The order has been sent for review"))}</div></div>`);
+            } else {
+              _push2(`<!---->`);
+            }
+            if (msgErrorLocation.value != "") {
+              _push2(`<div class="col-12 mt-3" data-v-6903177d${_scopeId}><div class="alert alert-danger" data-v-6903177d${_scopeId}>${ssrInterpolate(msgErrorLocation.value)}</div></div>`);
             } else {
               _push2(`<!---->`);
             }
             _push2(`<!--[-->`);
-            ssrRenderList(carts.value, (cart) => {
-              _push2(`<div class="bg-surface-container-lowest rounded-2xl p-3 p-sm-4 product-card-grid shadow-sm" data-v-7282490f${_scopeId}><div class="product-image-wrap rounded-3 overflow-hidden flex-shrink-0" data-v-7282490f${_scopeId}><img alt="بطارية" class="w-100 h-100 object-fit-cover"${ssrRenderAttr("src", cart.primary_slide)} data-v-7282490f${_scopeId}></div><div class="d-flex flex-column justify-content-between min-w-0" data-v-7282490f${_scopeId}><div data-v-7282490f${_scopeId}><div class="d-flex justify-content-between align-items-start gap-2" data-v-7282490f${_scopeId}><h3 class="fs-6 fs-sm-5 fw-bold text-on-surface lh-sm text-truncate" data-v-7282490f${_scopeId}>بطارية 35Ah B20 (NS40)</h3><button class="btn p-0 text-primary-60 flex-shrink-0" data-v-7282490f${_scopeId}><span class="material-symbols-outlined fs-20" data-v-7282490f${_scopeId}>delete</span></button></div><div class="fs-11 small text-on-surface-variant-80 mt-1" data-v-7282490f${_scopeId}><p class="mb-1" data-v-7282490f${_scopeId}>${ssrInterpolate(trans("Capacity (Ah)"))}${ssrInterpolate(formatCapacityLabel(cart.capacity))}</p><p class="mb-0" data-v-7282490f${_scopeId}>${ssrInterpolate(trans("Voltage (V)"))} ${ssrInterpolate(cart.voltage)}</p></div></div><div class="d-flex justify-content-between align-items-center mt-3" data-v-7282490f${_scopeId}><div class="d-flex align-items-center bg-surface-container rounded-3 p-1" data-v-7282490f${_scopeId}><button class="btn p-0 qty-btn d-flex align-items-center justify-content-center text-primary-custom active-scale-sm" data-v-7282490f${_scopeId}><span class="material-symbols-outlined fs-18" data-v-7282490f${_scopeId}>remove</span></button><span class="px-2 px-sm-4 fw-bold small fs-sm-6" data-v-7282490f${_scopeId}>${ssrInterpolate(cart.quantity)}</span><button class="btn p-0 qty-btn d-flex align-items-center justify-content-center text-primary-custom active-scale-sm" data-v-7282490f${_scopeId}><span class="material-symbols-outlined fs-18" data-v-7282490f${_scopeId}>add</span></button></div><span class="h5 mb-0 fw-bolder text-on-surface" data-v-7282490f${_scopeId}>${ssrInterpolate(cart.price)} $</span></div></div></div>`);
+            ssrRenderList(unref(cartStore).carts, (cart) => {
+              _push2(`<div class="bg-surface-container-lowest rounded-2xl p-3 p-sm-4 product-card-grid shadow-sm" data-v-6903177d${_scopeId}><div class="product-image-wrap rounded-3 overflow-hidden flex-shrink-0" data-v-6903177d${_scopeId}><img alt="بطارية" class="w-100 h-100 object-fit-cover"${ssrRenderAttr("src", cart.primary_slide)} data-v-6903177d${_scopeId}></div><div class="d-flex flex-column justify-content-between min-w-0" data-v-6903177d${_scopeId}><div data-v-6903177d${_scopeId}><div class="d-flex justify-content-between align-items-start gap-2" data-v-6903177d${_scopeId}><h3 class="fs-6 fs-sm-5 fw-bold text-on-surface lh-sm text-truncate" data-v-6903177d${_scopeId}>بطارية 35Ah B20 (NS40)</h3><button class="btn p-0 text-primary-60 flex-shrink-0" data-v-6903177d${_scopeId}><span class="material-symbols-outlined fs-20" data-v-6903177d${_scopeId}>delete</span></button></div><div class="fs-11 small text-on-surface-variant-80 mt-1" data-v-6903177d${_scopeId}><p class="mb-1" data-v-6903177d${_scopeId}>${ssrInterpolate(trans("Capacity (Ah)"))}${ssrInterpolate(formatCapacityLabel(cart.capacity))}</p><p class="mb-0" data-v-6903177d${_scopeId}>${ssrInterpolate(trans("Voltage (V)"))} ${ssrInterpolate(cart.voltage)}</p></div></div><div class="d-flex justify-content-between align-items-center mt-3" data-v-6903177d${_scopeId}><div class="d-flex align-items-center bg-surface-container rounded-3 p-1" data-v-6903177d${_scopeId}><button class="btn p-0 qty-btn d-flex align-items-center justify-content-center text-primary-custom active-scale-sm" data-v-6903177d${_scopeId}><span class="material-symbols-outlined fs-18" data-v-6903177d${_scopeId}>remove</span></button><span class="px-2 px-sm-4 fw-bold small fs-sm-6" data-v-6903177d${_scopeId}>${ssrInterpolate(cart.quantity)}</span><button class="btn p-0 qty-btn d-flex align-items-center justify-content-center text-primary-custom active-scale-sm" data-v-6903177d${_scopeId}><span class="material-symbols-outlined fs-18" data-v-6903177d${_scopeId}>add</span></button></div><span class="h5 mb-0 fw-bolder text-on-surface" data-v-6903177d${_scopeId}>${ssrInterpolate(cart.price)} $</span></div></div></div>`);
             });
-            _push2(`<!--]--><div class="bg-surface-container-high rounded-2xl p-4 p-sm-5 d-flex flex-column gap-4" data-v-7282490f${_scopeId}><div data-v-7282490f${_scopeId}><h4 class="fw-bold h5 mb-4 d-flex align-items-center gap-2" data-v-7282490f${_scopeId}><span class="material-symbols-outlined text-primary-custom" data-v-7282490f${_scopeId}>local_shipping</span> طريقة الشحن </h4><div class="d-flex flex-column gap-3" data-v-7282490f${_scopeId}><label class="${ssrRenderClass([unref(createOrder).deliveryType == "home" ? "bg-danger" : "bg-surface-container-lowest", "d-flex align-items-center gap-3 p-4 rounded-3 border border-transparent hover-border-outline-30 transition-all"])}" for="home-delivery" data-v-7282490f${_scopeId}><input checked="" id="home-delivery" name="shipping-method" value="home" type="radio"${ssrIncludeBooleanAttr(ssrLooseEqual(unref(createOrder).deliveryType, "home")) ? " checked" : ""} data-v-7282490f${_scopeId}><div class="flex-grow-1 d-flex justify-content-between align-items-center" data-v-7282490f${_scopeId}><div class="d-flex align-items-center gap-2" data-v-7282490f${_scopeId}><span class="material-symbols-outlined text-on-surface-variant fs-20" data-v-7282490f${_scopeId}>home</span><span class="fw-bold small" data-v-7282490f${_scopeId}>${ssrInterpolate(trans("Shipping to Home"))}</span></div></div></label><label class="${ssrRenderClass([unref(createOrder).deliveryType == "office" ? "bg-danger" : "bg-surface-container-lowest", "d-flex align-items-center gap-3 p-4 rounded-3 border border-transparent hover-border-outline-30 transition-all"])}" for="pickup-center" data-v-7282490f${_scopeId}><input id="pickup-center" name="shipping-method" value="office" type="radio"${ssrIncludeBooleanAttr(ssrLooseEqual(unref(createOrder).deliveryType, "office")) ? " checked" : ""} data-v-7282490f${_scopeId}><div class="flex-grow-1 d-flex justify-content-between align-items-center" data-v-7282490f${_scopeId}><div class="d-flex align-items-center gap-2" data-v-7282490f${_scopeId}><span class="material-symbols-outlined text-on-surface-variant fs-20" data-v-7282490f${_scopeId}>store</span><span class="fw-bold small" data-v-7282490f${_scopeId}>${ssrInterpolate(trans("Pickup Center"))}</span></div></div></label></div></div><div class="line-outline-30" data-v-7282490f${_scopeId}></div>`);
+            _push2(`<!--]--><div class="bg-surface-container-high rounded-2xl p-4 p-sm-5 d-flex flex-column gap-4" data-v-6903177d${_scopeId}><div data-v-6903177d${_scopeId}><h4 class="fw-bold h5 mb-4 d-flex align-items-center gap-2" data-v-6903177d${_scopeId}><span class="material-symbols-outlined text-primary-custom" data-v-6903177d${_scopeId}>local_shipping</span> طريقة الشحن </h4><div class="d-flex flex-column gap-3" data-v-6903177d${_scopeId}><label class="${ssrRenderClass([unref(createOrder).deliveryType == "home" ? "bg-danger" : "bg-surface-container-lowest", "d-flex align-items-center gap-3 p-4 rounded-3 border border-transparent hover-border-outline-30 transition-all"])}" for="home-delivery" data-v-6903177d${_scopeId}><input checked="" id="home-delivery" name="shipping-method" value="home" type="radio"${ssrIncludeBooleanAttr(ssrLooseEqual(unref(createOrder).deliveryType, "home")) ? " checked" : ""} data-v-6903177d${_scopeId}><div class="flex-grow-1 d-flex justify-content-between align-items-center" data-v-6903177d${_scopeId}><div class="d-flex align-items-center gap-2" data-v-6903177d${_scopeId}><span class="material-symbols-outlined text-on-surface-variant fs-20" data-v-6903177d${_scopeId}>home</span><span class="fw-bold small" data-v-6903177d${_scopeId}>${ssrInterpolate(trans("Shipping to Home"))}</span></div></div></label><label class="${ssrRenderClass([unref(createOrder).deliveryType == "office" ? "bg-danger" : "bg-surface-container-lowest", "d-flex align-items-center gap-3 p-4 rounded-3 border border-transparent hover-border-outline-30 transition-all"])}" for="pickup-center" data-v-6903177d${_scopeId}><input id="pickup-center" name="shipping-method" value="office" type="radio"${ssrIncludeBooleanAttr(ssrLooseEqual(unref(createOrder).deliveryType, "office")) ? " checked" : ""} data-v-6903177d${_scopeId}><div class="flex-grow-1 d-flex justify-content-between align-items-center" data-v-6903177d${_scopeId}><div class="d-flex align-items-center gap-2" data-v-6903177d${_scopeId}><span class="material-symbols-outlined text-on-surface-variant fs-20" data-v-6903177d${_scopeId}>store</span><span class="fw-bold small" data-v-6903177d${_scopeId}>${ssrInterpolate(trans("Pickup Center"))}</span></div></div></label></div></div><div class="line-outline-30" data-v-6903177d${_scopeId}></div>`);
             if (unref(createOrder).deliveryType === "home") {
-              _push2(`<div class="d-flex flex-column gap-3" data-v-7282490f${_scopeId}><div class="d-flex align-items-start gap-3" data-v-7282490f${_scopeId}><div class="rounded-circle bg-primary-10 d-flex align-items-center justify-content-center text-primary-custom flex-shrink-0 mt-1" style="${ssrRenderStyle({ "width": "2.5rem", "height": "2.5rem" })}" data-v-7282490f${_scopeId}><span class="material-symbols-outlined fs-20" style="${ssrRenderStyle({ "font-variation-settings": "'FILL' 1" })}" data-v-7282490f${_scopeId}>location_on</span></div><div class="min-w-0" data-v-7282490f${_scopeId}><h4 class="fw-bold fs-6" data-v-7282490f${_scopeId}>${ssrInterpolate(trans("Address"))}</h4>`);
-              if (msgErrorLocation.value.length > 0) {
-                _push2(`<p data-v-7282490f${_scopeId}>${ssrInterpolate(msgErrorLocation.value)}</p>`);
-              } else {
-                _push2(`<!---->`);
-              }
+              _push2(`<div class="d-flex flex-column gap-3" data-v-6903177d${_scopeId}><div class="d-flex align-items-start gap-3" data-v-6903177d${_scopeId}><div class="rounded-circle bg-primary-10 d-flex align-items-center justify-content-center text-primary-custom flex-shrink-0 mt-1" style="${ssrRenderStyle({ "width": "2.5rem", "height": "2.5rem" })}" data-v-6903177d${_scopeId}><span class="material-symbols-outlined fs-20" style="${ssrRenderStyle({ "font-variation-settings": "'FILL' 1" })}" data-v-6903177d${_scopeId}>location_on</span></div><div class="min-w-0" data-v-6903177d${_scopeId}><h4 class="fw-bold fs-6" data-v-6903177d${_scopeId}>${ssrInterpolate(trans("Address"))}</h4>`);
               if (unref(createOrder).map == null) {
-                _push2(`<p class="text-on-surface-variant small text-truncate mb-0" data-v-7282490f${_scopeId}>${ssrInterpolate(trans("Doesn't  have a location"))}</p>`);
+                _push2(`<p class="text-on-surface-variant small text-truncate mb-0" data-v-6903177d${_scopeId}>${ssrInterpolate(trans("Doesn't  have a location"))}</p>`);
               } else {
-                _push2(`<p class="text-on-surface-variant small text-truncate mb-0" data-v-7282490f${_scopeId}><a${ssrRenderAttr("href", unref(createOrder).map)} target="_blank" data-v-7282490f${_scopeId}>${ssrInterpolate(trans("View Location"))}</a></p>`);
+                _push2(`<p class="text-on-surface-variant small text-truncate mb-0" data-v-6903177d${_scopeId}>`);
+                _push2(ssrRenderComponent(_sfc_main$b, {
+                  lat: lat.value,
+                  lng: lng.value
+                }, null, _parent2, _scopeId));
+                _push2(`<a${ssrRenderAttr("href", unref(createOrder).map)} target="_blank" data-v-6903177d${_scopeId}>${ssrInterpolate(trans("View Location"))}</a></p>`);
               }
-              _push2(`</div></div><button class="btn w-100 btn-map px-4 py-3 rounded-3 fw-bold small transition-opacity active-scale d-flex align-items-center justify-content-center gap-2" data-v-7282490f${_scopeId}><span class="material-symbols-outlined fs-18" data-v-7282490f${_scopeId}>map</span> ${ssrInterpolate(trans("Get Location"))}</button></div>`);
+              _push2(`</div></div><button class="btn w-100 btn-map px-4 py-3 rounded-3 fw-bold small transition-opacity active-scale d-flex align-items-center justify-content-center gap-2" data-v-6903177d${_scopeId}><span class="material-symbols-outlined fs-18" data-v-6903177d${_scopeId}>map</span> ${ssrInterpolate(trans("Get Location"))}</button></div>`);
             } else {
               _push2(`<!---->`);
             }
-            _push2(`</div></div><div class="col-12 col-lg-4 mb-4" data-v-7282490f${_scopeId}><div class="bg-surface-container-low rounded-3xl p-4 p-sm-5 sticky-top shadow-sm border border-outline-10" style="${ssrRenderStyle({ "top": "2rem" })}" data-v-7282490f${_scopeId}><h3 class="h4 fw-bolder mb-4 pb-3 border-bottom border-outline-20" data-v-7282490f${_scopeId}>${ssrInterpolate(trans("Information Order"))}</h3><div class="d-flex flex-column gap-3 mb-4" data-v-7282490f${_scopeId}><div class="d-flex justify-content-between text-on-surface-variant small fs-sm-6" data-v-7282490f${_scopeId}><span data-v-7282490f${_scopeId}>${ssrInterpolate(trans("Subtotal"))}</span><span class="fw-semibold text-on-surface" data-v-7282490f${_scopeId}>${ssrInterpolate(subPrice.value)} $</span></div><div class="d-flex justify-content-between text-on-surface-variant small fs-sm-6" data-v-7282490f${_scopeId}><span data-v-7282490f${_scopeId}>${ssrInterpolate(trans("Shipping"))}</span><span class="fw-semibold text-on-surface" data-v-7282490f${_scopeId}>${ssrInterpolate(shippingCost.value)} $</span></div><div class="pt-3 mt-3 border-top border-outline-30 d-flex justify-content-between align-items-baseline" data-v-7282490f${_scopeId}><span class="h5 fw-bold text-on-surface mb-0" data-v-7282490f${_scopeId}>${ssrInterpolate(trans("Total"))}</span><span class="display-6 fw-bolder text-primary-custom" data-v-7282490f${_scopeId}>${ssrInterpolate(shippingCost.value + subPrice.value)} $</span></div></div><div class="d-flex flex-column gap-3" data-v-7282490f${_scopeId}>`);
-            if (carts.value.length > 0) {
-              _push2(`<form data-v-7282490f${_scopeId}><button class="btn w-100 py-3 rounded-3 btn-gradient fw-bold fs-5 shadow active-scale transition-all" data-v-7282490f${_scopeId}>${ssrInterpolate(trans("Create Order"))}</button></form>`);
+            _push2(`</div></div><div class="col-12 col-lg-4 mb-4" data-v-6903177d${_scopeId}><div class="bg-surface-container-low rounded-3xl p-4 p-sm-5 sticky-top shadow-sm border border-outline-10" style="${ssrRenderStyle({ "top": "2rem" })}" data-v-6903177d${_scopeId}><h3 class="h4 fw-bolder mb-4 pb-3 border-bottom border-outline-20" data-v-6903177d${_scopeId}>${ssrInterpolate(trans("Information Order"))}</h3><div class="d-flex flex-column gap-3 mb-4" data-v-6903177d${_scopeId}><div class="d-flex justify-content-between text-on-surface-variant small fs-sm-6" data-v-6903177d${_scopeId}><span data-v-6903177d${_scopeId}>${ssrInterpolate(trans("Subtotal"))}</span><span class="fw-semibold text-on-surface" data-v-6903177d${_scopeId}>${ssrInterpolate(subPrice.value)} $</span></div><div class="d-flex justify-content-between text-on-surface-variant small fs-sm-6" data-v-6903177d${_scopeId}><span data-v-6903177d${_scopeId}>${ssrInterpolate(trans("Shipping"))}</span><span class="fw-semibold text-on-surface" data-v-6903177d${_scopeId}>${ssrInterpolate(shippingCost.value)} $</span></div><div class="pt-3 mt-3 border-top border-outline-30 d-flex justify-content-between align-items-baseline" data-v-6903177d${_scopeId}><span class="h5 fw-bold text-on-surface mb-0" data-v-6903177d${_scopeId}>${ssrInterpolate(trans("Total"))}</span><span class="display-6 fw-bolder text-primary-custom" data-v-6903177d${_scopeId}>${ssrInterpolate(shippingCost.value + subPrice.value)} $</span></div></div><div class="d-flex flex-column gap-3" data-v-6903177d${_scopeId}>`);
+            if (unref(cartStore).carts.length > 0) {
+              _push2(`<form data-v-6903177d${_scopeId}><button class="btn w-100 py-3 rounded-3 btn-gradient fw-bold fs-5 shadow active-scale transition-all" data-v-6903177d${_scopeId}>${ssrInterpolate(trans("Create Order"))}</button></form>`);
             } else {
               _push2(`<!---->`);
             }
-            _push2(`<div class="d-flex align-items-center justify-content-center gap-2 text-on-surface-variant-60 small py-2" data-v-7282490f${_scopeId}><span class="material-symbols-outlined" style="${ssrRenderStyle({ "font-size": "14px" })}" data-v-7282490f${_scopeId}>lock</span><span data-v-7282490f${_scopeId}>يمكنك الدفع عند الاستلام أو الدفع عبر شام كاش</span></div></div></div></div></div></main>`);
+            _push2(`<div class="d-flex align-items-center justify-content-center gap-2 text-on-surface-variant-60 small py-2" data-v-6903177d${_scopeId}><span class="material-symbols-outlined" style="${ssrRenderStyle({ "font-size": "14px" })}" data-v-6903177d${_scopeId}>lock</span><span data-v-6903177d${_scopeId}>يمكنك الدفع عند الاستلام أو الدفع عبر شام كاش</span></div></div></div></div></div></main>`);
           } else {
             return [
               createVNode("main", { class: "py-5 px-3 max-w-5xl mx-auto overflow-hidden" }, [
@@ -1654,7 +1738,13 @@ const _sfc_main$a = {
                     }, [
                       createVNode("div", { class: "alert alert-success" }, toDisplayString(trans("The order has been sent for review")), 1)
                     ])) : createCommentVNode("", true),
-                    (openBlock(true), createBlock(Fragment, null, renderList(carts.value, (cart) => {
+                    msgErrorLocation.value != "" ? (openBlock(), createBlock("div", {
+                      key: 1,
+                      class: "col-12 mt-3"
+                    }, [
+                      createVNode("div", { class: "alert alert-danger" }, toDisplayString(msgErrorLocation.value), 1)
+                    ])) : createCommentVNode("", true),
+                    (openBlock(true), createBlock(Fragment, null, renderList(unref(cartStore).carts, (cart) => {
                       return openBlock(), createBlock("div", { class: "bg-surface-container-lowest rounded-2xl p-3 p-sm-4 product-card-grid shadow-sm" }, [
                         createVNode("div", { class: "product-image-wrap rounded-3 overflow-hidden flex-shrink-0" }, [
                           createVNode("img", {
@@ -1668,7 +1758,7 @@ const _sfc_main$a = {
                             createVNode("div", { class: "d-flex justify-content-between align-items-start gap-2" }, [
                               createVNode("h3", { class: "fs-6 fs-sm-5 fw-bold text-on-surface lh-sm text-truncate" }, "بطارية 35Ah B20 (NS40)"),
                               createVNode("button", {
-                                onClick: ($event) => removeFromCart(cart),
+                                onClick: ($event) => unref(cartStore).removeFromCart(cart),
                                 class: "btn p-0 text-primary-60 flex-shrink-0"
                               }, [
                                 createVNode("span", { class: "material-symbols-outlined fs-20" }, "delete")
@@ -1682,14 +1772,14 @@ const _sfc_main$a = {
                           createVNode("div", { class: "d-flex justify-content-between align-items-center mt-3" }, [
                             createVNode("div", { class: "d-flex align-items-center bg-surface-container rounded-3 p-1" }, [
                               createVNode("button", {
-                                onClick: ($event) => decreaseQty(cart),
+                                onClick: ($event) => unref(cartStore).decreaseQuantity(cart),
                                 class: "btn p-0 qty-btn d-flex align-items-center justify-content-center text-primary-custom active-scale-sm"
                               }, [
                                 createVNode("span", { class: "material-symbols-outlined fs-18" }, "remove")
                               ], 8, ["onClick"]),
                               createVNode("span", { class: "px-2 px-sm-4 fw-bold small fs-sm-6" }, toDisplayString(cart.quantity), 1),
                               createVNode("button", {
-                                onClick: ($event) => addToCart(cart),
+                                onClick: ($event) => unref(cartStore).addQuantity(cart),
                                 class: "btn p-0 qty-btn d-flex align-items-center justify-content-center text-primary-custom active-scale-sm"
                               }, [
                                 createVNode("span", { class: "material-symbols-outlined fs-18" }, "add")
@@ -1767,14 +1857,17 @@ const _sfc_main$a = {
                           ]),
                           createVNode("div", { class: "min-w-0" }, [
                             createVNode("h4", { class: "fw-bold fs-6" }, toDisplayString(trans("Address")), 1),
-                            msgErrorLocation.value.length > 0 ? (openBlock(), createBlock("p", { key: 0 }, toDisplayString(msgErrorLocation.value), 1)) : createCommentVNode("", true),
                             unref(createOrder).map == null ? (openBlock(), createBlock("p", {
-                              key: 1,
+                              key: 0,
                               class: "text-on-surface-variant small text-truncate mb-0"
                             }, toDisplayString(trans("Doesn't  have a location")), 1)) : (openBlock(), createBlock("p", {
-                              key: 2,
+                              key: 1,
                               class: "text-on-surface-variant small text-truncate mb-0"
                             }, [
+                              createVNode(_sfc_main$b, {
+                                lat: lat.value,
+                                lng: lng.value
+                              }, null, 8, ["lat", "lng"]),
                               createVNode("a", {
                                 href: unref(createOrder).map,
                                 target: "_blank"
@@ -1813,7 +1906,7 @@ const _sfc_main$a = {
                         ])
                       ]),
                       createVNode("div", { class: "d-flex flex-column gap-3" }, [
-                        carts.value.length > 0 ? (openBlock(), createBlock("form", {
+                        unref(cartStore).carts.length > 0 ? (openBlock(), createBlock("form", {
                           key: 0,
                           onSubmit: withModifiers(submitOrder, ["prevent"])
                         }, [
@@ -1846,7 +1939,7 @@ _sfc_main$a.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("Modules/Cart/resources/assets/js/Pages/CartIndex.vue");
   return _sfc_setup$a ? _sfc_setup$a(props, ctx) : void 0;
 };
-const CartIndex = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["__scopeId", "data-v-7282490f"]]);
+const CartIndex = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["__scopeId", "data-v-6903177d"]]);
 const __vite_glob_0_2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: CartIndex
@@ -2464,6 +2557,7 @@ const _sfc_main$8 = /* @__PURE__ */ Object.assign(__default__$3, {
   setup(__props) {
     const page2 = usePage();
     const trans = (key) => page2.props.translations[key] || key;
+    const cartStore = useCartStore();
     computed(() => page2.props.seo);
     const settings = computed(() => page2.props.settings || {});
     const product = computed(() => page2.props.product);
@@ -2482,19 +2576,6 @@ const _sfc_main$8 = /* @__PURE__ */ Object.assign(__default__$3, {
     });
     const activeCapacity = ref("all");
     const selectedSlideBySubProductId = reactive({});
-    const addToCart = (sp) => {
-      let carts = JSON.parse(localStorage.getItem("carts") || "[]");
-      const index = carts.findIndex((item) => item.id === sp.id);
-      if (index !== -1) {
-        carts[index].quantity += 1;
-      } else {
-        carts.push({
-          ...sp,
-          quantity: 1
-        });
-      }
-      localStorage.setItem("carts", JSON.stringify(carts));
-    };
     const normalizeCapacity = (val) => {
       if (val === null || val === void 0) return "";
       return String(val).trim();
@@ -2551,7 +2632,7 @@ const _sfc_main$8 = /* @__PURE__ */ Object.assign(__default__$3, {
       _push(ssrRenderComponent(unref(Head), null, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<title data-v-8c771c79${_scopeId}>${ssrInterpolate(product.value.title)} | Mutlu</title>`);
+            _push2(`<title data-v-a81a0f75${_scopeId}>${ssrInterpolate(product.value.title)} | Mutlu</title>`);
           } else {
             return [
               createVNode("title", null, toDisplayString(product.value.title) + " | Mutlu", 1)
@@ -2563,7 +2644,7 @@ const _sfc_main$8 = /* @__PURE__ */ Object.assign(__default__$3, {
       _push(ssrRenderComponent(AppLayout, null, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<div class="breadcumb-wrapper" data-v-8c771c79${_scopeId}><div class="container" data-v-8c771c79${_scopeId}><div class="row" data-v-8c771c79${_scopeId}><div class="col-lg-6" data-v-8c771c79${_scopeId}><div class="breadcumb-content" data-v-8c771c79${_scopeId}><h1 class="breadcumb-title" data-v-8c771c79${_scopeId}>${ssrInterpolate(product.value.title)}</h1><ul class="breadcumb-menu" data-v-8c771c79${_scopeId}><li data-v-8c771c79${_scopeId}>`);
+            _push2(`<div class="breadcumb-wrapper" data-v-a81a0f75${_scopeId}><div class="container" data-v-a81a0f75${_scopeId}><div class="row" data-v-a81a0f75${_scopeId}><div class="col-lg-6" data-v-a81a0f75${_scopeId}><div class="breadcumb-content" data-v-a81a0f75${_scopeId}><h1 class="breadcumb-title" data-v-a81a0f75${_scopeId}>${ssrInterpolate(product.value.title)}</h1><ul class="breadcumb-menu" data-v-a81a0f75${_scopeId}><li data-v-a81a0f75${_scopeId}>`);
             _push2(ssrRenderComponent(unref(Link), {
               href: _ctx.route("home")
             }, {
@@ -2578,7 +2659,7 @@ const _sfc_main$8 = /* @__PURE__ */ Object.assign(__default__$3, {
               }),
               _: 1
             }, _parent2, _scopeId));
-            _push2(`</li><li data-v-8c771c79${_scopeId}>`);
+            _push2(`</li><li data-v-a81a0f75${_scopeId}>`);
             _push2(ssrRenderComponent(unref(Link), {
               href: _ctx.route("shop.index")
             }, {
@@ -2593,7 +2674,7 @@ const _sfc_main$8 = /* @__PURE__ */ Object.assign(__default__$3, {
               }),
               _: 1
             }, _parent2, _scopeId));
-            _push2(`</li><li class="active" data-v-8c771c79${_scopeId}>${ssrInterpolate(product.value.title)}</li></ul></div></div><div class="col-lg-6 d-lg-block d-none" data-v-8c771c79${_scopeId}><div class="breadcumb-thumb" data-v-8c771c79${_scopeId}><img${ssrRenderAttr("src", product.value.image_link)}${ssrRenderAttr("alt", product.value.title)} data-v-8c771c79${_scopeId}></div></div></div></div></div><section class="product-details my-3" data-v-8c771c79${_scopeId}><div class="container" data-v-8c771c79${_scopeId}><div class="row gx-80" data-v-8c771c79${_scopeId}><div class="col-lg-12" data-v-8c771c79${_scopeId}><h2 class="product-title" data-v-8c771c79${_scopeId}>${ssrInterpolate(product.value.title)}</h2><div class="product_meta" data-v-8c771c79${_scopeId}><span class="posted_in" data-v-8c771c79${_scopeId}>${ssrInterpolate(trans("Category"))}: `);
+            _push2(`</li><li class="active" data-v-a81a0f75${_scopeId}>${ssrInterpolate(product.value.title)}</li></ul></div></div><div class="col-lg-6 d-lg-block d-none" data-v-a81a0f75${_scopeId}><div class="breadcumb-thumb" data-v-a81a0f75${_scopeId}><img${ssrRenderAttr("src", product.value.image_link)}${ssrRenderAttr("alt", product.value.title)} data-v-a81a0f75${_scopeId}></div></div></div></div></div><section class="product-details my-3" data-v-a81a0f75${_scopeId}><div class="container" data-v-a81a0f75${_scopeId}><div class="row gx-80" data-v-a81a0f75${_scopeId}><div class="col-lg-12" data-v-a81a0f75${_scopeId}><h2 class="product-title" data-v-a81a0f75${_scopeId}>${ssrInterpolate(product.value.title)}</h2><div class="product_meta" data-v-a81a0f75${_scopeId}><span class="posted_in" data-v-a81a0f75${_scopeId}>${ssrInterpolate(trans("Category"))}: `);
             if (product.value.category) {
               _push2(ssrRenderComponent(unref(Link), {
                 href: _ctx.route("shop.index", { category: product.value.category.slug }),
@@ -2611,11 +2692,11 @@ const _sfc_main$8 = /* @__PURE__ */ Object.assign(__default__$3, {
                 _: 1
               }, _parent2, _scopeId));
             } else {
-              _push2(`<span data-v-8c771c79${_scopeId}>${ssrInterpolate(trans("Uncategorized"))}</span>`);
+              _push2(`<span data-v-a81a0f75${_scopeId}>${ssrInterpolate(trans("Uncategorized"))}</span>`);
             }
-            _push2(`</span></div><div class="paragraph" data-v-8c771c79${_scopeId}>${product.value.content ?? ""}</div>`);
+            _push2(`</span></div><div class="paragraph" data-v-a81a0f75${_scopeId}>${product.value.content ?? ""}</div>`);
             if (keywordList.value.length) {
-              _push2(`<div data-v-8c771c79${_scopeId}><h4 data-v-8c771c79${_scopeId}>${ssrInterpolate(trans("Keywords"))}:</h4><!--[-->`);
+              _push2(`<div data-v-a81a0f75${_scopeId}><h4 data-v-a81a0f75${_scopeId}>${ssrInterpolate(trans("Keywords"))}:</h4><!--[-->`);
               ssrRenderList(keywordList.value, (kw, index) => {
                 _push2(`<!--[-->`);
                 _push2(ssrRenderComponent(unref(Link), {
@@ -2633,7 +2714,7 @@ const _sfc_main$8 = /* @__PURE__ */ Object.assign(__default__$3, {
                   _: 2
                 }, _parent2, _scopeId));
                 if (index !== keywordList.value.length - 1) {
-                  _push2(`<span data-v-8c771c79${_scopeId}>, </span>`);
+                  _push2(`<span data-v-a81a0f75${_scopeId}>, </span>`);
                 } else {
                   _push2(`<!---->`);
                 }
@@ -2645,61 +2726,61 @@ const _sfc_main$8 = /* @__PURE__ */ Object.assign(__default__$3, {
             }
             _push2(`</div></div>`);
             if (subProducts.value && subProducts.value.length) {
-              _push2(`<div class="space-extra-top" data-v-8c771c79${_scopeId}><div class="row justify-content-between align-items-end" data-v-8c771c79${_scopeId}><div class="col-md-6" data-v-8c771c79${_scopeId}><div class="title-area mb-20" data-v-8c771c79${_scopeId}><h2 class="sec-title" data-v-8c771c79${_scopeId}>${ssrInterpolate(trans("Available sizes"))}</h2></div></div></div><div class="capacity-tabs mb-30" data-v-8c771c79${_scopeId}><button type="button" class="${ssrRenderClass([{ active: activeCapacity.value === "all" }, "capacity-tab-btn"])}" data-v-8c771c79${_scopeId}>${ssrInterpolate(trans("All"))}</button><!--[-->`);
+              _push2(`<div class="space-extra-top" data-v-a81a0f75${_scopeId}><div class="row justify-content-between align-items-end" data-v-a81a0f75${_scopeId}><div class="col-md-6" data-v-a81a0f75${_scopeId}><div class="title-area mb-20" data-v-a81a0f75${_scopeId}><h2 class="sec-title" data-v-a81a0f75${_scopeId}>${ssrInterpolate(trans("Available sizes"))}</h2></div></div></div><div class="capacity-tabs mb-30" data-v-a81a0f75${_scopeId}><button type="button" class="${ssrRenderClass([{ active: activeCapacity.value === "all" }, "capacity-tab-btn"])}" data-v-a81a0f75${_scopeId}>${ssrInterpolate(trans("All"))}</button><!--[-->`);
               ssrRenderList(capacityTabs.value, (cap) => {
-                _push2(`<button type="button" class="${ssrRenderClass([{ active: activeCapacity.value === cap }, "capacity-tab-btn"])}" data-v-8c771c79${_scopeId}>${ssrInterpolate(formatCapacityLabel(cap))}</button>`);
+                _push2(`<button type="button" class="${ssrRenderClass([{ active: activeCapacity.value === cap }, "capacity-tab-btn"])}" data-v-a81a0f75${_scopeId}>${ssrInterpolate(formatCapacityLabel(cap))}</button>`);
               });
-              _push2(`<!--]--></div><div class="row gy-4" data-v-8c771c79${_scopeId}><!--[-->`);
+              _push2(`<!--]--></div><div class="row gy-4" data-v-a81a0f75${_scopeId}><!--[-->`);
               ssrRenderList(filteredSubProducts.value, (sp) => {
-                _push2(`<div class="col-xl-4 col-lg-4 col-md-6" data-v-8c771c79${_scopeId}><div class="sub-product-card" data-v-8c771c79${_scopeId}><div class="sub-product-img" data-v-8c771c79${_scopeId}><img${ssrRenderAttr("src", getSubProductSelectedSlide(sp))}${ssrRenderAttr("alt", sp.name || product.value.title)} data-v-8c771c79${_scopeId}></div>`);
+                _push2(`<div class="col-xl-4 col-lg-4 col-md-6" data-v-a81a0f75${_scopeId}><div class="sub-product-card" data-v-a81a0f75${_scopeId}><div class="sub-product-img" data-v-a81a0f75${_scopeId}><img${ssrRenderAttr("src", getSubProductSelectedSlide(sp))}${ssrRenderAttr("alt", sp.name || product.value.title)} data-v-a81a0f75${_scopeId}></div>`);
                 if (sp.slides && sp.slides.length) {
-                  _push2(`<div class="sub-product-thumbs" data-v-8c771c79${_scopeId}><!--[-->`);
+                  _push2(`<div class="sub-product-thumbs" data-v-a81a0f75${_scopeId}><!--[-->`);
                   ssrRenderList(sp.slides, (img, idx) => {
-                    _push2(`<button type="button" class="${ssrRenderClass([{ active: getSubProductSelectedSlide(sp) === img }, "sub-product-thumb"])}" data-v-8c771c79${_scopeId}><img${ssrRenderAttr("src", img)}${ssrRenderAttr("alt", `${sp.name || product.value.title} - ${idx + 1}`)} data-v-8c771c79${_scopeId}></button>`);
+                    _push2(`<button type="button" class="${ssrRenderClass([{ active: getSubProductSelectedSlide(sp) === img }, "sub-product-thumb"])}" data-v-a81a0f75${_scopeId}><img${ssrRenderAttr("src", img)}${ssrRenderAttr("alt", `${sp.name || product.value.title} - ${idx + 1}`)} data-v-a81a0f75${_scopeId}></button>`);
                   });
                   _push2(`<!--]--></div>`);
                 } else {
                   _push2(`<!---->`);
                 }
-                _push2(`<div class="sub-product-content" data-v-8c771c79${_scopeId}><h3 class="sub-product-title" data-v-8c771c79${_scopeId}>${ssrInterpolate(sp.name || `${formatCapacityLabel(sp.capacity)}`)}</h3><table class="sub-product-table" data-v-8c771c79${_scopeId}><tbody data-v-8c771c79${_scopeId}>`);
+                _push2(`<div class="sub-product-content" data-v-a81a0f75${_scopeId}><h3 class="sub-product-title" data-v-a81a0f75${_scopeId}>${ssrInterpolate(sp.name || `${formatCapacityLabel(sp.capacity)}`)}</h3><table class="sub-product-table" data-v-a81a0f75${_scopeId}><tbody data-v-a81a0f75${_scopeId}>`);
                 if (sp.capacity) {
-                  _push2(`<tr data-v-8c771c79${_scopeId}><th data-v-8c771c79${_scopeId}>${ssrInterpolate(trans("Capacity (Ah)"))}</th><td data-v-8c771c79${_scopeId}>${ssrInterpolate(sp.capacity)}</td></tr>`);
+                  _push2(`<tr data-v-a81a0f75${_scopeId}><th data-v-a81a0f75${_scopeId}>${ssrInterpolate(trans("Capacity (Ah)"))}</th><td data-v-a81a0f75${_scopeId}>${ssrInterpolate(sp.capacity)}</td></tr>`);
                 } else {
                   _push2(`<!---->`);
                 }
                 if (sp.voltage) {
-                  _push2(`<tr data-v-8c771c79${_scopeId}><th data-v-8c771c79${_scopeId}>${ssrInterpolate(trans("Voltage (V)"))}</th><td data-v-8c771c79${_scopeId}>${ssrInterpolate(sp.voltage)}</td></tr>`);
+                  _push2(`<tr data-v-a81a0f75${_scopeId}><th data-v-a81a0f75${_scopeId}>${ssrInterpolate(trans("Voltage (V)"))}</th><td data-v-a81a0f75${_scopeId}>${ssrInterpolate(sp.voltage)}</td></tr>`);
                 } else {
                   _push2(`<!---->`);
                 }
                 if (sp.box) {
-                  _push2(`<tr data-v-8c771c79${_scopeId}><th data-v-8c771c79${_scopeId}>${ssrInterpolate(trans("Box"))}</th><td data-v-8c771c79${_scopeId}>${ssrInterpolate(sp.box)}</td></tr>`);
+                  _push2(`<tr data-v-a81a0f75${_scopeId}><th data-v-a81a0f75${_scopeId}>${ssrInterpolate(trans("Box"))}</th><td data-v-a81a0f75${_scopeId}>${ssrInterpolate(sp.box)}</td></tr>`);
                 } else {
                   _push2(`<!---->`);
                 }
                 if (sp.length) {
-                  _push2(`<tr data-v-8c771c79${_scopeId}><th data-v-8c771c79${_scopeId}>${ssrInterpolate(trans("Length (mm)"))}</th><td data-v-8c771c79${_scopeId}>${ssrInterpolate(sp.length)}</td></tr>`);
+                  _push2(`<tr data-v-a81a0f75${_scopeId}><th data-v-a81a0f75${_scopeId}>${ssrInterpolate(trans("Length (mm)"))}</th><td data-v-a81a0f75${_scopeId}>${ssrInterpolate(sp.length)}</td></tr>`);
                 } else {
                   _push2(`<!---->`);
                 }
                 if (sp.height) {
-                  _push2(`<tr data-v-8c771c79${_scopeId}><th data-v-8c771c79${_scopeId}>${ssrInterpolate(trans("Height (mm)"))}</th><td data-v-8c771c79${_scopeId}>${ssrInterpolate(sp.height)}</td></tr>`);
+                  _push2(`<tr data-v-a81a0f75${_scopeId}><th data-v-a81a0f75${_scopeId}>${ssrInterpolate(trans("Height (mm)"))}</th><td data-v-a81a0f75${_scopeId}>${ssrInterpolate(sp.height)}</td></tr>`);
                 } else {
                   _push2(`<!---->`);
                 }
                 if (sp.weight) {
-                  _push2(`<tr data-v-8c771c79${_scopeId}><th data-v-8c771c79${_scopeId}>${ssrInterpolate(trans("Weight (kg)"))}</th><td data-v-8c771c79${_scopeId}>${ssrInterpolate(sp.weight)}</td></tr>`);
+                  _push2(`<tr data-v-a81a0f75${_scopeId}><th data-v-a81a0f75${_scopeId}>${ssrInterpolate(trans("Weight (kg)"))}</th><td data-v-a81a0f75${_scopeId}>${ssrInterpolate(sp.weight)}</td></tr>`);
                 } else {
                   _push2(`<!---->`);
                 }
-                _push2(`<tr data-v-8c771c79${_scopeId}><th data-v-8c771c79${_scopeId}>${ssrInterpolate(trans("Price ($)"))}</th><td data-v-8c771c79${_scopeId}>${ssrInterpolate(sp.price)} $</td></tr><tr data-v-8c771c79${_scopeId}><th colspan="2" data-v-8c771c79${_scopeId}><button class="capacity-tab-btn" data-v-8c771c79${_scopeId}>${ssrInterpolate(trans("Add To Cart"))} <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16" data-v-8c771c79${_scopeId}><path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z" data-v-8c771c79${_scopeId}></path><path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" data-v-8c771c79${_scopeId}></path></svg></button></th></tr></tbody></table></div></div></div>`);
+                _push2(`<tr data-v-a81a0f75${_scopeId}><th data-v-a81a0f75${_scopeId}>${ssrInterpolate(trans("Price ($)"))}</th><td data-v-a81a0f75${_scopeId}>${ssrInterpolate(sp.price)} $</td></tr><tr data-v-a81a0f75${_scopeId}><th colspan="2" data-v-a81a0f75${_scopeId}><button class="capacity-tab-btn" data-v-a81a0f75${_scopeId}>${ssrInterpolate(trans("Add To Cart"))} <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16" data-v-a81a0f75${_scopeId}><path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z" data-v-a81a0f75${_scopeId}></path><path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" data-v-a81a0f75${_scopeId}></path></svg></button></th></tr></tbody></table></div></div></div>`);
               });
               _push2(`<!--]--></div></div>`);
             } else {
               _push2(`<!---->`);
             }
             if (relatedProducts.value && relatedProducts.value.length) {
-              _push2(`<div class="space-extra-top space-bottom" data-v-8c771c79${_scopeId}><div class="row justify-content-between" data-v-8c771c79${_scopeId}><div class="col-md-6" data-v-8c771c79${_scopeId}><div class="title-area" data-v-8c771c79${_scopeId}><h2 class="sec-title" data-v-8c771c79${_scopeId}>${ssrInterpolate(trans("Related Products"))}</h2></div></div><div class="col-md-auto" data-v-8c771c79${_scopeId}><div class="sec-btn mb-40" data-v-8c771c79${_scopeId}>`);
+              _push2(`<div class="space-extra-top space-bottom" data-v-a81a0f75${_scopeId}><div class="row justify-content-between" data-v-a81a0f75${_scopeId}><div class="col-md-6" data-v-a81a0f75${_scopeId}><div class="title-area" data-v-a81a0f75${_scopeId}><h2 class="sec-title" data-v-a81a0f75${_scopeId}>${ssrInterpolate(trans("Related Products"))}</h2></div></div><div class="col-md-auto" data-v-a81a0f75${_scopeId}><div class="sec-btn mb-40" data-v-a81a0f75${_scopeId}>`);
               _push2(ssrRenderComponent(unref(Link), {
                 href: _ctx.route("shop.index"),
                 class: "btn style-border2"
@@ -2715,15 +2796,15 @@ const _sfc_main$8 = /* @__PURE__ */ Object.assign(__default__$3, {
                 }),
                 _: 1
               }, _parent2, _scopeId));
-              _push2(`</div></div></div><div class="row global-carousel" id="productCarousel" data-slide-show="4" data-lg-slide-show="4" data-md-slide-show="3" data-sm-slide-show="2" data-xs-slide-show="1" data-v-8c771c79${_scopeId}><!--[-->`);
+              _push2(`</div></div></div><div class="row global-carousel" id="productCarousel" data-slide-show="4" data-lg-slide-show="4" data-md-slide-show="3" data-sm-slide-show="2" data-xs-slide-show="1" data-v-a81a0f75${_scopeId}><!--[-->`);
               ssrRenderList(relatedProducts.value, (relatedProduct) => {
-                _push2(`<div class="col-lg-3 col-md-6" data-v-8c771c79${_scopeId}><div class="product-card style2" data-v-8c771c79${_scopeId}><div class="product-img" data-v-8c771c79${_scopeId}>`);
+                _push2(`<div class="col-lg-3 col-md-6" data-v-a81a0f75${_scopeId}><div class="product-card style2" data-v-a81a0f75${_scopeId}><div class="product-img" data-v-a81a0f75${_scopeId}>`);
                 _push2(ssrRenderComponent(unref(Link), {
                   href: _ctx.route("shop.show", relatedProduct.slug)
                 }, {
                   default: withCtx((_2, _push3, _parent3, _scopeId2) => {
                     if (_push3) {
-                      _push3(`<img${ssrRenderAttr("src", relatedProduct.image_link)}${ssrRenderAttr("alt", relatedProduct.title)} data-v-8c771c79${_scopeId2}>`);
+                      _push3(`<img${ssrRenderAttr("src", relatedProduct.image_link)}${ssrRenderAttr("alt", relatedProduct.title)} data-v-a81a0f75${_scopeId2}>`);
                     } else {
                       return [
                         createVNode("img", {
@@ -2735,7 +2816,7 @@ const _sfc_main$8 = /* @__PURE__ */ Object.assign(__default__$3, {
                   }),
                   _: 2
                 }, _parent2, _scopeId));
-                _push2(`</div><div class="product-content" data-v-8c771c79${_scopeId}><h3 class="product-title" data-v-8c771c79${_scopeId}>`);
+                _push2(`</div><div class="product-content" data-v-a81a0f75${_scopeId}><h3 class="product-title" data-v-a81a0f75${_scopeId}>`);
                 _push2(ssrRenderComponent(unref(Link), {
                   href: _ctx.route("shop.show", relatedProduct.slug)
                 }, {
@@ -2750,18 +2831,18 @@ const _sfc_main$8 = /* @__PURE__ */ Object.assign(__default__$3, {
                   }),
                   _: 2
                 }, _parent2, _scopeId));
-                _push2(`</h3><span class="star-rating" data-v-8c771c79${_scopeId}><!--[-->`);
+                _push2(`</h3><span class="star-rating" data-v-a81a0f75${_scopeId}><!--[-->`);
                 ssrRenderList(5, (i) => {
-                  _push2(`<i class="fas fa-star" data-v-8c771c79${_scopeId}></i>`);
+                  _push2(`<i class="fas fa-star" data-v-a81a0f75${_scopeId}></i>`);
                 });
-                _push2(`<!--]--></span><p class="mb-20" data-v-8c771c79${_scopeId}>${ssrInterpolate((relatedProduct.description || "").substring(0, 90))}</p>`);
+                _push2(`<!--]--></span><p class="mb-20" data-v-a81a0f75${_scopeId}>${ssrInterpolate((relatedProduct.description || "").substring(0, 90))}</p>`);
                 _push2(ssrRenderComponent(unref(Link), {
                   href: _ctx.route("shop.show", relatedProduct.slug),
                   class: "link-btn"
                 }, {
                   default: withCtx((_2, _push3, _parent3, _scopeId2) => {
                     if (_push3) {
-                      _push3(`${ssrInterpolate(trans("View details"))} <i class="fas fa-arrow-right" data-v-8c771c79${_scopeId2}></i>`);
+                      _push3(`${ssrInterpolate(trans("View details"))} <i class="fas fa-arrow-right" data-v-a81a0f75${_scopeId2}></i>`);
                     } else {
                       return [
                         createTextVNode(toDisplayString(trans("View details")) + " ", 1),
@@ -2777,9 +2858,9 @@ const _sfc_main$8 = /* @__PURE__ */ Object.assign(__default__$3, {
             } else {
               _push2(`<!---->`);
             }
-            _push2(`</div></section><div class="cta-area-1" data-v-8c771c79${_scopeId}><div class="cta1-bg-thumb" data-v-8c771c79${_scopeId}><img${ssrRenderAttr("src", asset_path.value + "images/custom/cta.png")} alt="img" data-v-8c771c79${_scopeId}></div><div class="container" data-v-8c771c79${_scopeId}><div class="cta-wrap1" data-v-8c771c79${_scopeId}><div class="row justify-content-md-between align-items-center" data-v-8c771c79${_scopeId}><div class="col-lg-6 col-md-8" data-v-8c771c79${_scopeId}><div class="title-area mb-md-0" data-v-8c771c79${_scopeId}><span class="sub-title style2 text-white" data-v-8c771c79${_scopeId}>${ssrInterpolate(trans("Let Us Call You"))}</span><h2 class="sec-title text-white mb-0" data-v-8c771c79${_scopeId}>${ssrInterpolate(trans("Lets Find Your Battery"))}</h2></div></div><div class="col-md-auto" data-v-8c771c79${_scopeId}><div class="title-area mb-0" data-v-8c771c79${_scopeId}>`);
+            _push2(`</div></section><div class="cta-area-1" data-v-a81a0f75${_scopeId}><div class="cta1-bg-thumb" data-v-a81a0f75${_scopeId}><img${ssrRenderAttr("src", asset_path.value + "images/custom/cta.png")} alt="img" data-v-a81a0f75${_scopeId}></div><div class="container" data-v-a81a0f75${_scopeId}><div class="cta-wrap1" data-v-a81a0f75${_scopeId}><div class="row justify-content-md-between align-items-center" data-v-a81a0f75${_scopeId}><div class="col-lg-6 col-md-8" data-v-a81a0f75${_scopeId}><div class="title-area mb-md-0" data-v-a81a0f75${_scopeId}><span class="sub-title style2 text-white" data-v-a81a0f75${_scopeId}>${ssrInterpolate(trans("Let Us Call You"))}</span><h2 class="sec-title text-white mb-0" data-v-a81a0f75${_scopeId}>${ssrInterpolate(trans("Lets Find Your Battery"))}</h2></div></div><div class="col-md-auto" data-v-a81a0f75${_scopeId}><div class="title-area mb-0" data-v-a81a0f75${_scopeId}>`);
             if (whatsappHref.value) {
-              _push2(`<a target="_blank" rel="noopener" class="btn"${ssrRenderAttr("href", whatsappHref.value)} data-v-8c771c79${_scopeId}>${ssrInterpolate(trans("Contact Us"))} <i class="fas fa-arrow-right ms-2" data-v-8c771c79${_scopeId}></i></a>`);
+              _push2(`<a target="_blank" rel="noopener" class="btn"${ssrRenderAttr("href", whatsappHref.value)} data-v-a81a0f75${_scopeId}>${ssrInterpolate(trans("Contact Us"))} <i class="fas fa-arrow-right ms-2" data-v-a81a0f75${_scopeId}></i></a>`);
             } else {
               _push2(ssrRenderComponent(unref(Link), {
                 class: "btn",
@@ -2787,7 +2868,7 @@ const _sfc_main$8 = /* @__PURE__ */ Object.assign(__default__$3, {
               }, {
                 default: withCtx((_2, _push3, _parent3, _scopeId2) => {
                   if (_push3) {
-                    _push3(`${ssrInterpolate(trans("Contact Us"))} <i class="fas fa-arrow-right ms-2" data-v-8c771c79${_scopeId2}></i>`);
+                    _push3(`${ssrInterpolate(trans("Contact Us"))} <i class="fas fa-arrow-right ms-2" data-v-a81a0f75${_scopeId2}></i>`);
                   } else {
                     return [
                       createTextVNode(toDisplayString(trans("Contact Us")) + " ", 1),
@@ -2980,7 +3061,7 @@ const _sfc_main$8 = /* @__PURE__ */ Object.assign(__default__$3, {
                                     createVNode("th", { colspan: "2" }, [
                                       createVNode("button", {
                                         class: "capacity-tab-btn",
-                                        onClick: ($event) => addToCart(sp)
+                                        onClick: ($event) => unref(cartStore).addToCart(sp)
                                       }, [
                                         createTextVNode(toDisplayString(trans("Add To Cart")) + " ", 1),
                                         (openBlock(), createBlock("svg", {
@@ -3154,14 +3235,12 @@ _sfc_main$8.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("Modules/Shop/resources/assets/js/Pages/ShopShow.vue");
   return _sfc_setup$8 ? _sfc_setup$8(props, ctx) : void 0;
 };
-const ShopShow = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["__scopeId", "data-v-8c771c79"]]);
+const ShopShow = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["__scopeId", "data-v-a81a0f75"]]);
 const __vite_glob_0_4 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: ShopShow
 }, Symbol.toStringTag, { value: "Module" }));
 const markerIcon2x = "/build/assets/marker-icon-2x-_ZA0WGCc.png";
-const markerIcon = "/build/assets/marker-icon-hN30_KVU.png";
-const markerShadow = "/build/assets/marker-shadow-f7SaPCxT.png";
 const __default__$2 = {
   components: {
     AppLayout
@@ -3298,7 +3377,7 @@ const _sfc_main$7 = /* @__PURE__ */ Object.assign(__default__$2, {
       let contactUrl = "/contact-us";
       try {
         if (typeof route !== "undefined" && route) {
-          contactUrl = route("contact-us.store");
+          contactUrl = route("contact-us.Store");
         } else {
           const currentLocale = page2.props.locale || "";
           contactUrl = currentLocale ? `/${currentLocale}/contact-us` : "/contact-us";
@@ -3351,7 +3430,7 @@ const _sfc_main$7 = /* @__PURE__ */ Object.assign(__default__$2, {
       _push(ssrRenderComponent(unref(Head), null, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<title data-v-c5b1ff57${_scopeId}>${ssrInterpolate(trans("Contact Us"))} | Mutlu</title>`);
+            _push2(`<title data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(trans("Contact Us"))} | Mutlu</title>`);
           } else {
             return [
               createVNode("title", null, toDisplayString(trans("Contact Us")) + " | Mutlu", 1)
@@ -3363,7 +3442,7 @@ const _sfc_main$7 = /* @__PURE__ */ Object.assign(__default__$2, {
       _push(ssrRenderComponent(AppLayout, null, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<div class="breadcumb-wrapper" data-v-c5b1ff57${_scopeId}><div class="container" data-v-c5b1ff57${_scopeId}><div class="row" data-v-c5b1ff57${_scopeId}><div class="col-lg-6" data-v-c5b1ff57${_scopeId}><div class="breadcumb-content" data-v-c5b1ff57${_scopeId}><h1 class="breadcumb-title" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(trans("Contact Us"))}</h1><ul class="breadcumb-menu" data-v-c5b1ff57${_scopeId}><li data-v-c5b1ff57${_scopeId}>`);
+            _push2(`<div class="breadcumb-wrapper" data-v-9b6a9fe2${_scopeId}><div class="container" data-v-9b6a9fe2${_scopeId}><div class="row" data-v-9b6a9fe2${_scopeId}><div class="col-lg-6" data-v-9b6a9fe2${_scopeId}><div class="breadcumb-content" data-v-9b6a9fe2${_scopeId}><h1 class="breadcumb-title" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(trans("Contact Us"))}</h1><ul class="breadcumb-menu" data-v-9b6a9fe2${_scopeId}><li data-v-9b6a9fe2${_scopeId}>`);
             _push2(ssrRenderComponent(unref(Link), {
               href: _ctx.route("home")
             }, {
@@ -3378,73 +3457,73 @@ const _sfc_main$7 = /* @__PURE__ */ Object.assign(__default__$2, {
               }),
               _: 1
             }, _parent2, _scopeId));
-            _push2(`</li><li class="active" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(trans("Contact Us"))}</li></ul></div></div><div class="col-lg-6 d-lg-block d-none" data-v-c5b1ff57${_scopeId}><div class="breadcumb-thumb" data-v-c5b1ff57${_scopeId}><img${ssrRenderAttr("src", asset_path.value + "images/custom/contact_us.png")} alt="img" data-v-c5b1ff57${_scopeId}></div></div></div></div></div><div class="contact-area space" data-v-c5b1ff57${_scopeId}><div class="container" data-v-c5b1ff57${_scopeId}><div class="row gy-4 justify-content-center" data-v-c5b1ff57${_scopeId}>`);
+            _push2(`</li><li class="active" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(trans("Contact Us"))}</li></ul></div></div><div class="col-lg-6 d-lg-block d-none" data-v-9b6a9fe2${_scopeId}><div class="breadcumb-thumb" data-v-9b6a9fe2${_scopeId}><img${ssrRenderAttr("src", asset_path.value + "images/custom/contact_us.png")} alt="img" data-v-9b6a9fe2${_scopeId}></div></div></div></div></div><div class="contact-area space" data-v-9b6a9fe2${_scopeId}><div class="container" data-v-9b6a9fe2${_scopeId}><div class="row gy-4 justify-content-center" data-v-9b6a9fe2${_scopeId}>`);
             if (contactAddressLines.value.length) {
-              _push2(`<div class="col-xxl-3 col-lg-4 col-md-6" data-v-c5b1ff57${_scopeId}><div class="contact-info" data-v-c5b1ff57${_scopeId}><div class="contact-info_icon" data-v-c5b1ff57${_scopeId}><i class="fas fa-map-marker-alt" data-v-c5b1ff57${_scopeId}></i></div><h6 class="contact-info_title" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(trans("Address"))}</h6><!--[-->`);
+              _push2(`<div class="col-xxl-3 col-lg-4 col-md-6" data-v-9b6a9fe2${_scopeId}><div class="contact-info" data-v-9b6a9fe2${_scopeId}><div class="contact-info_icon" data-v-9b6a9fe2${_scopeId}><i class="fas fa-map-marker-alt" data-v-9b6a9fe2${_scopeId}></i></div><h6 class="contact-info_title" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(trans("Address"))}</h6><!--[-->`);
               ssrRenderList(contactAddressLines.value, (line, idx) => {
-                _push2(`<p class="contact-info_text" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(line)}</p>`);
+                _push2(`<p class="contact-info_text" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(line)}</p>`);
               });
               _push2(`<!--]--></div></div>`);
             } else {
               _push2(`<!---->`);
             }
             if (contactPhoneLines.value.length) {
-              _push2(`<div class="col-xxl-3 col-lg-4 col-md-6" data-v-c5b1ff57${_scopeId}><div class="contact-info" data-v-c5b1ff57${_scopeId}><div class="contact-info_icon" data-v-c5b1ff57${_scopeId}><i class="fas fa-phone-alt" data-v-c5b1ff57${_scopeId}></i></div><h6 class="contact-info_title" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(trans("Phone Number"))}</h6><!--[-->`);
+              _push2(`<div class="col-xxl-3 col-lg-4 col-md-6" data-v-9b6a9fe2${_scopeId}><div class="contact-info" data-v-9b6a9fe2${_scopeId}><div class="contact-info_icon" data-v-9b6a9fe2${_scopeId}><i class="fas fa-phone-alt" data-v-9b6a9fe2${_scopeId}></i></div><h6 class="contact-info_title" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(trans("Phone Number"))}</h6><!--[-->`);
               ssrRenderList(contactPhoneLines.value, (phone, idx) => {
-                _push2(`<p class="contact-info_text" data-v-c5b1ff57${_scopeId}><a dir="ltr"${ssrRenderAttr("href", `tel:${phone}`)} data-v-c5b1ff57${_scopeId}>${ssrInterpolate(phone)}</a></p>`);
+                _push2(`<p class="contact-info_text" data-v-9b6a9fe2${_scopeId}><a dir="ltr"${ssrRenderAttr("href", `tel:${phone}`)} data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(phone)}</a></p>`);
               });
               _push2(`<!--]--></div></div>`);
             } else {
               _push2(`<!---->`);
             }
             if (contactEmailLines.value.length) {
-              _push2(`<div class="col-xxl-3 col-lg-4 col-md-6" data-v-c5b1ff57${_scopeId}><div class="contact-info" data-v-c5b1ff57${_scopeId}><div class="contact-info_icon" data-v-c5b1ff57${_scopeId}><i class="fas fa-envelope" data-v-c5b1ff57${_scopeId}></i></div><h6 class="contact-info_title" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(trans("E-mail"))}</h6><!--[-->`);
+              _push2(`<div class="col-xxl-3 col-lg-4 col-md-6" data-v-9b6a9fe2${_scopeId}><div class="contact-info" data-v-9b6a9fe2${_scopeId}><div class="contact-info_icon" data-v-9b6a9fe2${_scopeId}><i class="fas fa-envelope" data-v-9b6a9fe2${_scopeId}></i></div><h6 class="contact-info_title" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(trans("E-mail"))}</h6><!--[-->`);
               ssrRenderList(contactEmailLines.value, (email, idx) => {
-                _push2(`<p class="contact-info_text" data-v-c5b1ff57${_scopeId}><a dir="ltr"${ssrRenderAttr("href", `mailto:${email}`)} data-v-c5b1ff57${_scopeId}>${ssrInterpolate(email)}</a></p>`);
+                _push2(`<p class="contact-info_text" data-v-9b6a9fe2${_scopeId}><a dir="ltr"${ssrRenderAttr("href", `mailto:${email}`)} data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(email)}</a></p>`);
               });
               _push2(`<!--]--></div></div>`);
             } else {
               _push2(`<!---->`);
             }
-            _push2(`</div></div></div><section class="contact-form-area appointment-area-2 bg-smoke overflow-hidden" style="${ssrRenderStyle({ backgroundImage: `url(${asset_path.value}images/custom/contact_bg.png)` })}" data-v-c5b1ff57${_scopeId}><div class="container" data-v-c5b1ff57${_scopeId}><div class="row gx-0 contact-us__grid" data-v-c5b1ff57${_scopeId}><div class="col-lg-6 d-flex" data-v-c5b1ff57${_scopeId}><div class="contact-form-wrap contact-us__panel mb-1" data-v-c5b1ff57${_scopeId}><div class="title-area" data-v-c5b1ff57${_scopeId}><span class="sub-title" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(trans("Our Agents"))}</span></div><div class="contact-us__locator" data-v-c5b1ff57${_scopeId}><div class="contact-us__map-shell" data-v-c5b1ff57${_scopeId}><div class="contact-us__map" data-v-c5b1ff57${_scopeId}></div></div></div></div></div><div class="col-lg-6 d-flex" data-v-c5b1ff57${_scopeId}><div class="contact-form-wrap contact-us__panel" data-v-c5b1ff57${_scopeId}><div class="title-area" data-v-c5b1ff57${_scopeId}><span class="sub-title" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(trans("Contact form"))}</span><h2 class="sec-title" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(trans("Please Fill The Form Below"))}</h2></div><form class="appointment-form ajax-contact" data-v-c5b1ff57${_scopeId}><div class="row" data-v-c5b1ff57${_scopeId}><div class="col-md-6 form-group" data-v-c5b1ff57${_scopeId}><input${ssrRenderAttr("value", unref(contactForm).name)} type="text" name="name" id="name"${ssrRenderAttr("placeholder", trans("Your Name"))} class="${ssrRenderClass([{ "error": unref(contactForm).errors.name }, "form-control style-white"])}"${ssrIncludeBooleanAttr(unref(contactForm).processing) ? " disabled" : ""} required data-v-c5b1ff57${_scopeId}><i class="far fa-user" data-v-c5b1ff57${_scopeId}></i>`);
+            _push2(`</div></div></div><section class="contact-form-area appointment-area-2 bg-smoke overflow-hidden" style="${ssrRenderStyle({ backgroundImage: `url(${asset_path.value}images/custom/contact_bg.png)` })}" data-v-9b6a9fe2${_scopeId}><div class="container" data-v-9b6a9fe2${_scopeId}><div class="row gx-0 contact-us__grid" data-v-9b6a9fe2${_scopeId}><div class="col-lg-6 d-flex" data-v-9b6a9fe2${_scopeId}><div class="contact-form-wrap contact-us__panel mb-1" data-v-9b6a9fe2${_scopeId}><div class="title-area" data-v-9b6a9fe2${_scopeId}><span class="sub-title" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(trans("Our Agents"))}</span></div><div class="contact-us__locator" data-v-9b6a9fe2${_scopeId}><div class="contact-us__map-shell" data-v-9b6a9fe2${_scopeId}><div class="contact-us__map" data-v-9b6a9fe2${_scopeId}></div></div></div></div></div><div class="col-lg-6 d-flex" data-v-9b6a9fe2${_scopeId}><div class="contact-form-wrap contact-us__panel" data-v-9b6a9fe2${_scopeId}><div class="title-area" data-v-9b6a9fe2${_scopeId}><span class="sub-title" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(trans("Contact form"))}</span><h2 class="sec-title" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(trans("Please Fill The Form Below"))}</h2></div><form class="appointment-form ajax-contact" data-v-9b6a9fe2${_scopeId}><div class="row" data-v-9b6a9fe2${_scopeId}><div class="col-md-6 form-group" data-v-9b6a9fe2${_scopeId}><input${ssrRenderAttr("value", unref(contactForm).name)} type="text" name="name" id="name"${ssrRenderAttr("placeholder", trans("Your Name"))} class="${ssrRenderClass([{ "error": unref(contactForm).errors.name }, "form-control style-white"])}"${ssrIncludeBooleanAttr(unref(contactForm).processing) ? " disabled" : ""} required data-v-9b6a9fe2${_scopeId}><i class="far fa-user" data-v-9b6a9fe2${_scopeId}></i>`);
             if (unref(contactForm).errors.name) {
-              _push2(`<div class="text-danger mt-1 small" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(unref(contactForm).errors.name)}</div>`);
+              _push2(`<div class="text-danger mt-1 small" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(unref(contactForm).errors.name)}</div>`);
             } else {
               _push2(`<!---->`);
             }
-            _push2(`</div><div class="col-md-6 form-group" data-v-c5b1ff57${_scopeId}><input${ssrRenderAttr("value", unref(contactForm).email)} type="email" name="email" id="email"${ssrRenderAttr("placeholder", trans("Email Address"))} class="${ssrRenderClass([{ "error": unref(contactForm).errors.email }, "form-control style-white"])}"${ssrIncludeBooleanAttr(unref(contactForm).processing) ? " disabled" : ""} required data-v-c5b1ff57${_scopeId}><i class="far fa-envelope" data-v-c5b1ff57${_scopeId}></i>`);
+            _push2(`</div><div class="col-md-6 form-group" data-v-9b6a9fe2${_scopeId}><input${ssrRenderAttr("value", unref(contactForm).email)} type="email" name="email" id="email"${ssrRenderAttr("placeholder", trans("Email Address"))} class="${ssrRenderClass([{ "error": unref(contactForm).errors.email }, "form-control style-white"])}"${ssrIncludeBooleanAttr(unref(contactForm).processing) ? " disabled" : ""} required data-v-9b6a9fe2${_scopeId}><i class="far fa-envelope" data-v-9b6a9fe2${_scopeId}></i>`);
             if (unref(contactForm).errors.email) {
-              _push2(`<div class="text-danger mt-1 small" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(unref(contactForm).errors.email)}</div>`);
+              _push2(`<div class="text-danger mt-1 small" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(unref(contactForm).errors.email)}</div>`);
             } else {
               _push2(`<!---->`);
             }
-            _push2(`</div><div class="col-md-6 form-group" data-v-c5b1ff57${_scopeId}><input${ssrRenderAttr("value", unref(contactForm).mobile)} type="text" name="mobile" id="mobile"${ssrRenderAttr("placeholder", trans("Phone Number"))} class="${ssrRenderClass([{ "error": unref(contactForm).errors.mobile }, "form-control style-white"])}"${ssrIncludeBooleanAttr(unref(contactForm).processing) ? " disabled" : ""} data-v-c5b1ff57${_scopeId}><i class="far fa-phone" data-v-c5b1ff57${_scopeId}></i>`);
+            _push2(`</div><div class="col-md-6 form-group" data-v-9b6a9fe2${_scopeId}><input${ssrRenderAttr("value", unref(contactForm).mobile)} type="text" name="mobile" id="mobile"${ssrRenderAttr("placeholder", trans("Phone Number"))} class="${ssrRenderClass([{ "error": unref(contactForm).errors.mobile }, "form-control style-white"])}"${ssrIncludeBooleanAttr(unref(contactForm).processing) ? " disabled" : ""} data-v-9b6a9fe2${_scopeId}><i class="far fa-phone" data-v-9b6a9fe2${_scopeId}></i>`);
             if (unref(contactForm).errors.mobile) {
-              _push2(`<div class="text-danger mt-1 small" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(unref(contactForm).errors.mobile)}</div>`);
+              _push2(`<div class="text-danger mt-1 small" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(unref(contactForm).errors.mobile)}</div>`);
             } else {
               _push2(`<!---->`);
             }
-            _push2(`</div><div class="col-md-6 form-group" data-v-c5b1ff57${_scopeId}><input${ssrRenderAttr("value", unref(contactForm).subject)} type="text" name="subject" id="subject"${ssrRenderAttr("placeholder", trans("Subject"))} class="${ssrRenderClass([{ "error": unref(contactForm).errors.subject }, "form-control style-white"])}"${ssrIncludeBooleanAttr(unref(contactForm).processing) ? " disabled" : ""} data-v-c5b1ff57${_scopeId}><i class="far fa-phone" data-v-c5b1ff57${_scopeId}></i>`);
+            _push2(`</div><div class="col-md-6 form-group" data-v-9b6a9fe2${_scopeId}><input${ssrRenderAttr("value", unref(contactForm).subject)} type="text" name="subject" id="subject"${ssrRenderAttr("placeholder", trans("Subject"))} class="${ssrRenderClass([{ "error": unref(contactForm).errors.subject }, "form-control style-white"])}"${ssrIncludeBooleanAttr(unref(contactForm).processing) ? " disabled" : ""} data-v-9b6a9fe2${_scopeId}><i class="far fa-phone" data-v-9b6a9fe2${_scopeId}></i>`);
             if (unref(contactForm).errors.subject) {
-              _push2(`<div class="text-danger mt-1 small" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(unref(contactForm).errors.subject)}</div>`);
+              _push2(`<div class="text-danger mt-1 small" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(unref(contactForm).errors.subject)}</div>`);
             } else {
               _push2(`<!---->`);
             }
-            _push2(`</div><div class="col-12 form-group" data-v-c5b1ff57${_scopeId}><textarea${ssrRenderAttr("placeholder", trans("Type Your Message"))} class="${ssrRenderClass([{ "error": unref(contactForm).errors.message }, "form-control style-white"])}"${ssrIncludeBooleanAttr(unref(contactForm).processing) ? " disabled" : ""} required data-v-c5b1ff57${_scopeId}>${ssrInterpolate(unref(contactForm).message)}</textarea><i class="far fa-pencil" data-v-c5b1ff57${_scopeId}></i>`);
+            _push2(`</div><div class="col-12 form-group" data-v-9b6a9fe2${_scopeId}><textarea${ssrRenderAttr("placeholder", trans("Type Your Message"))} class="${ssrRenderClass([{ "error": unref(contactForm).errors.message }, "form-control style-white"])}"${ssrIncludeBooleanAttr(unref(contactForm).processing) ? " disabled" : ""} required data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(unref(contactForm).message)}</textarea><i class="far fa-pencil" data-v-9b6a9fe2${_scopeId}></i>`);
             if (unref(contactForm).errors.message) {
-              _push2(`<div class="text-danger mt-1 small" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(unref(contactForm).errors.message)}</div>`);
+              _push2(`<div class="text-danger mt-1 small" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(unref(contactForm).errors.message)}</div>`);
             } else {
               _push2(`<!---->`);
             }
-            _push2(`</div><div class="col-12 form-group mb-0" data-v-c5b1ff57${_scopeId}><button class="btn style2" type="submit"${ssrIncludeBooleanAttr(unref(contactForm).processing) ? " disabled" : ""} data-v-c5b1ff57${_scopeId}>`);
+            _push2(`</div><div class="col-12 form-group mb-0" data-v-9b6a9fe2${_scopeId}><button class="btn style2" type="submit"${ssrIncludeBooleanAttr(unref(contactForm).processing) ? " disabled" : ""} data-v-9b6a9fe2${_scopeId}>`);
             if (unref(contactForm).processing) {
-              _push2(`<span data-v-c5b1ff57${_scopeId}><i class="fa-solid fa-spinner fa-spin me-2" data-v-c5b1ff57${_scopeId}></i>${ssrInterpolate(trans("Sending..."))}</span>`);
+              _push2(`<span data-v-9b6a9fe2${_scopeId}><i class="fa-solid fa-spinner fa-spin me-2" data-v-9b6a9fe2${_scopeId}></i>${ssrInterpolate(trans("Sending..."))}</span>`);
             } else {
-              _push2(`<span data-v-c5b1ff57${_scopeId}>${ssrInterpolate(trans("Send Message"))}</span>`);
+              _push2(`<span data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(trans("Send Message"))}</span>`);
             }
             _push2(`</button></div>`);
             if (submitSuccess.value) {
-              _push2(`<div class="col-12 mt-3" data-v-c5b1ff57${_scopeId}><div class="alert alert-success" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(trans("Thank you for contacting us! We will get back to you soon."))}</div></div>`);
+              _push2(`<div class="col-12 mt-3" data-v-9b6a9fe2${_scopeId}><div class="alert alert-success" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(trans("Thank you for contacting us! We will get back to you soon."))}</div></div>`);
             } else {
               _push2(`<!---->`);
             }
@@ -3715,7 +3794,7 @@ _sfc_main$7.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("Modules/Support/resources/assets/js/Pages/Index.vue");
   return _sfc_setup$7 ? _sfc_setup$7(props, ctx) : void 0;
 };
-const Index = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["__scopeId", "data-v-c5b1ff57"]]);
+const Index = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["__scopeId", "data-v-9b6a9fe2"]]);
 const __vite_glob_0_5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Index

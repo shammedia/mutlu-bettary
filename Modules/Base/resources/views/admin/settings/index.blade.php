@@ -12,7 +12,7 @@
 @endsection
 
 <x-admin-layout>
-    <x-admin.create-card title="Website Configurations" :formUrl="route('admin.settings.store')">
+    <x-admin.create-card title="Website Configurations" :formUrl="route('admin.settings.Store')">
         <div class="row mb-10">
             <!--begin::Col-->
             <div class="col-xl-3 mb-5">

@@ -14,7 +14,7 @@
             <!--end::Close-->
         </div>
 
-        <form method="POST" action="{{route('admin.staffs.store')}}">
+        <form method="POST" action="{{route('admin.staffs.Store')}}">
             @csrf
 
             <input type="hidden" name="type" value="admin">

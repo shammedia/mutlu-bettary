@@ -16,7 +16,7 @@
 @endsection
 
 <x-admin-layout>
-    <x-admin.create-card title="Add New FAQ" :formUrl="route('admin.faqs.store')">
+    <x-admin.create-card title="Add New FAQ" :formUrl="route('admin.faqs.Store')">
         <div class="row mb-8">
             <div class="col-xl-3">
                 <div class="fs-6 fw-bold mt-2 mb-3">

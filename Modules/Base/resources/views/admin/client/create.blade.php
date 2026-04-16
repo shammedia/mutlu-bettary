@@ -16,7 +16,7 @@
 @endsection
 
 <x-admin-layout>
-    <x-admin.create-card title="Add New Client" :formUrl="route('admin.clients.store')">
+    <x-admin.create-card title="Add New Client" :formUrl="route('admin.clients.Store')">
         <div class="row mb-8">
             <div class="col-xl-3">
                 <div class="fs-6 fw-bold mt-2 mb-3">{{ __('Image') }} <span class="text-danger">*</span></div>

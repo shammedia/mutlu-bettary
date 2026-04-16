@@ -299,7 +299,7 @@ const scrollToSection = (id) => {
 };
 
 
-// Home contact form (posts to Support module: contact-us.store)
+// Home contact form (posts to Support module: contact-us.Store)
 const contactSuccess = ref(false)
 const contactForm = useForm({
     name: '',
@@ -315,7 +315,7 @@ const handleContactSubmit = () => {
     let contactUrl = '/contact-us'
     try {
         if (typeof route !== 'undefined' && route) {
-            contactUrl = route('contact-us.store')
+            contactUrl = route('contact-us.Store')
         } else {
             const currentLocale = page.props.locale || ''
             contactUrl = currentLocale ? `/${currentLocale}/contact-us` : '/contact-us'

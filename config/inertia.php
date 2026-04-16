@@ -37,11 +37,11 @@ return [
     |--------------------------------------------------------------------------
     |
     | Set `ensure_pages_exist` to true if you want to enforce that Inertia page
-    | components exist on disk when rendering a page. This is useful for
-    | catching missing or misnamed components.
+    | Components exist on disk when rendering a page. This is useful for
+    | catching missing or misnamed Components.
     |
     | The `page_paths` and `page_extensions` options define where to look
-    | for page components and which file extensions to consider.
+    | for page Components and which file extensions to consider.
     |
     */
 
@@ -69,7 +69,7 @@ return [
     | Testing
     |--------------------------------------------------------------------------
     |
-    | The values described here are used to locate Inertia components on the
+    | The values described here are used to locate Inertia Components on the
     | filesystem. For instance, when using `assertInertia`, the assertion
     | attempts to locate the component as a file relative to any of the
     | paths AND with any of the extensions specified here.

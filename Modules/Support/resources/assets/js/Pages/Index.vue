@@ -420,7 +420,7 @@ const handleSubmit = () => {
     let contactUrl = '/contact-us';
     try {
         if (typeof route !== 'undefined' && route) {
-            contactUrl = route('contact-us.store');
+            contactUrl = route('contact-us.Store');
         } else {
             const currentLocale = page.props.locale || '';
             contactUrl = currentLocale ? `/${currentLocale}/contact-us` : '/contact-us';
@@ -518,7 +518,7 @@ const handleComplaintSubmit = (e) => {
     let complaintUrl = '/complaint';
     try {
         if (typeof route !== 'undefined' && route) {
-            complaintUrl = route('complaint.store');
+            complaintUrl = route('complaint.Store');
         } else {
             const currentLocale = page.props.locale || '';
             complaintUrl = currentLocale ? `/${currentLocale}/complaint` : '/complaint';

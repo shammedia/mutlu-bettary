@@ -6,6 +6,7 @@ import {createInertiaApp, router} from '@inertiajs/vue3';
 // Bridge utilities to (re)initialize legacy theme JS after Inertia navigations
 import './theme-bridge';
 import {resolvePageComponent} from 'laravel-vite-plugin/inertia-helpers';
+import {createPinia} from "pinia";
 
 
 createInertiaApp({
@@ -24,8 +25,10 @@ createInertiaApp({
         }
     },
     setup({el, App, props, plugin}) {
+        const pinia = createPinia();
         const vue = createApp({render: () => h(App, props)})
             .use(plugin).mixin({methods: {route}})
+            .use(pinia)
             .mount(el);
 
         // Run legacy theme initializers after first mount

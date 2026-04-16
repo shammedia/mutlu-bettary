@@ -157,7 +157,7 @@ return [
 
             // resource/
             'assets' => ['path' => 'resources/assets', 'generate' => true],
-            'component-view' => ['path' => 'resources/views/components', 'generate' => false],
+            'component-view' => ['path' => 'resources/views/Components', 'generate' => false],
             'views' => ['path' => 'resources/views', 'generate' => true],
 
             // routes/
@@ -270,7 +270,7 @@ return [
     |
     | You can define new types of activators here, file, database, etc. The only
     | required parameter is 'class'.
-    | The file activator will store the activation status in storage/installed_modules
+    | The file activator will Store the activation status in storage/installed_modules
     */
     'activators' => [
         'file' => [
