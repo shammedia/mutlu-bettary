@@ -77,6 +77,7 @@ class OrderController extends Controller
             'status' => 'pending',
             'phone' => $request->phone,
             'map' => $request->map,
+            'total' => $request->total,
         ]);
         foreach ($request->items as $item) {
             $product = SubProduct::find($item['id']);
