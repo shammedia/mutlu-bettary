@@ -111,7 +111,7 @@
                                 </div>
                                 <div class="min-w-0" style="overflow: auto">
 <!--                                    <h4 class="fw-bold fs-6">{{ trans('Address') }}</h4>-->
-                                   <div class="d-flex gap-2">
+                                   <div class="d-flex flex-column flex-md-row  gap-2">
                                        <input type="text" :placeholder="trans('Address')" class="form-control-sm" v-model="createOrder.address">
                                        <input type="text" :placeholder="trans('Phone')" class="form-control-sm" v-model="createOrder.phone">
                                    </div>
