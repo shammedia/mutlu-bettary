@@ -22,6 +22,7 @@
                            data-kt-check-target="#dataTable .form-check-input" value="1"/>
                 </div>
             </th>
+            <th class="min-w-100px">{{__('ORDER ID')}}</th>
             <th class="min-w-100px">{{__('Customer Name')}}</th>
             <th class="min-w-100px">{{__('Delivery Type')}}</th>
             <th class="min-w-100px">{{__('Status')}}</th>
@@ -39,6 +40,7 @@
                         <input class="form-check-input" type="checkbox" name="ids[]" value="{{$order->id}}"/>
                     </div>
                 </td>
+                <td>{{$order->id}}</td>
                 <td>{{$order->name}}</td>
                 <td>{{\Modules\Order\app\Enums\DeliveryTypeEnum::tryFrom($order->delivery_type)?->getLabel()}}</td>
                 <td>{{\Modules\Order\app\Enums\OrderEnum::tryFrom($order->status)?->getLabel()}}</td>
@@ -59,11 +61,7 @@
         @endforeach
         </tbody>
     </x-admin.table>
-<div class="row">
-    <div class="col-md-12">
-        {{ $model->links() }}
-    </div>
-</div>
+
 </x-admin-layout>
 
 

@@ -58,6 +58,7 @@
                            data-kt-check-target="#dataTable .form-check-input" value="1"/>
                 </div>
             </th>
+            <th class="min-w-100px"><?php echo e(__('Customer Name')); ?></th>
             <th class="min-w-100px"><?php echo e(__('Delivery Type')); ?></th>
             <th class="min-w-100px"><?php echo e(__('Status')); ?></th>
             <th class="min-w-100px"><?php echo e(__('Shipping')); ?></th>
@@ -74,6 +75,7 @@
                         <input class="form-check-input" type="checkbox" name="ids[]" value="<?php echo e($order->id); ?>"/>
                     </div>
                 </td>
+                <td><?php echo e($order->name); ?></td>
                 <td><?php echo e(\Modules\Order\app\Enums\DeliveryTypeEnum::tryFrom($order->delivery_type)?->getLabel()); ?></td>
                 <td><?php echo e(\Modules\Order\app\Enums\OrderEnum::tryFrom($order->status)?->getLabel()); ?></td>
                 <td><?php echo e($order->shipping); ?></td>
