@@ -246,7 +246,7 @@
                 <div class="modal-body scroll-y mx-lg-5 my-7">
                     <!--begin::Form-->
                     <form id="kt_modal_add_role_form" class="form" method="post"
-                          action="<?php echo e(route('admin.roles.Store')); ?>">
+                          action="<?php echo e(route('admin.roles.store')); ?>">
                         <?php echo csrf_field(); ?>
                         <!--begin::Scroll-->
                         <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_role_scroll"

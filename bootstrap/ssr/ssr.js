@@ -1075,7 +1075,7 @@ const _sfc_main$c = /* @__PURE__ */ Object.assign(__default__$5, {
       let contactUrl = "/contact-us";
       try {
         if (typeof route !== "undefined" && route) {
-          contactUrl = route("contact-us.Store");
+          contactUrl = route("contact-us.store");
         } else {
           const currentLocale = page.props.locale || "";
           contactUrl = currentLocale ? `/${currentLocale}/contact-us` : "/contact-us";

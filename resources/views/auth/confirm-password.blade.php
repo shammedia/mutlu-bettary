@@ -15,7 +15,7 @@
         <div class="col-12 col-md-8 col-lg-6">
             <x-admin.card :title="__('Confirm Password')">
                 <p class="mb-6 text-muted">{{ __('For your security, please confirm your password to continue.') }}</p>
-                <form method="POST" action="{{ route('password.confirm.Store') }}">
+                <form method="POST" action="{{ route('password.confirm.store') }}">
                     @csrf
                     <div class="row mb-6">
                         <label class="col-lg-4 col-form-label required fw-semibold">{{ __('Password') }}</label>
