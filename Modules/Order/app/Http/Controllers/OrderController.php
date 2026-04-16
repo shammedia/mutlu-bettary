@@ -78,10 +78,10 @@ class OrderController extends Controller
         }
         if ($order->address != '') {
 
-            $message .= "العنوان\n";
+            $message .= "\n العنوان \n";
             $message .= $order->address;
         }
-            $message .= "الهاتف\n";
+            $message .= "\n الهاتف \n";
             $message .= $order->phone;
 
         $msg = urlencode($message);
@@ -143,10 +143,11 @@ class OrderController extends Controller
         }
         if ($order->address != '') {
 
-            $message .= "العنوان\n";
+            $message .= "\n العنوان \n";
             $message .= $order->address;
+
         }
-        $message .= "الهاتف\n";
+        $message .= "\n الهاتف \n";
         $message .= $order->phone;
         $msg = urlencode($message);
         $shippingPhone = Settings::get('shipping_phone');
