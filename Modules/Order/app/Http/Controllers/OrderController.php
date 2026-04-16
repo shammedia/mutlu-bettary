@@ -42,6 +42,7 @@ class OrderController extends Controller
 
         foreach ($order->items as $item) {
             $message .= "المنتج : {$item->product->name}\n";
+            $message .= "الفئة : {$item->product?->product?->getTranslation('title', app()->getLocale())}\n";
             $message .= "العدد : {$item->quantity}\n";
             $message .= "السعر : {$item->price}\n";
             $message .= "الإجمالي : {$item->total}\n";
@@ -60,7 +61,8 @@ class OrderController extends Controller
 
         }
         $message .= "الهاتف  : {$order->phone}\n";
-        return urlencode($message);
+
+        return rawurlencode($message);
     }
 
     /**
@@ -77,8 +79,9 @@ class OrderController extends Controller
             'status' => 'pending',
             'phone' => $request->phone,
             'map' => $request->map,
-            'total' => $request->total,
-        ]);
+        ])->refresh();
+
+
         foreach ($request->items as $item) {
             $product = SubProduct::find($item['id']);
             if (!$product) {
@@ -91,6 +94,7 @@ class OrderController extends Controller
                 'price' => $product->price,
             ]);
         }
+        $order->refresh();
         $msg = $this->generateMsg($order);
         $shippingPhone = ltrim(Settings::get('phone'), '+');
         return back()->with('wa', "https://wa.me/{$shippingPhone}?text={$msg}");

@@ -76,6 +76,16 @@
                                             <th><?php echo e(__('Total')); ?></th>
                                             <td><?php echo e($order->total); ?></td>
                                         </tr>
+                                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($order->address!=''): ?>
+                                        <tr>
+                                            <th><?php echo e(__('Address')); ?></th>
+                                            <td><?php echo e($order->address); ?></td>
+                                        </tr>
+                                        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                                        <tr>
+                                            <th><?php echo e(__('Phone')); ?></th>
+                                            <td><a href="https://wa.me/<?php echo e(ltrim($order->phone,'+')); ?>"><?php echo e($order->phone); ?></a></td>
+                                        </tr>
                                         <tr>
                                             <th><?php echo e(__('Created At')); ?></th>
                                             <td><?php echo e($order->created_at->diffForHumans()); ?></td>

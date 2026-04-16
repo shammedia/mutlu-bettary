@@ -17,7 +17,11 @@ class Order extends Model
      */
     protected $guarded = [];
 
-
+protected $casts=[
+    'subtotal' => 'float',
+    'shipping' => 'float',
+    'total' => 'float'
+];
     public function items(): HasMany
     {
         return $this->hasMany(Item::class);
