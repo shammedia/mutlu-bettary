@@ -80,6 +80,7 @@ class OrderController extends Controller
             'status' => 'pending',
             'phone' => $request->phone,
             'map' => $request->map,
+            'name'=>$request->name,
         ])->refresh();
 
 
