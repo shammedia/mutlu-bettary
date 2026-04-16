@@ -1,5 +1,5 @@
 <template>
-    <div id="map" ref="mapEl" style="height: 300px;width: 300px"></div>
+    <div id="map" ref="mapEl" class="mt-2" style="height: 300px;width: 300px;z-index: 1"></div>
 </template>
 
 <script setup>

@@ -53,6 +53,9 @@ class HandleInertiaRequests extends Middleware {
 
         // Try to get shared data, but handle errors gracefully for error pages
         $shared = array_merge($shared, [
+            'flash' => [
+                'wa' => fn () => $request->session()->get('wa'),
+            ],
             'appName' => $safe(fn() => config('app.name'), 'Sham Vision'),
             'csrf' => $safe(fn() => csrf_token(), ''),
             'asset_path' => asset('/'),

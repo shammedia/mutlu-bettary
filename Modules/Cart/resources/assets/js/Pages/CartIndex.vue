@@ -17,11 +17,11 @@
                             {{ trans("The order has been sent for review") }}
                         </div>
                     </div>
-                    <div v-if="msgErrorLocation!=''" class="col-12 mt-3">
+<!--                    <div v-if="msgErrorLocation!=''" class="col-12 mt-3">
                         <div class="alert alert-danger">
                             {{ msgErrorLocation }}
                         </div>
-                    </div>
+                    </div>-->
                     <!-- Product Card 1 -->
                     <div class="bg-surface-container-lowest rounded-2xl p-3 p-sm-4 product-card-grid shadow-sm"
                          v-for="cart in cartStore.carts">
@@ -109,14 +109,17 @@
                                     <span class="material-symbols-outlined fs-20"
                                           style="font-variation-settings: 'FILL' 1;">location_on</span>
                                 </div>
-                                <div class="min-w-0">
-                                    <h4 class="fw-bold fs-6">{{ trans('Address') }}</h4>
-                                    <input type="text" class="form-control-sm" v-model="createOrder.address">
-                                    <p v-if="createOrder.map==null"
+                                <div class="min-w-0" style="overflow: auto">
+<!--                                    <h4 class="fw-bold fs-6">{{ trans('Address') }}</h4>-->
+                                   <div class="d-flex gap-2">
+                                       <input type="text" :placeholder="trans('Address')" class="form-control-sm" v-model="createOrder.address">
+                                       <input type="text" :placeholder="trans('Phone')" class="form-control-sm" v-model="createOrder.phone">
+                                   </div>
+<!--                                    <p v-if="createOrder.map==null"
                                        class="text-on-surface-variant small text-truncate mb-0">
                                         {{ trans("Doesn't  have a location") }}
-                                    </p>
-                                    <p v-else class="text-on-surface-variant small text-truncate mb-0">
+                                    </p>-->
+                                    <p v-if="lat>0 && lng>0" class="text-on-surface-variant small text-truncate mb-0">
                               <LeafletMap :lat="lat" :lng="lng"/>
                                         <a :href="createOrder.map" target="_blank">{{ trans('View Location') }} </a>
                                     </p>
@@ -222,9 +225,14 @@ const getLocation = () => {
     }
 }
 const submitOrder = () => {
-    if ( createOrder.map === null || createOrder.map=='') {
+    if ( (createOrder.map === null || createOrder.map=='') && createOrder.address=='') {
         msgErrorLocation.value = trans('Please select your location');
-        console.log(msgErrorLocation.value)
+        toastr.error(msgErrorLocation.value)
+        return;
+    }
+    if(createOrder.phone==''){
+        msgErrorLocation.value = trans('Please insert your phone number');
+        toastr.error(msgErrorLocation.value)
         return;
     }
     createOrder.items = cartStore.carts;
@@ -250,7 +258,8 @@ const submitOrder = () => {
         onBefore: () => {
             submitSuccess.value = false;
         },
-        onSuccess: () => {
+        onSuccess: (page) => {
+
             submitSuccess.value = true;
             createOrder.reset();
             createOrder.clearErrors();
@@ -259,6 +268,7 @@ const submitOrder = () => {
             setTimeout(() => {
                 submitSuccess.value = false;
             }, 5000);
+            window.open(page.props.flash.wa,'_blank')
         },
         onError: () => {
             submitSuccess.value = false;

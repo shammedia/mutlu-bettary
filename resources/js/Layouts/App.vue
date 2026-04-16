@@ -155,7 +155,9 @@
                                     </li>
                                 </ul>
                             </nav>
+
                             <div class="navbar-right d-inline-flex d-lg-none">
+                                <span class="d-flex w-25 justify-content-center position-relative" style="left:20px;"> <cart/></span>
                                 <button type="button" class="menu-toggle icon-btn"><i class="fas fa-bars"></i></button>
                             </div>
                         </div>
@@ -318,6 +320,8 @@
             <i class="fab fa-whatsapp" aria-hidden="true"></i>
         </a>
     </Transition>
+
+
 
     <!-- Scroll To Top -->
     <div class="scroll-top">
@@ -527,6 +531,57 @@ const isActive = (routeName) => {
     animation: waPulse 2.4s ease-out infinite;
     pointer-events: none;
 }
+/*Carts*/
+
+.cart-fab {
+    position: fixed;
+    left: 30px;
+    bottom: 90px; /* keep above scroll-to-top (bottom:30px) */
+    width: 50px;
+    height: 50px;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    color: #ff0000;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22);
+    z-index: 9999;
+    transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.cart-fab i {
+    font-size: 26px;
+    line-height: 1;
+}
+
+.cart-fab:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.26);
+    filter: brightness(1.03);
+}
+
+.cart-fab:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.cart-fab:focus-visible {
+    outline: 3px solid rgba(255, 0, 0, 0.35);
+    outline-offset: 3px;
+}
+
+.cart-fab::before {
+    content: "";
+    position: absolute;
+    inset: -8px;
+    border-radius: inherit;
+    background: rgba(255, 0, 0, 0.35);
+    opacity: 0;
+    transform: scale(0.9);
+    animation: waPulse 2.4s ease-out infinite;
+    pointer-events: none;
+}
 
 @keyframes waPulse {
     0% {
@@ -548,11 +603,15 @@ const isActive = (routeName) => {
 
 /* Smooth entrance */
 .wa-fab-enter-active,
-.wa-fab-leave-active {
+.wa-fab-leave-active,
+.cart-fab-enter-active,
+.cart-fab-leave-active {
     transition: opacity 220ms ease, transform 220ms ease;
 }
 .wa-fab-enter-from,
-.wa-fab-leave-to {
+.wa-fab-leave-to,
+.cart-fab-enter-from,
+.cart-fab-leave-to{
     opacity: 0;
     transform: translateY(12px) scale(0.96);
 }

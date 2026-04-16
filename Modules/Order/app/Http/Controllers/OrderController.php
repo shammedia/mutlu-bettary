@@ -34,13 +34,14 @@ class OrderController extends Controller
     public function store(Request $request)
     {
 
-      $order=  Order::create([
-            'delivery_type'=>$request->deliveryType,
-            'shipping'=>$request->shippingCost,
-            'address'=>$request->address,
+        $order = Order::create([
+            'delivery_type' => $request->deliveryType,
+            'shipping' => $request->shippingCost,
+            'address' => $request->address,
             'subtotal' => $request->subPrice,
             'status' => 'pending',
-          'map' => $request->map,
+            'phone' => $request->phone,
+            'map' => $request->map,
         ]);
         foreach ($request->items as $item) {
 
@@ -50,7 +51,35 @@ class OrderController extends Controller
                 'quantity' => $item['quantity'],
                 'price' => $item['price'],
             ]);
-      }
+        }
+        $message = "";
+        $message .= "رقم الطلب : {$order->id}\n";
+        $message .= "السعر  : {$order->subtotal}\n";
+        $message .= "الشحن  : {$order->shipping}\n";
+        $message .= "الاجمالي  : {$order->total}\n";
+        $message .= "-----------------------------\n";
+        $message .= "الإجمالي      السعر   العدد   المنتج\n";
+        $message .= "-----------------------------\n";
+
+
+        foreach ($order->items as $item) {
+            $name = str_pad($item->product->name, 12);
+            $qty = str_pad($item->quantity, 6);
+            $price = str_pad($item->price, 8);
+            $total = str_pad($item->total, 8);
+
+            $message .= "{$name}{$qty}{$price}{$total}\n";
+        }
+
+        $message .= "-----------------------------\n";
+        if ($order->map != '') {
+
+            $message .= "الموقع\n";
+            $message .= $order->map;
+        }
+        $msg = urlencode($message);
+        $shippingPhone = ltrim(Settings::get('phone'), '+');
+        return back()->with('wa',"https://wa.me/{$shippingPhone}?text={$msg}");
     }
 
     /**
@@ -58,8 +87,8 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order=Order::with(['items'=>fn($query)=>$query->with('product')])->findOrFail($id);
-        return view('order::admin.show',compact('order'));
+        $order = Order::with(['items' => fn($query) => $query->with('product')])->findOrFail($id);
+        return view('order::admin.show', compact('order'));
     }
 
     /**
@@ -75,25 +104,24 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $status=$request->status;
-        $order=Order::findOrFail($id);
+        $status = $request->status;
+        $order = Order::findOrFail($id);
         $order->update([
-            'status'=>OrderEnum::DONE->value,
+            'status' => OrderEnum::DONE->value,
         ]);
-        $message="";
-        $message.="رقم الطلب : {$order->id}\n";
-        $message.="السعر  : {$order->subtotal}\n";
-        $message.="الشحن  : {$order->shipping}\n";
-        $message.="الاجمالي  : {$order->total}\n";
+        $message = "";
+        $message .= "رقم الطلب : {$order->id}\n";
+        $message .= "السعر  : {$order->subtotal}\n";
+        $message .= "الشحن  : {$order->shipping}\n";
+        $message .= "الاجمالي  : {$order->total}\n";
         $message .= "-----------------------------\n";
         $message .= "الإجمالي      السعر   العدد   المنتج\n";
         $message .= "-----------------------------\n";
 
 
-
         foreach ($order->items as $item) {
-            $name  = str_pad($item->product->name, 12);
-            $qty   = str_pad($item->quantity, 6);
+            $name = str_pad($item->product->name, 12);
+            $qty = str_pad($item->quantity, 6);
             $price = str_pad($item->price, 8);
             $total = str_pad($item->total, 8);
 
@@ -101,13 +129,13 @@ class OrderController extends Controller
         }
 
         $message .= "-----------------------------\n";
-        if($order->map!=''){
+        if ($order->map != '') {
 
             $message .= "الموقع\n";
             $message .= $order->map;
         }
-        $msg=urlencode($message);
-        $shippingPhone=Settings::get('shipping_phone');
+        $msg = urlencode($message);
+        $shippingPhone = Settings::get('shipping_phone');
         return redirect()->to("https://wa.me/{$shippingPhone}?text={$msg}");
     }
 
@@ -120,11 +148,12 @@ class OrderController extends Controller
         return redirect()->back();
     }
 
-    public function all(){
-        $model= Order::
-            withCount('items')
+    public function all()
+    {
+        $model = Order::
+        withCount('items')
             ->latest()
             ->paginate(Config::get('core.page_size', 10));
-        return view('order::admin.index',compact('model'));
+        return view('order::admin.index', compact('model'));
     }
 }
