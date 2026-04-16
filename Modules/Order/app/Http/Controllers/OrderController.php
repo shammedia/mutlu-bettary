@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Config;
 use Illuminate\Http\Request;
 use Modules\Base\Models\Settings;
+use Modules\Order\app\Enums\DeliveryTypeEnum;
 use Modules\Order\app\Enums\OrderEnum;
 use Modules\Order\Models\Item;
 use Modules\Order\Models\Order;
@@ -27,7 +28,38 @@ class OrderController extends Controller
     {
         return view('order::create');
     }
+private function generateMsg($order)
+{
+    $message = "";
+    $message .= "رقم الطلب : {$order->id}\n";
+    $message .= "شحن إلى : ".DeliveryTypeEnum::tryFrom($order->delivery_type)?->getLabel()."\n";
+    $message .= "السعر  : {$order->subtotal}\n";
+    $message .= "الشحن  : {$order->shipping}\n";
+    $message .= "الاجمالي  : {$order->total}\n";
+    $message .= "-----------------------------\n";
 
+    foreach ($order->items as $item) {
+        $message.="المنتج : {$item->product->name}\n";
+        $message.="العدد : {$item->quantity}\n";
+        $message.="السعر : {$item->price}\n";
+        $message.="الإجمالي : {$item->total}\n";
+        $message .= "-----------------------------\n";
+    }
+
+
+    if ($order->map != '') {
+
+        $message .= "الموقع: ";
+        $message .= "\n {$order->map} \n";
+    }
+    if ($order->address != '') {
+        $message .= "العنوان  : {$order->address}\n";
+
+
+    }
+    $message .= "الهاتف  : {$order->phone}\n";
+return urlencode($message);
+}
     /**
      * Store a newly created resource in storage.
      */
@@ -51,40 +83,7 @@ class OrderController extends Controller
                 'price' => $item['price'],
             ]);
         }
-        $message = "";
-        $message .= "رقم الطلب : {$order->id}\n";
-        $message .= "السعر  : {$order->subtotal}\n";
-        $message .= "الشحن  : {$order->shipping}\n";
-        $message .= "الاجمالي  : {$order->total}\n";
-        $message .= "-----------------------------\n";
-
-        foreach ($order->items as $item) {
-            $message.="\n المنتج \n";
-            $message.="\n {$item->product->name} \n";
-            $message.="\n العدد \n";
-            $message.="\n {$item->quantity} \n";
-            $message.="\n السعر \n";
-            $message.="\n {$item->price} \n";
-            $message.="\n الإجمالي \n";
-            $message.="\n {$item->total} \n";
-            $message .= "-----------------------------\n";
-        }
-
-
-        if ($order->map != '') {
-
-            $message .= "\n الموقع \n";
-            $message .= $order->map;
-        }
-        if ($order->address != '') {
-
-            $message .= "\n العنوان \n";
-            $message .= $order->address;
-
-        }
-        $message .= "\n الهاتف \n";
-        $message .= $order->phone;
-        $msg = urlencode($message);
+       $msg=$this->generateMsg($order);
         $shippingPhone = ltrim(Settings::get('phone'), '+');
         return back()->with('wa',"https://wa.me/{$shippingPhone}?text={$msg}");
     }
@@ -116,40 +115,7 @@ class OrderController extends Controller
         $order->update([
             'status' => OrderEnum::DONE->value,
         ]);
-        $message = "";
-        $message .= "رقم الطلب : {$order->id}\n";
-        $message .= "السعر  : {$order->subtotal}\n";
-        $message .= "الشحن  : {$order->shipping}\n";
-        $message .= "الاجمالي  : {$order->total}\n";
-        $message .= "-----------------------------\n";
-
-        foreach ($order->items as $item) {
-            $message.="\n المنتج \n";
-            $message.="\n {$item->product->name} \n";
-            $message.="\n العدد \n";
-            $message.="\n {$item->quantity} \n";
-            $message.="\n السعر \n";
-            $message.="\n {$item->price} \n";
-            $message.="\n الإجمالي \n";
-            $message.="\n {$item->total} \n";
-            $message .= "-----------------------------\n";
-        }
-
-
-        if ($order->map != '') {
-
-            $message .= "\n الموقع \n";
-            $message .= $order->map;
-        }
-        if ($order->address != '') {
-
-            $message .= "\n العنوان \n";
-            $message .= $order->address;
-
-        }
-        $message .= "\n الهاتف \n";
-        $message .= $order->phone;
-        $msg = urlencode($message);
+        $msg=$this->generateMsg($order);
         $shippingPhone = Settings::get('shipping_phone');
         return redirect()->to("https://wa.me/{$shippingPhone}?text={$msg}");
     }
