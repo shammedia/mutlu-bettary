@@ -108,8 +108,10 @@
                                     <thead>
                                         <tr>
                                             <th>{{ trans('Product') }}</th>
+                                            <th>{{ trans('Category') }}</th>
                                             <th>{{ trans('Quantity') }}</th>
                                             <th>{{ trans('Price') }}</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -123,8 +125,10 @@
                                             @endphp
                                             <tr>
                                                 <td>{{ $productName }}</td>
+                                                <td>{{ $item->product?->product?->getTranslation('title', app()->getLocale()) }}</td>
                                                 <td>{{ $item->quantity }}</td>
                                                 <td>{{ $item->price }}</td>
+
                                             </tr>
                                         @endforeach
                                     </tbody>
