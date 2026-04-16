@@ -80,11 +80,14 @@
             <!-- Main Menu Area -->
             <div class="menu-area">
                 <div class="container">
-                    <div class="row align-items-center justify-content-between">
-                        <div class="col-auto header-navbar-logo">
+                    <div class="row align-items-center justify-content-between align-center">
+                        <div class="col-auto header-navbar-logo d-flex gap-2">
                             <div class="header-logo">
                                 <Link :href="homeUrl"><img :src="logoSrc" alt="logo"></Link>
 
+                            </div>
+                            <div class="d-flex align-items-center mx-2 justify-content-center flex-grow-1">
+                                <cart />
                             </div>
                         </div>
                         <div class="col-auto">
@@ -156,9 +159,11 @@
                                 </ul>
                             </nav>
 
-                            <div class="navbar-right d-inline-flex d-lg-none">
-                                <span class="d-flex w-25 justify-content-center position-relative" style="left:20px;"> <cart/></span>
+                            <div class="navbar-right d-flex d-lg-none align-items-center justify-content-between w-100">
+
                                 <button type="button" class="menu-toggle icon-btn"><i class="fas fa-bars"></i></button>
+
+
                             </div>
                         </div>
                         <div class="col-auto d-xl-block d-none">
@@ -167,7 +172,7 @@
                                    rel="noopener">
                                     <i :class="item.icon"></i>
                                 </a>
-<cart/>
+
                             </div>
                         </div>
                     </div>
