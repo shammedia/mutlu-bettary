@@ -127,7 +127,7 @@
                                                 <td>{{ $productName }}</td>
                                                 <td>{{ $item->product?->product?->getTranslation('title', app()->getLocale()) }}</td>
                                                 <td>{{ $item->quantity }}</td>
-                                                <td>{{ $item->price }}</td>
+                                                <td>{{ $item->product->price }}</td>
 
                                             </tr>
                                         @endforeach
