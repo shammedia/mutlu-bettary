@@ -56,7 +56,7 @@
                                         @endif
                                         <tr>
                                             <th>{{ __('Phone') }}</th>
-                                            <td><a href="https://wa.me/{{ ltrim($order->phone,'+') }}"></a></td>
+                                            <td><a href="https://wa.me/{{ ltrim($order->phone,'+') }}">{{$order->phone}}</a></td>
                                         </tr>
                                         <tr>
                                             <th>{{ __('Created At') }}</th>
