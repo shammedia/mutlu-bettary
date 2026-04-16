@@ -57,33 +57,33 @@ class OrderController extends Controller
         $message .= "الشحن  : {$order->shipping}\n";
         $message .= "الاجمالي  : {$order->total}\n";
         $message .= "-----------------------------\n";
-        $message .= "الإجمالي      السعر   العدد   المنتج\n";
-        $message .= "-----------------------------\n";
-
 
         foreach ($order->items as $item) {
-            $name = str_pad($item->product->name, 12);
-            $qty = str_pad($item->quantity, 6);
-            $price = str_pad($item->price, 8);
-            $total = str_pad($item->total, 8);
-
-            $message .= "{$name}{$qty}{$price}{$total}\n";
+            $message.="\n المنتج \n";
+            $message.="\n {$item->product->name} \n";
+            $message.="\n العدد \n";
+            $message.="\n {$item->quantity} \n";
+            $message.="\n السعر \n";
+            $message.="\n {$item->price} \n";
+            $message.="\n الإجمالي \n";
+            $message.="\n {$item->total} \n";
+            $message .= "-----------------------------\n";
         }
 
-        $message .= "-----------------------------\n";
+
         if ($order->map != '') {
 
-            $message .= "الموقع\n";
+            $message .= "\n الموقع \n";
             $message .= $order->map;
         }
         if ($order->address != '') {
 
             $message .= "\n العنوان \n";
             $message .= $order->address;
-        }
-            $message .= "\n الهاتف \n";
-            $message .= $order->phone;
 
+        }
+        $message .= "\n الهاتف \n";
+        $message .= $order->phone;
         $msg = urlencode($message);
         $shippingPhone = ltrim(Settings::get('phone'), '+');
         return back()->with('wa',"https://wa.me/{$shippingPhone}?text={$msg}");
@@ -122,23 +122,23 @@ class OrderController extends Controller
         $message .= "الشحن  : {$order->shipping}\n";
         $message .= "الاجمالي  : {$order->total}\n";
         $message .= "-----------------------------\n";
-        $message .= "الإجمالي      السعر   العدد   المنتج\n";
-        $message .= "-----------------------------\n";
-
 
         foreach ($order->items as $item) {
-            $name = str_pad($item->product->name, 12);
-            $qty = str_pad($item->quantity, 6);
-            $price = str_pad($item->price, 8);
-            $total = str_pad($item->total, 8);
-
-            $message .= "{$name}{$qty}{$price}{$total}\n";
+            $message.="\n المنتج \n";
+            $message.="\n {$item->product->name} \n";
+            $message.="\n العدد \n";
+            $message.="\n {$item->quantity} \n";
+            $message.="\n السعر \n";
+            $message.="\n {$item->price} \n";
+            $message.="\n الإجمالي \n";
+            $message.="\n {$item->total} \n";
+            $message .= "-----------------------------\n";
         }
 
-        $message .= "-----------------------------\n";
+
         if ($order->map != '') {
 
-            $message .= "الموقع\n";
+            $message .= "\n الموقع \n";
             $message .= $order->map;
         }
         if ($order->address != '') {
