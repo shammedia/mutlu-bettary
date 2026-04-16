@@ -59,7 +59,11 @@
         @endforeach
         </tbody>
     </x-admin.table>
-
+<div class="row">
+    <div class="col-md-12">
+        {{ $model->links() }}
+    </div>
+</div>
 </x-admin-layout>
 
 
