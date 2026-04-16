@@ -86,9 +86,7 @@
                                 <Link :href="homeUrl"><img :src="logoSrc" alt="logo"></Link>
 
                             </div>
-                            <div class="d-flex align-items-center mx-2 justify-content-center flex-grow-1">
-                                <cart />
-                            </div>
+
                         </div>
                         <div class="col-auto">
                             <nav class="main-menu d-none d-lg-inline-block">
@@ -160,7 +158,9 @@
                             </nav>
 
                             <div class="navbar-right d-flex d-lg-none align-items-center justify-content-between w-100">
-
+                                <div class="d-flex align-items-center mx-3 justify-content-center flex-grow-1">
+                                    <cart />
+                                </div>
                                 <button type="button" class="menu-toggle icon-btn"><i class="fas fa-bars"></i></button>
 
 
@@ -172,7 +172,7 @@
                                    rel="noopener">
                                     <i :class="item.icon"></i>
                                 </a>
-
+<cart/>
                             </div>
                         </div>
                     </div>

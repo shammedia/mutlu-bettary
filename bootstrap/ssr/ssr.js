@@ -270,11 +270,11 @@ const _sfc_main$f = {
     };
     return (_ctx, _push, _parent, _attrs) => {
       var _a, _b;
-      _push(`<!--[--><div class="mobile-menu-wrapper" data-v-c6d725dd><div class="mobile-menu-area" data-v-c6d725dd><div class="mobile-logo" data-v-c6d725dd>`);
+      _push(`<!--[--><div class="mobile-menu-wrapper" data-v-bd44171c><div class="mobile-menu-area" data-v-bd44171c><div class="mobile-logo" data-v-bd44171c>`);
       _push(ssrRenderComponent(unref(Link), { href: homeUrl.value }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<img${ssrRenderAttr("src", asset_path.value + "images/red_logo.png")} alt="logo" data-v-c6d725dd${_scopeId}>`);
+            _push2(`<img${ssrRenderAttr("src", asset_path.value + "images/red_logo.png")} alt="logo" data-v-bd44171c${_scopeId}>`);
           } else {
             return [
               createVNode("img", {
@@ -286,7 +286,7 @@ const _sfc_main$f = {
         }),
         _: 1
       }, _parent));
-      _push(`<button class="menu-toggle" data-v-c6d725dd><i class="fa fa-times" data-v-c6d725dd></i></button></div><div class="mobile-menu" data-v-c6d725dd><ul data-v-c6d725dd><li data-v-c6d725dd>`);
+      _push(`<button class="menu-toggle" data-v-bd44171c><i class="fa fa-times" data-v-bd44171c></i></button></div><div class="mobile-menu" data-v-bd44171c><ul data-v-bd44171c><li data-v-bd44171c>`);
       _push(ssrRenderComponent(unref(Link), {
         href: homeUrl.value,
         class: { "nav-route-active": isActive("home") }
@@ -302,7 +302,7 @@ const _sfc_main$f = {
         }),
         _: 1
       }, _parent));
-      _push(`</li><li data-v-c6d725dd>`);
+      _push(`</li><li data-v-bd44171c>`);
       _push(ssrRenderComponent(unref(Link), {
         href: aboutUrl.value,
         class: { "nav-route-active": isActive("about-us") }
@@ -320,7 +320,7 @@ const _sfc_main$f = {
       }, _parent));
       _push(`</li>`);
       if (shopCategories.value.length) {
-        _push(`<li class="menu-item-has-children" data-v-c6d725dd><a href="#" class="${ssrRenderClass({ "nav-route-active": isActive("shop.*") })}" data-v-c6d725dd>${ssrInterpolate(trans("Categories"))}</a><ul class="sub-menu" data-v-c6d725dd><li data-v-c6d725dd>`);
+        _push(`<li class="menu-item-has-children" data-v-bd44171c><a href="#" class="${ssrRenderClass({ "nav-route-active": isActive("shop.*") })}" data-v-bd44171c>${ssrInterpolate(trans("Categories"))}</a><ul class="sub-menu" data-v-bd44171c><li data-v-bd44171c>`);
         _push(ssrRenderComponent(unref(Link), {
           href: shopIndexUrl.value,
           class: { "nav-route-active": isActive("shop.index") }
@@ -338,7 +338,7 @@ const _sfc_main$f = {
         }, _parent));
         _push(`</li><!--[-->`);
         ssrRenderList(shopCategories.value, (category) => {
-          _push(`<li data-v-c6d725dd>`);
+          _push(`<li data-v-bd44171c>`);
           _push(ssrRenderComponent(unref(Link), {
             href: categoryUrl(category.slug)
           }, {
@@ -359,7 +359,7 @@ const _sfc_main$f = {
       } else {
         _push(`<!---->`);
       }
-      _push(`<li data-v-c6d725dd>`);
+      _push(`<li data-v-bd44171c>`);
       _push(ssrRenderComponent(unref(Link), {
         href: contactUrl.value,
         class: { "nav-route-active": isActive("contact-us") }
@@ -377,15 +377,15 @@ const _sfc_main$f = {
       }, _parent));
       _push(`</li>`);
       if (((_a = auth.value) == null ? void 0 : _a.type) === "admin") {
-        _push(`<li class="${ssrRenderClass({ active: isActive("admin.dashboard.index") })}" data-v-c6d725dd><a${ssrRenderAttr("href", _ctx.route("admin.dashboard.index"))} class="nav-link main-nav-link" data-v-c6d725dd>${ssrInterpolate(trans("Dashboard"))}</a></li>`);
+        _push(`<li class="${ssrRenderClass({ active: isActive("admin.dashboard.index") })}" data-v-bd44171c><a${ssrRenderAttr("href", _ctx.route("admin.dashboard.index"))} class="nav-link main-nav-link" data-v-bd44171c>${ssrInterpolate(trans("Dashboard"))}</a></li>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`<li class="menu-item-has-children" data-v-c6d725dd><a href="#" data-v-c6d725dd>${ssrInterpolate(trans("Language"))}</a><ul class="sub-menu" data-v-c6d725dd><li data-v-c6d725dd><a href="#" class="${ssrRenderClass({ "active": locale.value === "ar" })}" data-v-c6d725dd>AR</a></li><li data-v-c6d725dd><a href="#" class="${ssrRenderClass({ "active": locale.value === "en" })}" data-v-c6d725dd>EN</a></li><li data-v-c6d725dd><a href="#" class="${ssrRenderClass({ "active": locale.value === "tr" })}" data-v-c6d725dd>TR</a></li></ul></li></ul></div></div></div><header class="nav-header header-layout2" data-v-c6d725dd><div class="sticky-wrapper" data-v-c6d725dd><div class="menu-area" data-v-c6d725dd><div class="container" data-v-c6d725dd><div class="row align-items-center justify-content-between align-center" data-v-c6d725dd><div class="col-auto header-navbar-logo d-flex gap-2" data-v-c6d725dd><div class="header-logo" data-v-c6d725dd>`);
+      _push(`<li class="menu-item-has-children" data-v-bd44171c><a href="#" data-v-bd44171c>${ssrInterpolate(trans("Language"))}</a><ul class="sub-menu" data-v-bd44171c><li data-v-bd44171c><a href="#" class="${ssrRenderClass({ "active": locale.value === "ar" })}" data-v-bd44171c>AR</a></li><li data-v-bd44171c><a href="#" class="${ssrRenderClass({ "active": locale.value === "en" })}" data-v-bd44171c>EN</a></li><li data-v-bd44171c><a href="#" class="${ssrRenderClass({ "active": locale.value === "tr" })}" data-v-bd44171c>TR</a></li></ul></li></ul></div></div></div><header class="nav-header header-layout2" data-v-bd44171c><div class="sticky-wrapper" data-v-bd44171c><div class="menu-area" data-v-bd44171c><div class="container" data-v-bd44171c><div class="row align-items-center justify-content-between align-center" data-v-bd44171c><div class="col-auto header-navbar-logo d-flex gap-2" data-v-bd44171c><div class="header-logo" data-v-bd44171c>`);
       _push(ssrRenderComponent(unref(Link), { href: homeUrl.value }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<img${ssrRenderAttr("src", logoSrc.value)} alt="logo" data-v-c6d725dd${_scopeId}>`);
+            _push2(`<img${ssrRenderAttr("src", logoSrc.value)} alt="logo" data-v-bd44171c${_scopeId}>`);
           } else {
             return [
               createVNode("img", {
@@ -397,9 +397,7 @@ const _sfc_main$f = {
         }),
         _: 1
       }, _parent));
-      _push(`</div><div class="d-flex align-items-center mx-2 justify-content-center flex-grow-1" data-v-c6d725dd>`);
-      _push(ssrRenderComponent(Cart, null, null, _parent));
-      _push(`</div></div><div class="col-auto" data-v-c6d725dd><nav class="main-menu d-none d-lg-inline-block" data-v-c6d725dd><ul data-v-c6d725dd><li data-v-c6d725dd>`);
+      _push(`</div></div><div class="col-auto" data-v-bd44171c><nav class="main-menu d-none d-lg-inline-block" data-v-bd44171c><ul data-v-bd44171c><li data-v-bd44171c>`);
       _push(ssrRenderComponent(unref(Link), {
         href: homeUrl.value,
         class: { "nav-route-active": isActive("home") }
@@ -415,7 +413,7 @@ const _sfc_main$f = {
         }),
         _: 1
       }, _parent));
-      _push(`</li><li data-v-c6d725dd>`);
+      _push(`</li><li data-v-bd44171c>`);
       _push(ssrRenderComponent(unref(Link), {
         href: aboutUrl.value,
         class: { "nav-route-active": isActive("about-us") }
@@ -433,9 +431,9 @@ const _sfc_main$f = {
       }, _parent));
       _push(`</li>`);
       if (shopCategories.value.length) {
-        _push(`<li class="menu-item-has-children" data-v-c6d725dd><a href="#" class="${ssrRenderClass({ "nav-route-active": isActive("shop.*") })}" data-v-c6d725dd>${ssrInterpolate(trans("Our Products"))}</a><ul class="sub-menu" data-v-c6d725dd><!--[-->`);
+        _push(`<li class="menu-item-has-children" data-v-bd44171c><a href="#" class="${ssrRenderClass({ "nav-route-active": isActive("shop.*") })}" data-v-bd44171c>${ssrInterpolate(trans("Our Products"))}</a><ul class="sub-menu" data-v-bd44171c><!--[-->`);
         ssrRenderList(shopCategories.value, (category) => {
-          _push(`<li data-v-c6d725dd>`);
+          _push(`<li data-v-bd44171c>`);
           _push(ssrRenderComponent(unref(Link), {
             href: categoryUrl(category.slug)
           }, {
@@ -452,14 +450,14 @@ const _sfc_main$f = {
           }, _parent));
           _push(`</li>`);
         });
-        _push(`<!--]--><li data-v-c6d725dd>`);
+        _push(`<!--]--><li data-v-bd44171c>`);
         _push(ssrRenderComponent(unref(Link), {
           href: shopIndexUrl.value,
           class: { "nav-route-active": isActive("shop.index") }
         }, {
           default: withCtx((_, _push2, _parent2, _scopeId) => {
             if (_push2) {
-              _push2(`<strong data-v-c6d725dd${_scopeId}>${ssrInterpolate(trans("All Products"))}</strong>`);
+              _push2(`<strong data-v-bd44171c${_scopeId}>${ssrInterpolate(trans("All Products"))}</strong>`);
             } else {
               return [
                 createVNode("strong", null, toDisplayString(trans("All Products")), 1)
@@ -472,7 +470,7 @@ const _sfc_main$f = {
       } else {
         _push(`<!---->`);
       }
-      _push(`<li data-v-c6d725dd>`);
+      _push(`<li data-v-bd44171c>`);
       _push(ssrRenderComponent(unref(Link), {
         href: contactUrl.value,
         class: { "nav-route-active": isActive("contact-us") }
@@ -490,27 +488,31 @@ const _sfc_main$f = {
       }, _parent));
       _push(`</li>`);
       if (((_b = auth.value) == null ? void 0 : _b.type) === "admin") {
-        _push(`<li class="${ssrRenderClass({ active: isActive("admin.dashboard.index") })}" data-v-c6d725dd><a${ssrRenderAttr("href", _ctx.route("admin.dashboard.index"))} class="nav-link main-nav-link" data-v-c6d725dd>${ssrInterpolate(trans("Dashboard"))}</a></li>`);
+        _push(`<li class="${ssrRenderClass({ active: isActive("admin.dashboard.index") })}" data-v-bd44171c><a${ssrRenderAttr("href", _ctx.route("admin.dashboard.index"))} class="nav-link main-nav-link" data-v-bd44171c>${ssrInterpolate(trans("Dashboard"))}</a></li>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`<li class="menu-item-has-children" data-v-c6d725dd><a class="text-uppercase" href="#" data-v-c6d725dd>${ssrInterpolate(locale.value)}</a><ul class="sub-menu" data-v-c6d725dd><li data-v-c6d725dd><a href="#" class="${ssrRenderClass({ "active": locale.value === "ar" })}" data-v-c6d725dd>AR</a></li><li data-v-c6d725dd><a href="#" class="${ssrRenderClass({ "active": locale.value === "en" })}" data-v-c6d725dd>EN</a></li><li data-v-c6d725dd><a href="#" class="${ssrRenderClass({ "active": locale.value === "tr" })}" data-v-c6d725dd>TR</a></li></ul></li></ul></nav><div class="navbar-right d-flex d-lg-none align-items-center justify-content-between w-100" data-v-c6d725dd><button type="button" class="menu-toggle icon-btn" data-v-c6d725dd><i class="fas fa-bars" data-v-c6d725dd></i></button></div></div><div class="col-auto d-xl-block d-none" data-v-c6d725dd>`);
+      _push(`<li class="menu-item-has-children" data-v-bd44171c><a class="text-uppercase" href="#" data-v-bd44171c>${ssrInterpolate(locale.value)}</a><ul class="sub-menu" data-v-bd44171c><li data-v-bd44171c><a href="#" class="${ssrRenderClass({ "active": locale.value === "ar" })}" data-v-bd44171c>AR</a></li><li data-v-bd44171c><a href="#" class="${ssrRenderClass({ "active": locale.value === "en" })}" data-v-bd44171c>EN</a></li><li data-v-bd44171c><a href="#" class="${ssrRenderClass({ "active": locale.value === "tr" })}" data-v-bd44171c>TR</a></li></ul></li></ul></nav><div class="navbar-right d-flex d-lg-none align-items-center justify-content-between w-100" data-v-bd44171c><div class="d-flex align-items-center mx-3 justify-content-center flex-grow-1" data-v-bd44171c>`);
+      _push(ssrRenderComponent(Cart, null, null, _parent));
+      _push(`</div><button type="button" class="menu-toggle icon-btn" data-v-bd44171c><i class="fas fa-bars" data-v-bd44171c></i></button></div></div><div class="col-auto d-xl-block d-none" data-v-bd44171c>`);
       if (socialLinks.value.length) {
-        _push(`<div class="social-links" data-v-c6d725dd><!--[-->`);
+        _push(`<div class="social-links" data-v-bd44171c><!--[-->`);
         ssrRenderList(socialLinks.value, (item) => {
-          _push(`<a${ssrRenderAttr("href", item.url)} target="_blank" rel="noopener" data-v-c6d725dd><i class="${ssrRenderClass(item.icon)}" data-v-c6d725dd></i></a>`);
+          _push(`<a${ssrRenderAttr("href", item.url)} target="_blank" rel="noopener" data-v-bd44171c><i class="${ssrRenderClass(item.icon)}" data-v-bd44171c></i></a>`);
         });
-        _push(`<!--]--></div>`);
+        _push(`<!--]-->`);
+        _push(ssrRenderComponent(Cart, null, null, _parent));
+        _push(`</div>`);
       } else {
         _push(`<!---->`);
       }
       _push(`</div></div></div></div></div></header>`);
       ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
-      _push(`<footer class="footer-wrapper footer-layout2" style="${ssrRenderStyle({ backgroundImage: `url(${asset_path.value}site/img/bg/footer-bg2-1.png)` })}" data-v-c6d725dd><div class="container" data-v-c6d725dd><div class="widget-area" data-v-c6d725dd><div class="row justify-content-between" data-v-c6d725dd><div class="col-md-6 col-xl-3" data-v-c6d725dd><div class="footer-logo mb-3" data-v-c6d725dd>`);
+      _push(`<footer class="footer-wrapper footer-layout2" style="${ssrRenderStyle({ backgroundImage: `url(${asset_path.value}site/img/bg/footer-bg2-1.png)` })}" data-v-bd44171c><div class="container" data-v-bd44171c><div class="widget-area" data-v-bd44171c><div class="row justify-content-between" data-v-bd44171c><div class="col-md-6 col-xl-3" data-v-bd44171c><div class="footer-logo mb-3" data-v-bd44171c>`);
       _push(ssrRenderComponent(unref(Link), { href: homeUrl.value }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<img${ssrRenderAttr("src", logoSrc.value)} alt="logo" data-v-c6d725dd${_scopeId}>`);
+            _push2(`<img${ssrRenderAttr("src", logoSrc.value)} alt="logo" data-v-bd44171c${_scopeId}>`);
           } else {
             return [
               createVNode("img", {
@@ -522,17 +524,17 @@ const _sfc_main$f = {
         }),
         _: 1
       }, _parent));
-      _push(`</div><div class="widget footer-widget widget-about" data-v-c6d725dd><p class="footer-text mb-30" data-v-c6d725dd>${ssrInterpolate(seo.value && seo.value.website_desc ? seo.value.website_desc : "")}</p>`);
+      _push(`</div><div class="widget footer-widget widget-about" data-v-bd44171c><p class="footer-text mb-30" data-v-bd44171c>${ssrInterpolate(seo.value && seo.value.website_desc ? seo.value.website_desc : "")}</p>`);
       if (socialLinks.value.length) {
-        _push(`<div class="social-btn style3" data-v-c6d725dd><!--[-->`);
+        _push(`<div class="social-btn style3" data-v-bd44171c><!--[-->`);
         ssrRenderList(socialLinks.value, (item) => {
-          _push(`<a${ssrRenderAttr("href", item.url)} target="_blank" rel="noopener" tabindex="-1" data-v-c6d725dd><i class="${ssrRenderClass(item.icon)}" data-v-c6d725dd></i></a>`);
+          _push(`<a${ssrRenderAttr("href", item.url)} target="_blank" rel="noopener" tabindex="-1" data-v-bd44171c><i class="${ssrRenderClass(item.icon)}" data-v-bd44171c></i></a>`);
         });
         _push(`<!--]--></div>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`</div></div><div class="col-md-6 col-xl-auto" data-v-c6d725dd><div class="widget widget_nav_menu footer-widget" data-v-c6d725dd><h3 class="widget_title" data-v-c6d725dd>${ssrInterpolate(trans("Company"))}</h3><div class="menu-all-pages-container" data-v-c6d725dd><ul class="menu" data-v-c6d725dd><li data-v-c6d725dd>`);
+      _push(`</div></div><div class="col-md-6 col-xl-auto" data-v-bd44171c><div class="widget widget_nav_menu footer-widget" data-v-bd44171c><h3 class="widget_title" data-v-bd44171c>${ssrInterpolate(trans("Company"))}</h3><div class="menu-all-pages-container" data-v-bd44171c><ul class="menu" data-v-bd44171c><li data-v-bd44171c>`);
       _push(ssrRenderComponent(unref(Link), { href: homeUrl.value }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
@@ -545,7 +547,7 @@ const _sfc_main$f = {
         }),
         _: 1
       }, _parent));
-      _push(`</li><li data-v-c6d725dd>`);
+      _push(`</li><li data-v-bd44171c>`);
       _push(ssrRenderComponent(unref(Link), { href: aboutUrl.value }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
@@ -558,7 +560,7 @@ const _sfc_main$f = {
         }),
         _: 1
       }, _parent));
-      _push(`</li><li data-v-c6d725dd>`);
+      _push(`</li><li data-v-bd44171c>`);
       _push(ssrRenderComponent(unref(Link), { href: contactUrl.value }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
@@ -573,7 +575,7 @@ const _sfc_main$f = {
       }, _parent));
       _push(`</li>`);
       if (shopCategories.value.length) {
-        _push(`<li data-v-c6d725dd>`);
+        _push(`<li data-v-bd44171c>`);
         _push(ssrRenderComponent(unref(Link), { href: shopIndexUrl.value }, {
           default: withCtx((_, _push2, _parent2, _scopeId) => {
             if (_push2) {
@@ -590,9 +592,9 @@ const _sfc_main$f = {
       } else {
         _push(`<!---->`);
       }
-      _push(`</ul></div></div></div><div class="col-md-6 col-xl-auto" data-v-c6d725dd><div class="widget widget_nav_menu footer-widget" data-v-c6d725dd><h3 class="widget_title" data-v-c6d725dd>${ssrInterpolate(trans("Our Products"))}</h3><div class="menu-all-pages-container" data-v-c6d725dd><ul class="menu" data-v-c6d725dd><!--[-->`);
+      _push(`</ul></div></div></div><div class="col-md-6 col-xl-auto" data-v-bd44171c><div class="widget widget_nav_menu footer-widget" data-v-bd44171c><h3 class="widget_title" data-v-bd44171c>${ssrInterpolate(trans("Our Products"))}</h3><div class="menu-all-pages-container" data-v-bd44171c><ul class="menu" data-v-bd44171c><!--[-->`);
       ssrRenderList(shopCategories.value.slice(0, 8), (category) => {
-        _push(`<li data-v-c6d725dd>`);
+        _push(`<li data-v-bd44171c>`);
         _push(ssrRenderComponent(unref(Link), {
           href: categoryUrl(category.slug)
         }, {
@@ -609,19 +611,19 @@ const _sfc_main$f = {
         }, _parent));
         _push(`</li>`);
       });
-      _push(`<!--]--></ul></div></div></div><div class="col-md-6 col-xl-auto" data-v-c6d725dd><div class="widget footer-widget" data-v-c6d725dd><h3 class="widget_title" data-v-c6d725dd>${ssrInterpolate(trans("Contact"))}</h3><div class="widget-contact2" data-v-c6d725dd><div class="widget-contact-grid" data-v-c6d725dd><div class="icon" data-v-c6d725dd><i class="fas fa-map-marker-alt" data-v-c6d725dd></i></div><div class="contact-grid-details" data-v-c6d725dd><p data-v-c6d725dd>${ssrInterpolate(trans("Address"))}</p><h6 data-v-c6d725dd>${ssrInterpolate(settings.value && settings.value.address ? settings.value.address : "")}</h6></div></div><div class="widget-contact-grid" data-v-c6d725dd><div class="icon" data-v-c6d725dd><i class="fas fa-phone-alt" data-v-c6d725dd></i></div><div class="contact-grid-details" data-v-c6d725dd><p data-v-c6d725dd>${ssrInterpolate(trans("Phone Number"))}</p><h6 data-v-c6d725dd>`);
+      _push(`<!--]--></ul></div></div></div><div class="col-md-6 col-xl-auto" data-v-bd44171c><div class="widget footer-widget" data-v-bd44171c><h3 class="widget_title" data-v-bd44171c>${ssrInterpolate(trans("Contact"))}</h3><div class="widget-contact2" data-v-bd44171c><div class="widget-contact-grid" data-v-bd44171c><div class="icon" data-v-bd44171c><i class="fas fa-map-marker-alt" data-v-bd44171c></i></div><div class="contact-grid-details" data-v-bd44171c><p data-v-bd44171c>${ssrInterpolate(trans("Address"))}</p><h6 data-v-bd44171c>${ssrInterpolate(settings.value && settings.value.address ? settings.value.address : "")}</h6></div></div><div class="widget-contact-grid" data-v-bd44171c><div class="icon" data-v-bd44171c><i class="fas fa-phone-alt" data-v-bd44171c></i></div><div class="contact-grid-details" data-v-bd44171c><p data-v-bd44171c>${ssrInterpolate(trans("Phone Number"))}</p><h6 data-v-bd44171c>`);
       if (settings.value && settings.value.phone) {
-        _push(`<a dir="ltr"${ssrRenderAttr("href", `tel:${settings.value.phone}`)} data-v-c6d725dd>${ssrInterpolate(settings.value.phone)}</a>`);
+        _push(`<a dir="ltr"${ssrRenderAttr("href", `tel:${settings.value.phone}`)} data-v-bd44171c>${ssrInterpolate(settings.value.phone)}</a>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`</h6></div></div><div class="widget-contact-grid" data-v-c6d725dd><div class="icon" data-v-c6d725dd><i class="fas fa-envelope" data-v-c6d725dd></i></div><div class="contact-grid-details" data-v-c6d725dd><p data-v-c6d725dd>${ssrInterpolate(trans("Email Address"))}</p><h6 data-v-c6d725dd>`);
+      _push(`</h6></div></div><div class="widget-contact-grid" data-v-bd44171c><div class="icon" data-v-bd44171c><i class="fas fa-envelope" data-v-bd44171c></i></div><div class="contact-grid-details" data-v-bd44171c><p data-v-bd44171c>${ssrInterpolate(trans("Email Address"))}</p><h6 data-v-bd44171c>`);
       if (settings.value && settings.value.email) {
-        _push(`<a dir="ltr"${ssrRenderAttr("href", `mailto:${settings.value.email}`)} data-v-c6d725dd>${ssrInterpolate(settings.value.email)}</a>`);
+        _push(`<a dir="ltr"${ssrRenderAttr("href", `mailto:${settings.value.email}`)} data-v-bd44171c>${ssrInterpolate(settings.value.email)}</a>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`</h6></div></div></div></div></div></div></div></div><div class="copyright-wrap" data-v-c6d725dd><div class="container" data-v-c6d725dd><div class="row gy-3 justify-content-md-between justify-content-center" data-v-c6d725dd><div class="col-auto align-self-center" data-v-c6d725dd><p class="copyright-text text-center" data-v-c6d725dd> © <a href="#" data-v-c6d725dd>${ssrInterpolate(seo.value && seo.value.website_name ? seo.value.website_name : "")}</a> ${ssrInterpolate(currentYear.value)} | ${ssrInterpolate(trans("All Rights Reserved"))}</p></div><div class="col-auto" data-v-c6d725dd><div class="footer-links" data-v-c6d725dd>`);
+      _push(`</h6></div></div></div></div></div></div></div></div><div class="copyright-wrap" data-v-bd44171c><div class="container" data-v-bd44171c><div class="row gy-3 justify-content-md-between justify-content-center" data-v-bd44171c><div class="col-auto align-self-center" data-v-bd44171c><p class="copyright-text text-center" data-v-bd44171c> © <a href="#" data-v-bd44171c>${ssrInterpolate(seo.value && seo.value.website_name ? seo.value.website_name : "")}</a> ${ssrInterpolate(currentYear.value)} | ${ssrInterpolate(trans("All Rights Reserved"))}</p></div><div class="col-auto" data-v-bd44171c><div class="footer-links" data-v-bd44171c>`);
       _push(ssrRenderComponent(unref(Link), { href: aboutUrl.value }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
@@ -648,11 +650,11 @@ const _sfc_main$f = {
       }, _parent));
       _push(`</div></div></div></div></div></footer>`);
       if (whatsappFabUrl.value) {
-        _push(`<a class="wa-fab"${ssrRenderAttr("href", whatsappFabUrl.value)} target="_blank" rel="noopener" aria-label="WhatsApp"${ssrRenderAttr("title", trans("WhatsApp"))} data-v-c6d725dd><i class="fab fa-whatsapp" aria-hidden="true" data-v-c6d725dd></i></a>`);
+        _push(`<a class="wa-fab"${ssrRenderAttr("href", whatsappFabUrl.value)} target="_blank" rel="noopener" aria-label="WhatsApp"${ssrRenderAttr("title", trans("WhatsApp"))} data-v-bd44171c><i class="fab fa-whatsapp" aria-hidden="true" data-v-bd44171c></i></a>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`<div class="scroll-top" data-v-c6d725dd><svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102" data-v-c6d725dd><path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" style="${ssrRenderStyle({ "transition": "stroke-dashoffset 10ms linear 0s", "stroke-dasharray": "307.919, 307.919", "stroke-dashoffset": "307.919" })}" data-v-c6d725dd></path></svg></div><!--]-->`);
+      _push(`<div class="scroll-top" data-v-bd44171c><svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102" data-v-bd44171c><path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" style="${ssrRenderStyle({ "transition": "stroke-dashoffset 10ms linear 0s", "stroke-dasharray": "307.919, 307.919", "stroke-dashoffset": "307.919" })}" data-v-bd44171c></path></svg></div><!--]-->`);
     };
   }
 };
@@ -662,7 +664,7 @@ _sfc_main$f.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Layouts/App.vue");
   return _sfc_setup$f ? _sfc_setup$f(props, ctx) : void 0;
 };
-const AppLayout = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["__scopeId", "data-v-c6d725dd"]]);
+const AppLayout = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["__scopeId", "data-v-bd44171c"]]);
 const __default__$6 = {
   components: {
     AppLayout
