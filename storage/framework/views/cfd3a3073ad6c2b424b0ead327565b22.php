@@ -42,14 +42,14 @@
 <?php $component->withAttributes([]); ?>
     <?php if (isset($component)) { $__componentOriginal6dd53ea036ef0ad42242489cd935340d = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal6dd53ea036ef0ad42242489cd935340d = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.admin.create-card','data' => ['title' => 'Website Configurations','formUrl' => route('admin.settings.store')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.admin.create-card','data' => ['title' => 'Website Configurations','formUrl' => route('admin.settings.Store')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('admin.create-card'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['title' => 'Website Configurations','formUrl' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('admin.settings.store'))]); ?>
+<?php $component->withAttributes(['title' => 'Website Configurations','formUrl' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('admin.settings.Store'))]); ?>
         <div class="row mb-10">
             <!--begin::Col-->
             <div class="col-xl-3 mb-5">
@@ -208,7 +208,7 @@
             <!--begin::Col-->
             <div class="col-xl-9 fv-row">
                 <input type="text" class="form-control form-control-solid" name="data[shipping_phone]"
-                       value="<?php echo e($settings->get('shipping_phone')); ?>" placeholder="9639xxxxxxxx"/>
+                       value="<?php echo e($settings->get('shipping_phone','phone')); ?>" placeholder="9639xxxxxxxx"/>
             </div>
         </div>
         <div class="row mb-8">
