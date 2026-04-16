@@ -14,5 +14,5 @@ use Modules\Order\Http\Controllers\OrderController;
 |
 */
 
-    Route::resource('orders', OrderController::class)->only('Store');
+    Route::resource('orders', OrderController::class)->only('store');
 
