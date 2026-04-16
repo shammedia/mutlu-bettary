@@ -225,7 +225,15 @@
         <FaqSection :faqs="faqs"/>
     </app-layout>
 </template>
-
+<style>
+@media (max-width: 575px) {
+    .portfolio-card .portfolio-card-thumb img {
+        min-height: 500px;
+        -o-object-fit: cover !important;
+        object-fit: none !important;
+    }
+}
+</style>
 <script setup>
 import {computed, ref} from 'vue'
 import {usePage, useForm, Link, Head} from '@inertiajs/vue3'
