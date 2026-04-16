@@ -1649,7 +1649,7 @@ const _sfc_main$a = {
       let cartUrl = "/cart";
       try {
         if (typeof route !== "undefined" && route) {
-          cartUrl = route("orders.Store");
+          cartUrl = route("orders.store");
         } else {
           const currentLocale = page.props.locale || "";
           cartUrl = currentLocale ? `/${currentLocale}/orders` : "/orders";
@@ -1727,7 +1727,7 @@ const _sfc_main$a = {
       _push(ssrRenderComponent(unref(Head), null, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<title data-v-205d5fb0${_scopeId}>${ssrInterpolate(trans("Our Products"))} | Mutlu</title>`);
+            _push2(`<title data-v-571dfc75${_scopeId}>${ssrInterpolate(trans("Our Products"))} | Mutlu</title>`);
           } else {
             return [
               createVNode("title", null, toDisplayString(trans("Our Products")) + " | Mutlu", 1)
@@ -1739,40 +1739,40 @@ const _sfc_main$a = {
       _push(ssrRenderComponent(AppLayout, null, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<main class="py-5 px-3 max-w-5xl mx-auto overflow-hidden" data-v-205d5fb0${_scopeId}><section class="mb-4 text-center" data-v-205d5fb0${_scopeId}><h2 class="display-6 fw-bold text-on-surface mb-1" data-v-205d5fb0${_scopeId}>سلة المقتنيات</h2><p class="text-on-surface-variant-80 small" data-v-205d5fb0${_scopeId}>يتوفر شحن حتى باب المنزل.</p></section><div class="row g-4" data-v-205d5fb0${_scopeId}><div class="col-12 col-lg-8 d-flex flex-column gap-3" data-v-205d5fb0${_scopeId}>`);
+            _push2(`<main class="py-5 px-3 max-w-5xl mx-auto overflow-hidden" data-v-571dfc75${_scopeId}><section class="mb-4 text-center" data-v-571dfc75${_scopeId}><h2 class="display-6 fw-bold text-on-surface mb-1" data-v-571dfc75${_scopeId}>سلة المقتنيات</h2><p class="text-on-surface-variant-80 small" data-v-571dfc75${_scopeId}>يتوفر شحن حتى باب المنزل.</p></section><div class="row g-4" data-v-571dfc75${_scopeId}><div class="col-12 col-lg-8 d-flex flex-column gap-3" data-v-571dfc75${_scopeId}>`);
             if (submitSuccess.value) {
-              _push2(`<div class="col-12 mt-3" data-v-205d5fb0${_scopeId}><div class="alert alert-success" data-v-205d5fb0${_scopeId}>${ssrInterpolate(trans("The order has been sent for review"))}</div></div>`);
+              _push2(`<div class="col-12 mt-3" data-v-571dfc75${_scopeId}><div class="alert alert-success" data-v-571dfc75${_scopeId}>${ssrInterpolate(trans("The order has been sent for review"))}</div></div>`);
             } else {
               _push2(`<!---->`);
             }
             _push2(`<!--[-->`);
             ssrRenderList(unref(cartStore).carts, (cart) => {
-              _push2(`<div class="bg-surface-container-lowest rounded-2xl p-3 p-sm-4 product-card-grid shadow-sm" data-v-205d5fb0${_scopeId}><div class="product-image-wrap rounded-3 overflow-hidden flex-shrink-0" data-v-205d5fb0${_scopeId}><img alt="بطارية" class="w-100 h-100 object-fit-cover"${ssrRenderAttr("src", cart.primary_slide)} data-v-205d5fb0${_scopeId}></div><div class="d-flex flex-column justify-content-between min-w-0" data-v-205d5fb0${_scopeId}><div data-v-205d5fb0${_scopeId}><div class="d-flex justify-content-between align-items-start gap-2" data-v-205d5fb0${_scopeId}><h3 class="fs-6 fs-sm-5 fw-bold text-on-surface lh-sm text-truncate" data-v-205d5fb0${_scopeId}>بطارية 35Ah B20 (NS40)</h3><button class="btn p-0 text-primary-60 flex-shrink-0" data-v-205d5fb0${_scopeId}><span class="material-symbols-outlined fs-20" data-v-205d5fb0${_scopeId}>delete</span></button></div><div class="fs-11 small text-on-surface-variant-80 mt-1" data-v-205d5fb0${_scopeId}><p class="mb-1" data-v-205d5fb0${_scopeId}>${ssrInterpolate(trans("Capacity (Ah)"))}${ssrInterpolate(formatCapacityLabel(cart.capacity))}</p><p class="mb-0" data-v-205d5fb0${_scopeId}>${ssrInterpolate(trans("Voltage (V)"))} ${ssrInterpolate(cart.voltage)}</p></div></div><div class="d-flex justify-content-between align-items-center mt-3" data-v-205d5fb0${_scopeId}><div class="d-flex align-items-center bg-surface-container rounded-3 p-1" data-v-205d5fb0${_scopeId}><button class="btn p-0 qty-btn d-flex align-items-center justify-content-center text-primary-custom active-scale-sm" data-v-205d5fb0${_scopeId}><span class="material-symbols-outlined fs-18" data-v-205d5fb0${_scopeId}>remove</span></button><span class="px-2 px-sm-4 fw-bold small fs-sm-6" data-v-205d5fb0${_scopeId}>${ssrInterpolate(cart.quantity)}</span><button class="btn p-0 qty-btn d-flex align-items-center justify-content-center text-primary-custom active-scale-sm" data-v-205d5fb0${_scopeId}><span class="material-symbols-outlined fs-18" data-v-205d5fb0${_scopeId}>add</span></button></div><span class="h5 mb-0 fw-bolder text-on-surface" data-v-205d5fb0${_scopeId}>${ssrInterpolate(cart.price)} $</span></div></div></div>`);
+              _push2(`<div class="bg-surface-container-lowest rounded-2xl p-3 p-sm-4 product-card-grid shadow-sm" data-v-571dfc75${_scopeId}><div class="product-image-wrap rounded-3 overflow-hidden flex-shrink-0" data-v-571dfc75${_scopeId}><img alt="بطارية" class="w-100 h-100 object-fit-cover"${ssrRenderAttr("src", cart.primary_slide)} data-v-571dfc75${_scopeId}></div><div class="d-flex flex-column justify-content-between min-w-0" data-v-571dfc75${_scopeId}><div data-v-571dfc75${_scopeId}><div class="d-flex justify-content-between align-items-start gap-2" data-v-571dfc75${_scopeId}><h3 class="fs-6 fs-sm-5 fw-bold text-on-surface lh-sm text-truncate" data-v-571dfc75${_scopeId}>بطارية 35Ah B20 (NS40)</h3><button class="btn p-0 text-primary-60 flex-shrink-0" data-v-571dfc75${_scopeId}><span class="material-symbols-outlined fs-20" data-v-571dfc75${_scopeId}>delete</span></button></div><div class="fs-11 small text-on-surface-variant-80 mt-1" data-v-571dfc75${_scopeId}><p class="mb-1" data-v-571dfc75${_scopeId}>${ssrInterpolate(trans("Capacity (Ah)"))}${ssrInterpolate(formatCapacityLabel(cart.capacity))}</p><p class="mb-0" data-v-571dfc75${_scopeId}>${ssrInterpolate(trans("Voltage (V)"))} ${ssrInterpolate(cart.voltage)}</p></div></div><div class="d-flex justify-content-between align-items-center mt-3" data-v-571dfc75${_scopeId}><div class="d-flex align-items-center bg-surface-container rounded-3 p-1" data-v-571dfc75${_scopeId}><button class="btn p-0 qty-btn d-flex align-items-center justify-content-center text-primary-custom active-scale-sm" data-v-571dfc75${_scopeId}><span class="material-symbols-outlined fs-18" data-v-571dfc75${_scopeId}>remove</span></button><span class="px-2 px-sm-4 fw-bold small fs-sm-6" data-v-571dfc75${_scopeId}>${ssrInterpolate(cart.quantity)}</span><button class="btn p-0 qty-btn d-flex align-items-center justify-content-center text-primary-custom active-scale-sm" data-v-571dfc75${_scopeId}><span class="material-symbols-outlined fs-18" data-v-571dfc75${_scopeId}>add</span></button></div><span class="h5 mb-0 fw-bolder text-on-surface" data-v-571dfc75${_scopeId}>${ssrInterpolate(cart.price)} $</span></div></div></div>`);
             });
-            _push2(`<!--]--><div class="bg-surface-container-high rounded-2xl p-4 p-sm-5 d-flex flex-column gap-4" data-v-205d5fb0${_scopeId}><div data-v-205d5fb0${_scopeId}><h4 class="fw-bold h5 mb-4 d-flex align-items-center gap-2" data-v-205d5fb0${_scopeId}><span class="material-symbols-outlined text-primary-custom" data-v-205d5fb0${_scopeId}>local_shipping</span> طريقة الشحن </h4><div class="d-flex flex-column gap-3" data-v-205d5fb0${_scopeId}><label class="${ssrRenderClass([unref(createOrder).deliveryType == "home" ? "bg-danger" : "bg-surface-container-lowest", "d-flex align-items-center gap-3 p-4 rounded-3 border border-transparent hover-border-outline-30 transition-all"])}" for="home-delivery" data-v-205d5fb0${_scopeId}><input checked="" id="home-delivery" name="shipping-method" value="home" type="radio"${ssrIncludeBooleanAttr(ssrLooseEqual(unref(createOrder).deliveryType, "home")) ? " checked" : ""} data-v-205d5fb0${_scopeId}><div class="flex-grow-1 d-flex justify-content-between align-items-center" data-v-205d5fb0${_scopeId}><div class="d-flex align-items-center gap-2" data-v-205d5fb0${_scopeId}><span class="material-symbols-outlined text-on-surface-variant fs-20" data-v-205d5fb0${_scopeId}>home</span><span class="fw-bold small" data-v-205d5fb0${_scopeId}>${ssrInterpolate(trans("Shipping to Home"))}</span></div></div></label><label class="${ssrRenderClass([unref(createOrder).deliveryType == "office" ? "bg-danger" : "bg-surface-container-lowest", "d-flex align-items-center gap-3 p-4 rounded-3 border border-transparent hover-border-outline-30 transition-all"])}" for="pickup-center" data-v-205d5fb0${_scopeId}><input id="pickup-center" name="shipping-method" value="office" type="radio"${ssrIncludeBooleanAttr(ssrLooseEqual(unref(createOrder).deliveryType, "office")) ? " checked" : ""} data-v-205d5fb0${_scopeId}><div class="flex-grow-1 d-flex justify-content-between align-items-center" data-v-205d5fb0${_scopeId}><div class="d-flex align-items-center gap-2" data-v-205d5fb0${_scopeId}><span class="material-symbols-outlined text-on-surface-variant fs-20" data-v-205d5fb0${_scopeId}>store</span><span class="fw-bold small" data-v-205d5fb0${_scopeId}>${ssrInterpolate(trans("Pickup Center"))}</span></div></div></label></div></div><div class="line-outline-30" data-v-205d5fb0${_scopeId}></div>`);
+            _push2(`<!--]--><div class="bg-surface-container-high rounded-2xl p-4 p-sm-5 d-flex flex-column gap-4" data-v-571dfc75${_scopeId}><div data-v-571dfc75${_scopeId}><h4 class="fw-bold h5 mb-4 d-flex align-items-center gap-2" data-v-571dfc75${_scopeId}><span class="material-symbols-outlined text-primary-custom" data-v-571dfc75${_scopeId}>local_shipping</span> طريقة الشحن </h4><div class="d-flex flex-column gap-3" data-v-571dfc75${_scopeId}><label class="${ssrRenderClass([unref(createOrder).deliveryType == "home" ? "bg-danger" : "bg-surface-container-lowest", "d-flex align-items-center gap-3 p-4 rounded-3 border border-transparent hover-border-outline-30 transition-all"])}" for="home-delivery" data-v-571dfc75${_scopeId}><input checked="" id="home-delivery" name="shipping-method" value="home" type="radio"${ssrIncludeBooleanAttr(ssrLooseEqual(unref(createOrder).deliveryType, "home")) ? " checked" : ""} data-v-571dfc75${_scopeId}><div class="flex-grow-1 d-flex justify-content-between align-items-center" data-v-571dfc75${_scopeId}><div class="d-flex align-items-center gap-2" data-v-571dfc75${_scopeId}><span class="material-symbols-outlined text-on-surface-variant fs-20" data-v-571dfc75${_scopeId}>home</span><span class="fw-bold small" data-v-571dfc75${_scopeId}>${ssrInterpolate(trans("Shipping to Home"))}</span></div></div></label><label class="${ssrRenderClass([unref(createOrder).deliveryType == "office" ? "bg-danger" : "bg-surface-container-lowest", "d-flex align-items-center gap-3 p-4 rounded-3 border border-transparent hover-border-outline-30 transition-all"])}" for="pickup-center" data-v-571dfc75${_scopeId}><input id="pickup-center" name="shipping-method" value="office" type="radio"${ssrIncludeBooleanAttr(ssrLooseEqual(unref(createOrder).deliveryType, "office")) ? " checked" : ""} data-v-571dfc75${_scopeId}><div class="flex-grow-1 d-flex justify-content-between align-items-center" data-v-571dfc75${_scopeId}><div class="d-flex align-items-center gap-2" data-v-571dfc75${_scopeId}><span class="material-symbols-outlined text-on-surface-variant fs-20" data-v-571dfc75${_scopeId}>store</span><span class="fw-bold small" data-v-571dfc75${_scopeId}>${ssrInterpolate(trans("Pickup Center"))}</span></div></div></label></div></div><div class="line-outline-30" data-v-571dfc75${_scopeId}></div>`);
             if (unref(createOrder).deliveryType === "home") {
-              _push2(`<div class="d-flex flex-column gap-3" data-v-205d5fb0${_scopeId}><div class="d-flex align-items-start gap-3" data-v-205d5fb0${_scopeId}><div class="rounded-circle bg-primary-10 d-flex align-items-center justify-content-center text-primary-custom flex-shrink-0 mt-1" style="${ssrRenderStyle({ "width": "2.5rem", "height": "2.5rem" })}" data-v-205d5fb0${_scopeId}><span class="material-symbols-outlined fs-20" style="${ssrRenderStyle({ "font-variation-settings": "'FILL' 1" })}" data-v-205d5fb0${_scopeId}>location_on</span></div><div class="min-w-0" style="${ssrRenderStyle({ "overflow": "auto" })}" data-v-205d5fb0${_scopeId}><div class="d-flex gap-2" data-v-205d5fb0${_scopeId}><input type="text"${ssrRenderAttr("placeholder", trans("Address"))} class="form-control-sm"${ssrRenderAttr("value", unref(createOrder).address)} data-v-205d5fb0${_scopeId}><input type="text"${ssrRenderAttr("placeholder", trans("Phone"))} class="form-control-sm"${ssrRenderAttr("value", unref(createOrder).phone)} data-v-205d5fb0${_scopeId}></div>`);
+              _push2(`<div class="d-flex flex-column gap-3" data-v-571dfc75${_scopeId}><div class="d-flex align-items-start gap-3" data-v-571dfc75${_scopeId}><div class="rounded-circle bg-primary-10 d-flex align-items-center justify-content-center text-primary-custom flex-shrink-0 mt-1" style="${ssrRenderStyle({ "width": "2.5rem", "height": "2.5rem" })}" data-v-571dfc75${_scopeId}><span class="material-symbols-outlined fs-20" style="${ssrRenderStyle({ "font-variation-settings": "'FILL' 1" })}" data-v-571dfc75${_scopeId}>location_on</span></div><div class="min-w-0" style="${ssrRenderStyle({ "overflow": "auto" })}" data-v-571dfc75${_scopeId}><div class="d-flex gap-2" data-v-571dfc75${_scopeId}><input type="text"${ssrRenderAttr("placeholder", trans("Address"))} class="form-control-sm"${ssrRenderAttr("value", unref(createOrder).address)} data-v-571dfc75${_scopeId}><input type="text"${ssrRenderAttr("placeholder", trans("Phone"))} class="form-control-sm"${ssrRenderAttr("value", unref(createOrder).phone)} data-v-571dfc75${_scopeId}></div>`);
               if (lat.value > 0 && lng.value > 0) {
-                _push2(`<p class="text-on-surface-variant small text-truncate mb-0" data-v-205d5fb0${_scopeId}>`);
+                _push2(`<p class="text-on-surface-variant small text-truncate mb-0" data-v-571dfc75${_scopeId}>`);
                 _push2(ssrRenderComponent(_sfc_main$b, {
                   lat: lat.value,
                   lng: lng.value
                 }, null, _parent2, _scopeId));
-                _push2(`<a${ssrRenderAttr("href", unref(createOrder).map)} target="_blank" data-v-205d5fb0${_scopeId}>${ssrInterpolate(trans("View Location"))}</a></p>`);
+                _push2(`<a${ssrRenderAttr("href", unref(createOrder).map)} target="_blank" data-v-571dfc75${_scopeId}>${ssrInterpolate(trans("View Location"))}</a></p>`);
               } else {
                 _push2(`<!---->`);
               }
-              _push2(`</div></div><button class="btn w-100 btn-map px-4 py-3 rounded-3 fw-bold small transition-opacity active-scale d-flex align-items-center justify-content-center gap-2" data-v-205d5fb0${_scopeId}><span class="material-symbols-outlined fs-18" data-v-205d5fb0${_scopeId}>map</span> ${ssrInterpolate(trans("Get Location"))}</button></div>`);
+              _push2(`</div></div><button class="btn w-100 btn-map px-4 py-3 rounded-3 fw-bold small transition-opacity active-scale d-flex align-items-center justify-content-center gap-2" data-v-571dfc75${_scopeId}><span class="material-symbols-outlined fs-18" data-v-571dfc75${_scopeId}>map</span> ${ssrInterpolate(trans("Get Location"))}</button></div>`);
             } else {
               _push2(`<!---->`);
             }
-            _push2(`</div></div><div class="col-12 col-lg-4 mb-4" data-v-205d5fb0${_scopeId}><div class="bg-surface-container-low rounded-3xl p-4 p-sm-5 sticky-top shadow-sm border border-outline-10" style="${ssrRenderStyle({ "top": "2rem" })}" data-v-205d5fb0${_scopeId}><h3 class="h4 fw-bolder mb-4 pb-3 border-bottom border-outline-20" data-v-205d5fb0${_scopeId}>${ssrInterpolate(trans("Information Order"))}</h3><div class="d-flex flex-column gap-3 mb-4" data-v-205d5fb0${_scopeId}><div class="d-flex justify-content-between text-on-surface-variant small fs-sm-6" data-v-205d5fb0${_scopeId}><span data-v-205d5fb0${_scopeId}>${ssrInterpolate(trans("Subtotal"))}</span><span class="fw-semibold text-on-surface" data-v-205d5fb0${_scopeId}>${ssrInterpolate(subPrice.value)} $</span></div><div class="d-flex justify-content-between text-on-surface-variant small fs-sm-6" data-v-205d5fb0${_scopeId}><span data-v-205d5fb0${_scopeId}>${ssrInterpolate(trans("Shipping"))}</span><span class="fw-semibold text-on-surface" data-v-205d5fb0${_scopeId}>${ssrInterpolate(shippingCost.value)} $</span></div><div class="pt-3 mt-3 border-top border-outline-30 d-flex justify-content-between align-items-baseline" data-v-205d5fb0${_scopeId}><span class="h5 fw-bold text-on-surface mb-0" data-v-205d5fb0${_scopeId}>${ssrInterpolate(trans("Total"))}</span><span class="display-6 fw-bolder text-primary-custom" data-v-205d5fb0${_scopeId}>${ssrInterpolate(shippingCost.value + subPrice.value)} $</span></div></div><div class="d-flex flex-column gap-3" data-v-205d5fb0${_scopeId}>`);
+            _push2(`</div></div><div class="col-12 col-lg-4 mb-4" data-v-571dfc75${_scopeId}><div class="bg-surface-container-low rounded-3xl p-4 p-sm-5 sticky-top shadow-sm border border-outline-10" style="${ssrRenderStyle({ "top": "2rem" })}" data-v-571dfc75${_scopeId}><h3 class="h4 fw-bolder mb-4 pb-3 border-bottom border-outline-20" data-v-571dfc75${_scopeId}>${ssrInterpolate(trans("Information Order"))}</h3><div class="d-flex flex-column gap-3 mb-4" data-v-571dfc75${_scopeId}><div class="d-flex justify-content-between text-on-surface-variant small fs-sm-6" data-v-571dfc75${_scopeId}><span data-v-571dfc75${_scopeId}>${ssrInterpolate(trans("Subtotal"))}</span><span class="fw-semibold text-on-surface" data-v-571dfc75${_scopeId}>${ssrInterpolate(subPrice.value)} $</span></div><div class="d-flex justify-content-between text-on-surface-variant small fs-sm-6" data-v-571dfc75${_scopeId}><span data-v-571dfc75${_scopeId}>${ssrInterpolate(trans("Shipping"))}</span><span class="fw-semibold text-on-surface" data-v-571dfc75${_scopeId}>${ssrInterpolate(shippingCost.value)} $</span></div><div class="pt-3 mt-3 border-top border-outline-30 d-flex justify-content-between align-items-baseline" data-v-571dfc75${_scopeId}><span class="h5 fw-bold text-on-surface mb-0" data-v-571dfc75${_scopeId}>${ssrInterpolate(trans("Total"))}</span><span class="display-6 fw-bolder text-primary-custom" data-v-571dfc75${_scopeId}>${ssrInterpolate(shippingCost.value + subPrice.value)} $</span></div></div><div class="d-flex flex-column gap-3" data-v-571dfc75${_scopeId}>`);
             if (unref(cartStore).carts.length > 0) {
-              _push2(`<form data-v-205d5fb0${_scopeId}><button class="btn w-100 py-3 rounded-3 btn-gradient fw-bold fs-5 shadow active-scale transition-all" data-v-205d5fb0${_scopeId}>${ssrInterpolate(trans("Create Order"))}</button></form>`);
+              _push2(`<form data-v-571dfc75${_scopeId}><button class="btn w-100 py-3 rounded-3 btn-gradient fw-bold fs-5 shadow active-scale transition-all" data-v-571dfc75${_scopeId}>${ssrInterpolate(trans("Create Order"))}</button></form>`);
             } else {
               _push2(`<!---->`);
             }
-            _push2(`<div class="d-flex align-items-center justify-content-center gap-2 text-on-surface-variant-60 small py-2" data-v-205d5fb0${_scopeId}><span class="material-symbols-outlined" style="${ssrRenderStyle({ "font-size": "14px" })}" data-v-205d5fb0${_scopeId}>lock</span><span data-v-205d5fb0${_scopeId}>يمكنك الدفع عند الاستلام أو الدفع عبر شام كاش</span></div></div></div></div></div></main>`);
+            _push2(`<div class="d-flex align-items-center justify-content-center gap-2 text-on-surface-variant-60 small py-2" data-v-571dfc75${_scopeId}><span class="material-symbols-outlined" style="${ssrRenderStyle({ "font-size": "14px" })}" data-v-571dfc75${_scopeId}>lock</span><span data-v-571dfc75${_scopeId}>يمكنك الدفع عند الاستلام أو الدفع عبر شام كاش</span></div></div></div></div></div></main>`);
           } else {
             return [
               createVNode("main", { class: "py-5 px-3 max-w-5xl mx-auto overflow-hidden" }, [
@@ -2000,7 +2000,7 @@ _sfc_main$a.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("Modules/Cart/resources/assets/js/Pages/CartIndex.vue");
   return _sfc_setup$a ? _sfc_setup$a(props, ctx) : void 0;
 };
-const CartIndex = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["__scopeId", "data-v-205d5fb0"]]);
+const CartIndex = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["__scopeId", "data-v-571dfc75"]]);
 const __vite_glob_0_2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: CartIndex
@@ -3438,7 +3438,7 @@ const _sfc_main$7 = /* @__PURE__ */ Object.assign(__default__$2, {
       let contactUrl = "/contact-us";
       try {
         if (typeof route !== "undefined" && route) {
-          contactUrl = route("contact-us.Store");
+          contactUrl = route("contact-us.store");
         } else {
           const currentLocale = page.props.locale || "";
           contactUrl = currentLocale ? `/${currentLocale}/contact-us` : "/contact-us";
@@ -3491,7 +3491,7 @@ const _sfc_main$7 = /* @__PURE__ */ Object.assign(__default__$2, {
       _push(ssrRenderComponent(unref(Head), null, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<title data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(trans("Contact Us"))} | Mutlu</title>`);
+            _push2(`<title data-v-c5b1ff57${_scopeId}>${ssrInterpolate(trans("Contact Us"))} | Mutlu</title>`);
           } else {
             return [
               createVNode("title", null, toDisplayString(trans("Contact Us")) + " | Mutlu", 1)
@@ -3503,7 +3503,7 @@ const _sfc_main$7 = /* @__PURE__ */ Object.assign(__default__$2, {
       _push(ssrRenderComponent(AppLayout, null, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<div class="breadcumb-wrapper" data-v-9b6a9fe2${_scopeId}><div class="container" data-v-9b6a9fe2${_scopeId}><div class="row" data-v-9b6a9fe2${_scopeId}><div class="col-lg-6" data-v-9b6a9fe2${_scopeId}><div class="breadcumb-content" data-v-9b6a9fe2${_scopeId}><h1 class="breadcumb-title" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(trans("Contact Us"))}</h1><ul class="breadcumb-menu" data-v-9b6a9fe2${_scopeId}><li data-v-9b6a9fe2${_scopeId}>`);
+            _push2(`<div class="breadcumb-wrapper" data-v-c5b1ff57${_scopeId}><div class="container" data-v-c5b1ff57${_scopeId}><div class="row" data-v-c5b1ff57${_scopeId}><div class="col-lg-6" data-v-c5b1ff57${_scopeId}><div class="breadcumb-content" data-v-c5b1ff57${_scopeId}><h1 class="breadcumb-title" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(trans("Contact Us"))}</h1><ul class="breadcumb-menu" data-v-c5b1ff57${_scopeId}><li data-v-c5b1ff57${_scopeId}>`);
             _push2(ssrRenderComponent(unref(Link), {
               href: _ctx.route("home")
             }, {
@@ -3518,73 +3518,73 @@ const _sfc_main$7 = /* @__PURE__ */ Object.assign(__default__$2, {
               }),
               _: 1
             }, _parent2, _scopeId));
-            _push2(`</li><li class="active" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(trans("Contact Us"))}</li></ul></div></div><div class="col-lg-6 d-lg-block d-none" data-v-9b6a9fe2${_scopeId}><div class="breadcumb-thumb" data-v-9b6a9fe2${_scopeId}><img${ssrRenderAttr("src", asset_path.value + "images/custom/contact_us.png")} alt="img" data-v-9b6a9fe2${_scopeId}></div></div></div></div></div><div class="contact-area space" data-v-9b6a9fe2${_scopeId}><div class="container" data-v-9b6a9fe2${_scopeId}><div class="row gy-4 justify-content-center" data-v-9b6a9fe2${_scopeId}>`);
+            _push2(`</li><li class="active" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(trans("Contact Us"))}</li></ul></div></div><div class="col-lg-6 d-lg-block d-none" data-v-c5b1ff57${_scopeId}><div class="breadcumb-thumb" data-v-c5b1ff57${_scopeId}><img${ssrRenderAttr("src", asset_path.value + "images/custom/contact_us.png")} alt="img" data-v-c5b1ff57${_scopeId}></div></div></div></div></div><div class="contact-area space" data-v-c5b1ff57${_scopeId}><div class="container" data-v-c5b1ff57${_scopeId}><div class="row gy-4 justify-content-center" data-v-c5b1ff57${_scopeId}>`);
             if (contactAddressLines.value.length) {
-              _push2(`<div class="col-xxl-3 col-lg-4 col-md-6" data-v-9b6a9fe2${_scopeId}><div class="contact-info" data-v-9b6a9fe2${_scopeId}><div class="contact-info_icon" data-v-9b6a9fe2${_scopeId}><i class="fas fa-map-marker-alt" data-v-9b6a9fe2${_scopeId}></i></div><h6 class="contact-info_title" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(trans("Address"))}</h6><!--[-->`);
+              _push2(`<div class="col-xxl-3 col-lg-4 col-md-6" data-v-c5b1ff57${_scopeId}><div class="contact-info" data-v-c5b1ff57${_scopeId}><div class="contact-info_icon" data-v-c5b1ff57${_scopeId}><i class="fas fa-map-marker-alt" data-v-c5b1ff57${_scopeId}></i></div><h6 class="contact-info_title" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(trans("Address"))}</h6><!--[-->`);
               ssrRenderList(contactAddressLines.value, (line, idx) => {
-                _push2(`<p class="contact-info_text" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(line)}</p>`);
+                _push2(`<p class="contact-info_text" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(line)}</p>`);
               });
               _push2(`<!--]--></div></div>`);
             } else {
               _push2(`<!---->`);
             }
             if (contactPhoneLines.value.length) {
-              _push2(`<div class="col-xxl-3 col-lg-4 col-md-6" data-v-9b6a9fe2${_scopeId}><div class="contact-info" data-v-9b6a9fe2${_scopeId}><div class="contact-info_icon" data-v-9b6a9fe2${_scopeId}><i class="fas fa-phone-alt" data-v-9b6a9fe2${_scopeId}></i></div><h6 class="contact-info_title" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(trans("Phone Number"))}</h6><!--[-->`);
+              _push2(`<div class="col-xxl-3 col-lg-4 col-md-6" data-v-c5b1ff57${_scopeId}><div class="contact-info" data-v-c5b1ff57${_scopeId}><div class="contact-info_icon" data-v-c5b1ff57${_scopeId}><i class="fas fa-phone-alt" data-v-c5b1ff57${_scopeId}></i></div><h6 class="contact-info_title" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(trans("Phone Number"))}</h6><!--[-->`);
               ssrRenderList(contactPhoneLines.value, (phone, idx) => {
-                _push2(`<p class="contact-info_text" data-v-9b6a9fe2${_scopeId}><a dir="ltr"${ssrRenderAttr("href", `tel:${phone}`)} data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(phone)}</a></p>`);
+                _push2(`<p class="contact-info_text" data-v-c5b1ff57${_scopeId}><a dir="ltr"${ssrRenderAttr("href", `tel:${phone}`)} data-v-c5b1ff57${_scopeId}>${ssrInterpolate(phone)}</a></p>`);
               });
               _push2(`<!--]--></div></div>`);
             } else {
               _push2(`<!---->`);
             }
             if (contactEmailLines.value.length) {
-              _push2(`<div class="col-xxl-3 col-lg-4 col-md-6" data-v-9b6a9fe2${_scopeId}><div class="contact-info" data-v-9b6a9fe2${_scopeId}><div class="contact-info_icon" data-v-9b6a9fe2${_scopeId}><i class="fas fa-envelope" data-v-9b6a9fe2${_scopeId}></i></div><h6 class="contact-info_title" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(trans("E-mail"))}</h6><!--[-->`);
+              _push2(`<div class="col-xxl-3 col-lg-4 col-md-6" data-v-c5b1ff57${_scopeId}><div class="contact-info" data-v-c5b1ff57${_scopeId}><div class="contact-info_icon" data-v-c5b1ff57${_scopeId}><i class="fas fa-envelope" data-v-c5b1ff57${_scopeId}></i></div><h6 class="contact-info_title" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(trans("E-mail"))}</h6><!--[-->`);
               ssrRenderList(contactEmailLines.value, (email, idx) => {
-                _push2(`<p class="contact-info_text" data-v-9b6a9fe2${_scopeId}><a dir="ltr"${ssrRenderAttr("href", `mailto:${email}`)} data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(email)}</a></p>`);
+                _push2(`<p class="contact-info_text" data-v-c5b1ff57${_scopeId}><a dir="ltr"${ssrRenderAttr("href", `mailto:${email}`)} data-v-c5b1ff57${_scopeId}>${ssrInterpolate(email)}</a></p>`);
               });
               _push2(`<!--]--></div></div>`);
             } else {
               _push2(`<!---->`);
             }
-            _push2(`</div></div></div><section class="contact-form-area appointment-area-2 bg-smoke overflow-hidden" style="${ssrRenderStyle({ backgroundImage: `url(${asset_path.value}images/custom/contact_bg.png)` })}" data-v-9b6a9fe2${_scopeId}><div class="container" data-v-9b6a9fe2${_scopeId}><div class="row gx-0 contact-us__grid" data-v-9b6a9fe2${_scopeId}><div class="col-lg-6 d-flex" data-v-9b6a9fe2${_scopeId}><div class="contact-form-wrap contact-us__panel mb-1" data-v-9b6a9fe2${_scopeId}><div class="title-area" data-v-9b6a9fe2${_scopeId}><span class="sub-title" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(trans("Our Agents"))}</span></div><div class="contact-us__locator" data-v-9b6a9fe2${_scopeId}><div class="contact-us__map-shell" data-v-9b6a9fe2${_scopeId}><div class="contact-us__map" data-v-9b6a9fe2${_scopeId}></div></div></div></div></div><div class="col-lg-6 d-flex" data-v-9b6a9fe2${_scopeId}><div class="contact-form-wrap contact-us__panel" data-v-9b6a9fe2${_scopeId}><div class="title-area" data-v-9b6a9fe2${_scopeId}><span class="sub-title" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(trans("Contact form"))}</span><h2 class="sec-title" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(trans("Please Fill The Form Below"))}</h2></div><form class="appointment-form ajax-contact" data-v-9b6a9fe2${_scopeId}><div class="row" data-v-9b6a9fe2${_scopeId}><div class="col-md-6 form-group" data-v-9b6a9fe2${_scopeId}><input${ssrRenderAttr("value", unref(contactForm).name)} type="text" name="name" id="name"${ssrRenderAttr("placeholder", trans("Your Name"))} class="${ssrRenderClass([{ "error": unref(contactForm).errors.name }, "form-control style-white"])}"${ssrIncludeBooleanAttr(unref(contactForm).processing) ? " disabled" : ""} required data-v-9b6a9fe2${_scopeId}><i class="far fa-user" data-v-9b6a9fe2${_scopeId}></i>`);
+            _push2(`</div></div></div><section class="contact-form-area appointment-area-2 bg-smoke overflow-hidden" style="${ssrRenderStyle({ backgroundImage: `url(${asset_path.value}images/custom/contact_bg.png)` })}" data-v-c5b1ff57${_scopeId}><div class="container" data-v-c5b1ff57${_scopeId}><div class="row gx-0 contact-us__grid" data-v-c5b1ff57${_scopeId}><div class="col-lg-6 d-flex" data-v-c5b1ff57${_scopeId}><div class="contact-form-wrap contact-us__panel mb-1" data-v-c5b1ff57${_scopeId}><div class="title-area" data-v-c5b1ff57${_scopeId}><span class="sub-title" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(trans("Our Agents"))}</span></div><div class="contact-us__locator" data-v-c5b1ff57${_scopeId}><div class="contact-us__map-shell" data-v-c5b1ff57${_scopeId}><div class="contact-us__map" data-v-c5b1ff57${_scopeId}></div></div></div></div></div><div class="col-lg-6 d-flex" data-v-c5b1ff57${_scopeId}><div class="contact-form-wrap contact-us__panel" data-v-c5b1ff57${_scopeId}><div class="title-area" data-v-c5b1ff57${_scopeId}><span class="sub-title" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(trans("Contact form"))}</span><h2 class="sec-title" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(trans("Please Fill The Form Below"))}</h2></div><form class="appointment-form ajax-contact" data-v-c5b1ff57${_scopeId}><div class="row" data-v-c5b1ff57${_scopeId}><div class="col-md-6 form-group" data-v-c5b1ff57${_scopeId}><input${ssrRenderAttr("value", unref(contactForm).name)} type="text" name="name" id="name"${ssrRenderAttr("placeholder", trans("Your Name"))} class="${ssrRenderClass([{ "error": unref(contactForm).errors.name }, "form-control style-white"])}"${ssrIncludeBooleanAttr(unref(contactForm).processing) ? " disabled" : ""} required data-v-c5b1ff57${_scopeId}><i class="far fa-user" data-v-c5b1ff57${_scopeId}></i>`);
             if (unref(contactForm).errors.name) {
-              _push2(`<div class="text-danger mt-1 small" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(unref(contactForm).errors.name)}</div>`);
+              _push2(`<div class="text-danger mt-1 small" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(unref(contactForm).errors.name)}</div>`);
             } else {
               _push2(`<!---->`);
             }
-            _push2(`</div><div class="col-md-6 form-group" data-v-9b6a9fe2${_scopeId}><input${ssrRenderAttr("value", unref(contactForm).email)} type="email" name="email" id="email"${ssrRenderAttr("placeholder", trans("Email Address"))} class="${ssrRenderClass([{ "error": unref(contactForm).errors.email }, "form-control style-white"])}"${ssrIncludeBooleanAttr(unref(contactForm).processing) ? " disabled" : ""} required data-v-9b6a9fe2${_scopeId}><i class="far fa-envelope" data-v-9b6a9fe2${_scopeId}></i>`);
+            _push2(`</div><div class="col-md-6 form-group" data-v-c5b1ff57${_scopeId}><input${ssrRenderAttr("value", unref(contactForm).email)} type="email" name="email" id="email"${ssrRenderAttr("placeholder", trans("Email Address"))} class="${ssrRenderClass([{ "error": unref(contactForm).errors.email }, "form-control style-white"])}"${ssrIncludeBooleanAttr(unref(contactForm).processing) ? " disabled" : ""} required data-v-c5b1ff57${_scopeId}><i class="far fa-envelope" data-v-c5b1ff57${_scopeId}></i>`);
             if (unref(contactForm).errors.email) {
-              _push2(`<div class="text-danger mt-1 small" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(unref(contactForm).errors.email)}</div>`);
+              _push2(`<div class="text-danger mt-1 small" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(unref(contactForm).errors.email)}</div>`);
             } else {
               _push2(`<!---->`);
             }
-            _push2(`</div><div class="col-md-6 form-group" data-v-9b6a9fe2${_scopeId}><input${ssrRenderAttr("value", unref(contactForm).mobile)} type="text" name="mobile" id="mobile"${ssrRenderAttr("placeholder", trans("Phone Number"))} class="${ssrRenderClass([{ "error": unref(contactForm).errors.mobile }, "form-control style-white"])}"${ssrIncludeBooleanAttr(unref(contactForm).processing) ? " disabled" : ""} data-v-9b6a9fe2${_scopeId}><i class="far fa-phone" data-v-9b6a9fe2${_scopeId}></i>`);
+            _push2(`</div><div class="col-md-6 form-group" data-v-c5b1ff57${_scopeId}><input${ssrRenderAttr("value", unref(contactForm).mobile)} type="text" name="mobile" id="mobile"${ssrRenderAttr("placeholder", trans("Phone Number"))} class="${ssrRenderClass([{ "error": unref(contactForm).errors.mobile }, "form-control style-white"])}"${ssrIncludeBooleanAttr(unref(contactForm).processing) ? " disabled" : ""} data-v-c5b1ff57${_scopeId}><i class="far fa-phone" data-v-c5b1ff57${_scopeId}></i>`);
             if (unref(contactForm).errors.mobile) {
-              _push2(`<div class="text-danger mt-1 small" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(unref(contactForm).errors.mobile)}</div>`);
+              _push2(`<div class="text-danger mt-1 small" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(unref(contactForm).errors.mobile)}</div>`);
             } else {
               _push2(`<!---->`);
             }
-            _push2(`</div><div class="col-md-6 form-group" data-v-9b6a9fe2${_scopeId}><input${ssrRenderAttr("value", unref(contactForm).subject)} type="text" name="subject" id="subject"${ssrRenderAttr("placeholder", trans("Subject"))} class="${ssrRenderClass([{ "error": unref(contactForm).errors.subject }, "form-control style-white"])}"${ssrIncludeBooleanAttr(unref(contactForm).processing) ? " disabled" : ""} data-v-9b6a9fe2${_scopeId}><i class="far fa-phone" data-v-9b6a9fe2${_scopeId}></i>`);
+            _push2(`</div><div class="col-md-6 form-group" data-v-c5b1ff57${_scopeId}><input${ssrRenderAttr("value", unref(contactForm).subject)} type="text" name="subject" id="subject"${ssrRenderAttr("placeholder", trans("Subject"))} class="${ssrRenderClass([{ "error": unref(contactForm).errors.subject }, "form-control style-white"])}"${ssrIncludeBooleanAttr(unref(contactForm).processing) ? " disabled" : ""} data-v-c5b1ff57${_scopeId}><i class="far fa-phone" data-v-c5b1ff57${_scopeId}></i>`);
             if (unref(contactForm).errors.subject) {
-              _push2(`<div class="text-danger mt-1 small" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(unref(contactForm).errors.subject)}</div>`);
+              _push2(`<div class="text-danger mt-1 small" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(unref(contactForm).errors.subject)}</div>`);
             } else {
               _push2(`<!---->`);
             }
-            _push2(`</div><div class="col-12 form-group" data-v-9b6a9fe2${_scopeId}><textarea${ssrRenderAttr("placeholder", trans("Type Your Message"))} class="${ssrRenderClass([{ "error": unref(contactForm).errors.message }, "form-control style-white"])}"${ssrIncludeBooleanAttr(unref(contactForm).processing) ? " disabled" : ""} required data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(unref(contactForm).message)}</textarea><i class="far fa-pencil" data-v-9b6a9fe2${_scopeId}></i>`);
+            _push2(`</div><div class="col-12 form-group" data-v-c5b1ff57${_scopeId}><textarea${ssrRenderAttr("placeholder", trans("Type Your Message"))} class="${ssrRenderClass([{ "error": unref(contactForm).errors.message }, "form-control style-white"])}"${ssrIncludeBooleanAttr(unref(contactForm).processing) ? " disabled" : ""} required data-v-c5b1ff57${_scopeId}>${ssrInterpolate(unref(contactForm).message)}</textarea><i class="far fa-pencil" data-v-c5b1ff57${_scopeId}></i>`);
             if (unref(contactForm).errors.message) {
-              _push2(`<div class="text-danger mt-1 small" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(unref(contactForm).errors.message)}</div>`);
+              _push2(`<div class="text-danger mt-1 small" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(unref(contactForm).errors.message)}</div>`);
             } else {
               _push2(`<!---->`);
             }
-            _push2(`</div><div class="col-12 form-group mb-0" data-v-9b6a9fe2${_scopeId}><button class="btn style2" type="submit"${ssrIncludeBooleanAttr(unref(contactForm).processing) ? " disabled" : ""} data-v-9b6a9fe2${_scopeId}>`);
+            _push2(`</div><div class="col-12 form-group mb-0" data-v-c5b1ff57${_scopeId}><button class="btn style2" type="submit"${ssrIncludeBooleanAttr(unref(contactForm).processing) ? " disabled" : ""} data-v-c5b1ff57${_scopeId}>`);
             if (unref(contactForm).processing) {
-              _push2(`<span data-v-9b6a9fe2${_scopeId}><i class="fa-solid fa-spinner fa-spin me-2" data-v-9b6a9fe2${_scopeId}></i>${ssrInterpolate(trans("Sending..."))}</span>`);
+              _push2(`<span data-v-c5b1ff57${_scopeId}><i class="fa-solid fa-spinner fa-spin me-2" data-v-c5b1ff57${_scopeId}></i>${ssrInterpolate(trans("Sending..."))}</span>`);
             } else {
-              _push2(`<span data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(trans("Send Message"))}</span>`);
+              _push2(`<span data-v-c5b1ff57${_scopeId}>${ssrInterpolate(trans("Send Message"))}</span>`);
             }
             _push2(`</button></div>`);
             if (submitSuccess.value) {
-              _push2(`<div class="col-12 mt-3" data-v-9b6a9fe2${_scopeId}><div class="alert alert-success" data-v-9b6a9fe2${_scopeId}>${ssrInterpolate(trans("Thank you for contacting us! We will get back to you soon."))}</div></div>`);
+              _push2(`<div class="col-12 mt-3" data-v-c5b1ff57${_scopeId}><div class="alert alert-success" data-v-c5b1ff57${_scopeId}>${ssrInterpolate(trans("Thank you for contacting us! We will get back to you soon."))}</div></div>`);
             } else {
               _push2(`<!---->`);
             }
@@ -3855,7 +3855,7 @@ _sfc_main$7.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("Modules/Support/resources/assets/js/Pages/Index.vue");
   return _sfc_setup$7 ? _sfc_setup$7(props, ctx) : void 0;
 };
-const Index = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["__scopeId", "data-v-9b6a9fe2"]]);
+const Index = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["__scopeId", "data-v-c5b1ff57"]]);
 const __vite_glob_0_5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Index

@@ -242,7 +242,7 @@ const submitOrder = () => {
     let cartUrl = '/cart';
     try {
         if (typeof route !== 'undefined' && route) {
-            cartUrl = route('orders.Store');
+            cartUrl = route('orders.store');
         } else {
             const currentLocale = page.props.locale || '';
             cartUrl = currentLocale ? `/${currentLocale}/orders` : '/orders';

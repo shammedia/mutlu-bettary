@@ -13,7 +13,7 @@
 @endsection
 
 <x-admin-layout>
-    <x-admin.create-card title="Add New Branch" :formUrl="route('admin.branches.Store')">
+    <x-admin.create-card title="Add New Branch" :formUrl="route('admin.branches.store')">
         <div class="row mb-8">
             <div class="col-xl-3">
                 <div class="fs-6 fw-bold mt-2 mb-3"><i class="bi bi-translate text-primary mx-1 "></i>{{__('Name')}} <span class="text-danger">*</span></div>
