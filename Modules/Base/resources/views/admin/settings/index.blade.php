@@ -171,7 +171,7 @@
             <!--begin::Col-->
             <div class="col-xl-9 fv-row">
                 <input type="text" class="form-control form-control-solid" name="data[shipping_phone]"
-                       value="{{$settings->get('shipping_phone')}}" placeholder="9639xxxxxxxx"/>
+                       value="{{$settings->get('shipping_phone','phone')}}" placeholder="9639xxxxxxxx"/>
             </div>
         </div>
         <div class="row mb-8">

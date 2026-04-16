@@ -111,7 +111,7 @@
                                 </div>
                                 <div class="min-w-0">
                                     <h4 class="fw-bold fs-6">{{ trans('Address') }}</h4>
-
+                                    <input type="text" class="form-control-sm" v-model="createOrder.address">
                                     <p v-if="createOrder.map==null"
                                        class="text-on-surface-variant small text-truncate mb-0">
                                         {{ trans("Doesn't  have a location") }}
@@ -195,6 +195,7 @@ const createOrder = useForm({
     address: '',
     subPrice: 0,
     map: null,
+    phone: '',
 })
 const submitSuccess = ref(false)
 
