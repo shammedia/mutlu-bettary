@@ -33,7 +33,6 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-
         $order = Order::create([
             'delivery_type' => $request->deliveryType,
             'shipping' => $request->shippingCost,
@@ -77,6 +76,14 @@ class OrderController extends Controller
             $message .= "الموقع\n";
             $message .= $order->map;
         }
+        if ($order->address != '') {
+
+            $message .= "العنوان\n";
+            $message .= $order->address;
+        }
+            $message .= "الهاتف\n";
+            $message .= $order->phone;
+
         $msg = urlencode($message);
         $shippingPhone = ltrim(Settings::get('phone'), '+');
         return back()->with('wa',"https://wa.me/{$shippingPhone}?text={$msg}");
@@ -134,6 +141,13 @@ class OrderController extends Controller
             $message .= "الموقع\n";
             $message .= $order->map;
         }
+        if ($order->address != '') {
+
+            $message .= "العنوان\n";
+            $message .= $order->address;
+        }
+        $message .= "الهاتف\n";
+        $message .= $order->phone;
         $msg = urlencode($message);
         $shippingPhone = Settings::get('shipping_phone');
         return redirect()->to("https://wa.me/{$shippingPhone}?text={$msg}");
